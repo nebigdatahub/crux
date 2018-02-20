@@ -31,6 +31,11 @@ module.exports = {
 					use: ['css-loader', 'sass-loader'],
 				})),
 				exclude: /node_modules/
+			},
+			{
+				test: /\.(jpg|png|gif|ico)$/,
+				use: ['file-loader'],
+				exclude: /node_modules/
 			}
 		],
 	},
@@ -45,11 +50,13 @@ module.exports = {
 		new ExtractTextPlugin({
 			filename: 'style.css'
 		}),
+		new webpack.NamedModulesPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
 	],
 	devServer: {
 		contentBase: './dist',
 		hot: true,
-		port: 3000
+		port: 3000,
+		historyApiFallback: true
 	}
 }

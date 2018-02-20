@@ -1,1 +1,16 @@
-@import '~bootstrap/scss/bootstrap.scss'
+$primary: #03A9F4;
+
+@import '~bulma/bulma.sass';
+
+
+.container {
+    max-width: 90%;
+}
+
+#signup-form {
+    @extend .hero;
+    @extend .is-dark;
+    a {
+        color: $link !important;
+    }
+}
