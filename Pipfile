@@ -9,8 +9,8 @@ name = "pypi"
 
 django = "*"
 djangorestframework = "*"
-"autopep8" = "*"
-"pep8" = "*"
+gunicorn = "*"
+whitenoise = "*"
 
 
 [dev-packages]

@@ -1,0 +1,1 @@
+web: gunicorn --pythonpath server crux.wsgi --log-file -

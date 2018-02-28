@@ -1,8 +1,9 @@
-const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const path = require('path')
 
 module.exports = {
   entry: [
@@ -62,7 +63,12 @@ module.exports = {
     extensions: ['*', '.js', '.jsx']
   },
   plugins: [
-    new CleanWebpackPlugin([__dirname + '/../public']),
+    new CleanWebpackPlugin(
+      [path.join(__dirname, '..', 'public')],
+      {
+        allowExternal: true
+      }
+    ),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html'

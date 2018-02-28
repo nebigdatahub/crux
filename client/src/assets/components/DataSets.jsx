@@ -9,7 +9,7 @@ class DataSets extends Component {
 
   render() {
     return (
-      <div className="columns is-multiline is-mobile">
+      <section className="columns is-multiline is-mobile">
         <div className="column is-one-fifth-desktop is-half-mobile">
           <DatasetCard />
         </div>
@@ -40,7 +40,7 @@ class DataSets extends Component {
         <div className="column is-one-fifth-desktop is-half-mobile">
           <DatasetCard />
         </div>
-      </div>
+      </section>
     )
   }
 }
