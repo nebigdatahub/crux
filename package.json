@@ -1,0 +1,21 @@
+{
+  "name": "crux",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "install": "npm --prefix client install",
+    "start": "npm --prefix client start",
+    "postinstall": "npm run build",
+    "build": "npm --prefix client run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nebigdatahub/crux.git"
+  },
+  "author": "Sabareesh Natarajan",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/nebigdatahub/crux/issues"
+  },
+  "homepage": "https://github.com/nebigdatahub/crux#readme"
+}

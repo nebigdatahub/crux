@@ -1,0 +1,17 @@
+$primary: #209cee;
+
+@import '~bulma/bulma.sass';
+
+
+.container {
+    max-width: 90%;
+}
+
+#signup-form {
+    @extend .hero;
+    @extend .is-fullheight;
+    @extend .is-dark;
+    a {
+        color: $link !important;
+    }
+}
