@@ -5,6 +5,7 @@
   "scripts": {
     "install": "npm --prefix client install",
     "start": "npm --prefix client start",
+    "postinstall": "npm run build",
     "build": "npm --prefix client run build"
   },
   "repository": {
