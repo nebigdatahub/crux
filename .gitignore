@@ -106,6 +106,8 @@ node_modules
 
 # production
 /build
+assets
+
 
 # misc
 .DS_Store
