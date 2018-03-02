@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
 
-import HomeView from "./assets/views/HomeView"
-import AuthView from "./assets/views/AuthView"
-import DashboardView from "./assets/views/DashboardView"
-import AuthForm from "./assets/components/AuthForm"
+import HomeView from "./views/HomeView"
+import AuthView from "./views/AuthView"
+import DashboardView from "./views/DashboardView"
+import AuthForm from "./components/AuthForm"
 
 class App extends Component {
   render() {

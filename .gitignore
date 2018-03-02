@@ -122,5 +122,6 @@ yarn-error.log*
 
 secret_key.txt
 public/
+etc
 
 *.sqlite3

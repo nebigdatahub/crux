@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom";
 
-import logo from '../files/logo.png'
+import logo from '../assets/files/logo.png'
 class Navbar extends Component {
   constructor(props) {
     super(props)
@@ -17,7 +17,7 @@ class Navbar extends Component {
           <div className="navbar-menu is-active">
             <div className="navbar-end">
               <div className="navbar-item">
-                <Link to="/signup" className="button is-primary">Sign Up</Link>
+                <Link to="/signup" className="is-primary">Sign Up</Link>
               </div>
             </div>
           </div>

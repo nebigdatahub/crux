@@ -11,6 +11,8 @@ django = "*"
 djangorestframework = "*"
 gunicorn = "*"
 whitenoise = "*"
+graphene = "*"
+graphene-django = "*"
 
 
 [dev-packages]

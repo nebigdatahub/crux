@@ -18,4 +18,6 @@ ReactDOM.render(
   // </Provider>
   , document.getElementById('app'))
 
-module.hot.accept();
+if (process.env != "production") {
+  module.hot.accept();
+}

@@ -1,8 +1,9 @@
 import React, { Component } from "react"
-import Navbar from "../components/Navbar";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Switch } from "react-router-dom";
+
+import Navbar from "../components/Navbar";
 import AuthForm from "../components/AuthForm";
-import Switch from "react-router-dom/Switch";
 import DashboardFrame from "../components/DashboardFrame";
 import DataSets from "../components/DataSets";
 
@@ -27,7 +28,6 @@ class DashboardView extends Component {
                 />
               ))
             }
-            <DataSets />
           </section>
         </main>
       </React.Fragment>
@@ -54,8 +54,8 @@ class Sidebar extends Component {
       component: () => <h1>Tasks</h1>
     },
     {
-      label: "Files",
       path: "/files",
+      label: "Files",
       component: () => <h1>Files</h1>
     },
     {
@@ -63,6 +63,11 @@ class Sidebar extends Component {
       path: "/profile",
       component: () => <h1>Profile</h1>
     },
+    {
+      label: "",
+      path: "/project/new",
+      component: () => <h1>Create New Project</h1>
+    }
   ]
 
   render() {

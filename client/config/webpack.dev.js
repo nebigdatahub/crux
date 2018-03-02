@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
 
 module.exports = {
 	entry: [
@@ -54,7 +55,7 @@ module.exports = {
 		new webpack.HotModuleReplacementPlugin(),
 	],
 	devServer: {
-		contentBase: './dist',
+		contentBase: path.join(__dirname, '..', 'public'),
 		hot: true,
 		port: 3000,
 		historyApiFallback: true

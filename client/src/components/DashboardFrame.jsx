@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { Link } from "react-router-dom";
 
 class DashboardFrame extends Component {
   render() {
@@ -6,7 +7,7 @@ class DashboardFrame extends Component {
       <section className="section">
         <h1 className="title">Quick Actions</h1>
         <div className="buttons">
-          <span className="button is-info">Create new project</span>
+          <Link to={this.props.match.path + "/project/new"} className="button is-info">Create new project</Link>
         </div>
       </section>
     )
