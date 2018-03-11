@@ -7,6 +7,7 @@ const path = require('path')
 
 module.exports = {
   entry: [
+    'babel-polyfill',
     './src/index.js',
   ],
   output: {
@@ -56,6 +57,11 @@ module.exports = {
             options: {}
           }
         ]
+      },
+      {
+        test: /\.(gql|graphql)$/,
+        use: 'graphql-tag/loader',
+        exclude: /node_modules/
       }
     ],
   },

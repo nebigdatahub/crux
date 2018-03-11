@@ -17,5 +17,6 @@
   "bugs": {
     "url": "https://github.com/nebigdatahub/crux/issues"
   },
-  "homepage": "https://github.com/nebigdatahub/crux#readme"
+  "homepage": "https://github.com/nebigdatahub/crux#readme",
+  "dependencies": {}
 }

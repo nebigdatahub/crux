@@ -39,6 +39,12 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     email = models.EmailField(_('email_address'), unique=True)
     organization = models.CharField(max_length=100)
+    username = models.CharField(
+        _('username'),
+        max_length=150,
+        help_text=_(
+            'Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+    )
 
     objects = UserManager()
 

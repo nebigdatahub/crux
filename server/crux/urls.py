@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, re_path
 from django.views.decorators.csrf import csrf_exempt
 from django.conf.urls import handler404, handler500
+from django.contrib.auth.urls import urlpatterns
 
 from graphene_django.views import GraphQLView
 from . import views

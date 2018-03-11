@@ -1,0 +1,31 @@
+query currentUserQuery {
+  currentUser {
+    email, firstName, lastName, username
+  }
+}
+
+mutation createUserMutation ($email:String!, $password: String!) {
+  createUser (email: $email, password: $password) {
+    user {
+      id
+    }
+  }
+}
+
+mutation verifyTokenMutation ($token: String!) {
+  verifyToken (token: $token) {
+    payload
+  }
+}
+
+mutation refreshTokenMutation ($token: String!) {
+  refreshToken (token: $token) {
+    payload
+  }
+}
+
+mutation loginUserMutation ($email: String!, $password: String!) {
+  loginUser (email: $email, password: $password) {
+    token
+  }
+}

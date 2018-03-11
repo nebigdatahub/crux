@@ -1,84 +1,47 @@
 import React, { Component } from "react"
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+import { Switch } from "react-router-dom"
 
-import Navbar from "../components/Navbar";
-import AuthForm from "../components/AuthForm";
-import DashboardFrame from "../components/DashboardFrame";
-import DataSets from "../components/DataSets";
+import Navbar from "../components/Navbar"
+import Sidebar from "../components/Sidebar"
+import { menuItems } from "../config"
+import { graphql, compose } from "react-apollo"
+import { currentUserQuery } from "../queries/users.gql"
+import Layout from "./Layout"
 
 class DashboardView extends Component {
-
   render() {
     return (
-      <React.Fragment>
+      <Layout>
         <Navbar />
-        <main className="columns">
-          <nav className="column menu is-one-fifth">
-            <Sidebar {...this.props} />
-          </nav>
-          <section className="column is-four-fifth">
-            {
-              Sidebar.menu.map((route, index) => (
-                <Route
-                  key={index}
-                  path={this.props.match.path + route.path}
-                  component={route.component}
-                  exact={true}
-                />
-              ))
-            }
-          </section>
-        </main>
-      </React.Fragment>
+        <Sidebar />
+        {this.props.currentUserQuery &&
+        this.props.currentUserQuery.currentUser ? (
+          <DashboardQuickActions {...this.props} />
+        ) : (
+          "You need to be logged in"
+        )}
+      </Layout>
     )
   }
 }
 
-class Sidebar extends Component {
-
-  static menu = [
-    {
-      label: "Dashboard",
-      path: "",
-      component: DashboardFrame
-    },
-    {
-      label: "Projects",
-      path: "/projects",
-      component: () => <h1>Projects</h1>
-    },
-    {
-      label: "Tasks",
-      path: "/tasks",
-      component: () => <h1>Tasks</h1>
-    },
-    {
-      path: "/files",
-      label: "Files",
-      component: () => <h1>Files</h1>
-    },
-    {
-      label: "Profile",
-      path: "/profile",
-      component: () => <h1>Profile</h1>
-    },
-    {
-      label: "",
-      path: "/project/new",
-      component: () => <h1>Create New Project</h1>
-    }
-  ]
-
-  render() {
-    const menuItems = Sidebar.menu.map((item, index) => <li key={index}><Link to={this.props.match.path + item.path}>{item.label}</Link></li>)
-
-    return (
-      <ul className="menu-list">
-        {menuItems}
-      </ul>
-    )
-  }
+const DashboardQuickActions = props => {
+  return (
+    <React.Fragment>
+      <h1 className="title">Quick Actions</h1>
+      <div className="buttons">
+        <Link to="/datasets/new" className="button is-info">
+          Create new dataset
+        </Link>
+      </div>
+    </React.Fragment>
+  )
 }
 
-export default DashboardView
+export default compose(
+  graphql(currentUserQuery, {
+    name: "currentUserQuery",
+    options: { errorPolicy: "all" },
+  })
+)(DashboardView)

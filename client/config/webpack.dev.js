@@ -5,6 +5,7 @@ const path = require('path')
 
 module.exports = {
 	entry: [
+		'babel-polyfill',
 		'react-hot-loader/patch',
 		'./src/index.js',
 	],
@@ -36,6 +37,11 @@ module.exports = {
 			{
 				test: /\.(jpg|png|gif|ico)$/,
 				use: ['file-loader'],
+				exclude: /node_modules/
+			},
+			{
+				test: /\.(gql|graphql)$/,
+				use: 'graphql-tag/loader',
 				exclude: /node_modules/
 			}
 		],
