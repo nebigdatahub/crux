@@ -13,6 +13,10 @@ gunicorn = "*"
 whitenoise = "*"
 graphene = "*"
 graphene-django = "*"
+django-graphql-jwt = "*"
+django-graphql-social-auth = "*"
+django-graphql-extensions = "*"
+django-cors-headers = "*"
 
 
 [dev-packages]
