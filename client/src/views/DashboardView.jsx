@@ -1,42 +1,30 @@
 import React, { Component } from "react"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
-import { Switch } from "react-router-dom"
-
-import Navbar from "../components/Navbar"
-import Sidebar from "../components/Sidebar"
-import { menuItems } from "../config"
 import { graphql, compose } from "react-apollo"
+
+import { menuItems } from "../config"
 import { currentUserQuery } from "../queries/users.gql"
-import Layout from "./Layout"
+
+import SidebarLayout from "./layouts/SidebarLayout"
+import QuickActionsLayout from "./layouts/QuickActionsLayout"
 
 class DashboardView extends Component {
+  quickActions = {
+    title: "Dashboard",
+    links: [{ text: "Create new dataset", url: "/datasets/new" }],
+  }
   render() {
     return (
-      <Layout>
-        <Navbar />
-        <Sidebar />
+      <SidebarLayout>
         {this.props.currentUserQuery &&
         this.props.currentUserQuery.currentUser ? (
-          <DashboardQuickActions {...this.props} />
+          <QuickActionsLayout {...this.quickActions} />
         ) : (
           "You need to be logged in"
         )}
-      </Layout>
+      </SidebarLayout>
     )
   }
-}
-
-const DashboardQuickActions = props => {
-  return (
-    <React.Fragment>
-      <h1 className="title">Quick Actions</h1>
-      <div className="buttons">
-        <Link to="/datasets/new" className="button is-info">
-          Create new dataset
-        </Link>
-      </div>
-    </React.Fragment>
-  )
 }
 
 export default compose(

@@ -6,8 +6,8 @@ import {
   loginUserMutation,
   createUserMutation,
   refreshTokenMutation,
-} from "../queries/users.gql"
-import { config } from "../config"
+} from "../../queries/users.gql"
+import { config } from "../../config"
 class AuthForm extends Component {
   state = {
     displayLogin: true,
@@ -55,7 +55,7 @@ class AuthForm extends Component {
         })
         .then(({ data }) => {
           localStorage.setItem(config.TOKEN_NAME, data.loginUser.token)
-          this.props.history.go(-1) // Send back to URL from where user was sent to login
+          this.props.history.push("/dashboard") // Send back to URL from where user was sent to login
         })
         .catch(error => {
           this.setState({ error: true, errorMessage: "Invalid credentials" })

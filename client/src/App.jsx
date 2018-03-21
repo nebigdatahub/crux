@@ -8,6 +8,7 @@ import DatasetsView from "./views/DatasetsView"
 import TasksView from "./views/TasksView"
 import ProfileView from "./views/ProfileView"
 import FilesView from "./views/FilesView"
+import AnalysisView from "./views/AnalysisView"
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
         <Route path="/tasks" render={props => <TasksView {...props} />} />
         <Route path="/files" render={props => <FilesView {...props} />} />
         <Route path="/profile" render={props => <ProfileView {...props} />} />
+        <Route path="/analysis" render={props => <AnalysisView {...props} />} />
       </React.Fragment>
     )
   }

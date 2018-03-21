@@ -1,16 +1,18 @@
 import React, { Component } from "react"
+import Navbar from "../../components/Navbar"
+import Sidebar from "../../components/Sidebar"
 
-class Layout extends Component {
+class SidebarLayout extends Component {
   render() {
     return (
       <React.Fragment>
-        {this.props.children[0]}
+        <Navbar />
         <main className="columns">
           <nav className="column menu is-2-desktop">
-            {this.props.children[1]}
+            <Sidebar />
           </nav>
           <section className="column is-10-desktop">
-            {this.props.children.slice(2)}
+            {this.props.children}
           </section>
         </main>
       </React.Fragment>
@@ -18,4 +20,4 @@ class Layout extends Component {
   }
 }
 
-export default Layout
+export default SidebarLayout

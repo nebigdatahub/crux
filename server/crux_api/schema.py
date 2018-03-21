@@ -16,6 +16,11 @@ MUTATIONS = [
 ]
 
 
+class FileUpload(graphene.Scalar):
+    def serializer(self):
+        pass
+
+
 class Query(*QUERIES):
     pass
 

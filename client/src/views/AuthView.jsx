@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Link } from "react-router-dom"
 
 import Navbar from "../components/Navbar"
-import AuthForm from "../components/AuthForm"
+import AuthForm from "../components/auth/AuthForm"
 
 class AuthView extends Component {
   render() {

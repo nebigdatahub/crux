@@ -1,13 +1,10 @@
 import React, { Component } from "react"
-import { Route, Link } from "react-router-dom"
-
-import DatasetNew from "../components/datasets/DatasetNew"
 import SidebarLayout from "./layouts/SidebarLayout"
 import QuickActionsLayout from "./layouts/QuickActionsLayout"
 
-class FilesView extends Component {
+class AnalysisView extends Component {
   quickActions = {
-    title: "Files",
+    title: "Analysis",
     links: [],
   }
   render() {
@@ -19,4 +16,4 @@ class FilesView extends Component {
   }
 }
 
-export default FilesView
+export default AnalysisView

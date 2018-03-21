@@ -1,21 +1,21 @@
 import React, { Component } from "react"
 import { Route, Link } from "react-router-dom"
-import DatasetNew from "../components/DatasetNew"
-import Navbar from "../components/Navbar"
-import Sidebar from "../components/Sidebar"
 
-import Layout from "./Layout"
+import SidebarLayout from "./layouts/SidebarLayout"
+import QuickActionsLayout from "./layouts/QuickActionsLayout"
 
-class FilesView extends Component {
+class ProfileView extends Component {
+  quickActions = {
+    title: "Profile",
+    links: [],
+  }
   render() {
     return (
-      <Layout>
-        <Navbar />
-        <Sidebar />
-        <DatasetNew />
-      </Layout>
+      <SidebarLayout>
+        <QuickActionsLayout {...this.quickActions} />
+      </SidebarLayout>
     )
   }
 }
 
-export default FilesView
+export default ProfileView

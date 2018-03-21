@@ -4,13 +4,14 @@ import { Link, NavLink } from "react-router-dom"
 
 class DatasetCard extends Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   static defaultProps = {
     name: "Dataset name",
-    description: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A blanditiis officia fugiat ullam quibusdam optio, neque perferendis necessitatibus modi distinctio?",
-    link: "/"
+    description:
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A blanditiis officia fugiat ullam quibusdam optio, neque perferendis necessitatibus modi distinctio?",
+    link: "/",
   }
 
   render() {
@@ -25,7 +26,7 @@ class DatasetCard extends Component {
         <div className="card-content">
           <p className="content">{description}</p>
         </div>
-      </div >
+      </div>
     )
   }
 }

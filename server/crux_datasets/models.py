@@ -4,16 +4,35 @@ from django.contrib.auth import get_user_model
 
 
 class Dataset(models.Model):
+    name = models.CharField(_('name'),
+                            max_length=100,
+                            help_text=_('Required. 100 characters or fewer.')
+                            )
+
+    description = models.CharField(_('description'),
+                                   max_length=500,
+                                   help_text=_('500 characters or fewer.')
+                                   )
+
+    owner = models.ForeignKey(get_user_model(),
+                              on_delete=models.CASCADE)
+
+    REQUIRED_FIELDS = [name, owner]
+
+
+class DatasetFile(models.Model):
     name = models.CharField(
         _('name'),
         max_length=100,
         help_text=_('Required. 100 characters or fewer.')
     )
 
-    description = models.CharField(
-        _('description'),
-        max_length=500,
-        help_text=_('500 characters or fewer.')
-    )
+    file = models.FileField()
 
-    owner = models.ManyToManyField(to=get_user_model())
+    dataset = models.ForeignKey(Dataset,
+                                on_delete=models.CASCADE)
+
+    uploaded_by = models.ForeignKey(get_user_model(),
+                                    on_delete=models.CASCADE)
+
+    REQUIRED_FIELDS = [name, file, dataset, uploaded_by]

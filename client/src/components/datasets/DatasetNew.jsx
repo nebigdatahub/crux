@@ -72,7 +72,7 @@ class DatasetNew extends Component {
     return (
       <section className="columns">
         <div className="column is-half">
-          <h1 className="subtitle">New dataset</h1>
+          <h1 className="title">New dataset</h1>
           <form>
             <div className="field">
               <label className="label">Name</label>

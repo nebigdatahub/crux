@@ -7,10 +7,6 @@ import { currentUserQuery } from "../queries/users.gql"
 import logo from "../assets/files/logo.png"
 
 class Navbar extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const { loading, error, currentUser } = this.props.currentUserQuery
 
@@ -26,9 +22,6 @@ class Navbar extends Component {
             <div className="navbar-end">
               <div className="navbar-item">
                 <Link to="/dashboard">Dashboard</Link>
-              </div>
-              <div className="navbar-item">
-                <Link to="/datasets/public">Datasets</Link>
               </div>
               <div className="navbar-item">
                 {currentUser ? (
@@ -53,9 +46,5 @@ class Navbar extends Component {
 export default compose(
   graphql(currentUserQuery, {
     name: "currentUserQuery",
-    options: {
-      errorPolicy: "all",
-      fetchPolicy: "cache-and-network",
-    },
   })
 )(Navbar)

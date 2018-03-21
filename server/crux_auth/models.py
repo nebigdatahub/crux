@@ -37,14 +37,24 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     USERNAME_FIELD = 'email'
-    email = models.EmailField(_('email_address'), unique=True)
-    organization = models.CharField(max_length=100)
-    username = models.CharField(
-        _('username'),
-        max_length=150,
-        help_text=_(
-            'Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
-    )
+    email = models.EmailField(_('email_address'),
+                              unique=True)
+    name = models.CharField(_('Full name'),
+                            max_length=100)
+    organization = models.CharField(_('username'),
+                                    max_length=100,
+                                    unique=True,
+                                    default=str(email).split('@')[0])
+    username = models.CharField(_('username'),
+                                max_length=150,
+                                help_text=_('Required. 150 characters or fewer.\
+                                            Letters, digits and . / - / _ only.'),
+                                )
+
+    bio = models.CharField(_('bio'),
+                           help_text=_(
+                               'About yourself. 1000 characters or less.'),
+                           max_length=1000)
 
     objects = UserManager()
 
