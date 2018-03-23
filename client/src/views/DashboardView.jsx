@@ -14,10 +14,10 @@ class DashboardView extends Component {
     links: [{ text: "Create new dataset", url: "/datasets/new" }],
   }
   render() {
+    const { currentUserQuery } = this.props
     return (
       <SidebarLayout>
-        {this.props.currentUserQuery &&
-        this.props.currentUserQuery.currentUser ? (
+        {currentUserQuery && currentUserQuery.currentUser ? (
           <QuickActionsLayout {...this.quickActions} />
         ) : (
           "You need to be logged in"
@@ -30,6 +30,5 @@ class DashboardView extends Component {
 export default compose(
   graphql(currentUserQuery, {
     name: "currentUserQuery",
-    options: { errorPolicy: "all" },
   })
 )(DashboardView)

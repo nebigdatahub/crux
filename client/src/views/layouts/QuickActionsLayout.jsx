@@ -3,14 +3,15 @@ import { Link, withRouter } from "react-router-dom"
 
 class QuickActionsLayout extends Component {
   render() {
+    const { title, links, match } = this.props
     return (
       <section>
-        <h1 className="title">{this.props.title}</h1>
+        <h1 className="title">{title}</h1>
         <h2 className="subtitle">Quick Actions</h2>
         <div className="buttons">
-          {this.props.links.map((link, idx) => (
+          {links.map((link, idx) => (
             <Link
-              to={this.props.match.path + link.url}
+              to={match.path + link.url}
               key={idx}
               className="button is-info"
             >

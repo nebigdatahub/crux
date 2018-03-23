@@ -18,15 +18,12 @@ class App extends Component {
         <Route path="/signup" render={props => <AuthView {...props} />} />
         <Route path="/login" render={props => <AuthView {...props} />} />
         <Route path="/logout" render={props => <AuthView {...props} />} />
-        <Route
-          path="/dashboard"
-          render={props => <DashboardView {...props} />}
-        />
-        <Route path="/datasets" render={props => <DatasetsView {...props} />} />
-        <Route path="/tasks" render={props => <TasksView {...props} />} />
-        <Route path="/files" render={props => <FilesView {...props} />} />
-        <Route path="/profile" render={props => <ProfileView {...props} />} />
-        <Route path="/analysis" render={props => <AnalysisView {...props} />} />
+        <Route path="/dashboard" render={() => <DashboardView />} />
+        <Route path="/datasets" render={() => <DatasetsView />} />
+        <Route path="/tasks" render={() => <TasksView />} />
+        <Route path="/files" render={() => <FilesView />} />
+        <Route path="/profile" render={() => <ProfileView />} />
+        <Route path="/analysis" render={() => <AnalysisView />} />
       </React.Fragment>
     )
   }

@@ -13,9 +13,9 @@ class Sidebar extends Component {
     { label: "Dashboard", path: "/dashboard" },
     { label: "Datasets", path: "/datasets" },
     { label: "Tasks", path: "/tasks" },
+    { label: "Analysis", path: "/analysis" },
     { label: "Files", path: "/files" },
     { label: "Profile", path: "/profile" },
-    { label: "Analysis", path: "/analysis" },
   ]
 
   render() {
