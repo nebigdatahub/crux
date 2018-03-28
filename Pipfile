@@ -17,6 +17,7 @@ django-graphql-jwt = "*"
 django-graphql-social-auth = "*"
 django-graphql-extensions = "*"
 django-cors-headers = "*"
+nbconvert = "*"
 
 
 [dev-packages]

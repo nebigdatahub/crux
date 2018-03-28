@@ -4,17 +4,12 @@ import graphql_jwt
 from graphene_django import DjangoObjectType
 from graphql_extensions.auth.decorators import (login_required,
                                                 staff_member_required)
-from .models import Dataset, DatasetFile
+from .models import Dataset
 
 
 class DatasetType(DjangoObjectType):
     class Meta:
         model = Dataset
-
-
-class DatasetFileType(DjangoObjectType):
-    class Meta:
-        model = DatasetFile
 
 
 class Query(graphene.ObjectType):
@@ -43,27 +38,5 @@ class CreateDataset(graphene.Mutation):
         return CreateDataset(dataset=dataset)
 
 
-class CreateDatasetFile(graphene.Mutation):
-    # dataset_file = graphene.Field(DatasetFileType)
-    success = graphene.Boolean()
-
-    class Arguments:
-        name = graphene.String(required=True)
-        dataset = graphene.Int(required=True)
-
-    @login_required
-    def mutate(self, info, name, dataset):
-        dataset_file = DatasetFile(
-            name=name,
-            file=info.context.FILES,
-            dataset=Dataset.objects.get(id=dataset),
-            uploaded_by=info.context.user
-        )
-        dataset_file.save()
-
-        return CreateDatasetFile(dataset_file=dataset_file)
-
-
 class Mutation(graphene.ObjectType):
     create_dataset = CreateDataset.Field()
-    create_dataset_file = CreateDatasetFile.Field()

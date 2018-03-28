@@ -20,5 +20,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 STATIC_URL = '/assets/'
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT, 'client', 'public')
+    os.path.join(PROJECT_ROOT, 'public')
 ]

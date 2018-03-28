@@ -26,7 +26,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'crux_api',
     'crux_auth',
-    'crux_datasets'
+    'crux_datasets',
+    'crux_files'
 ]
 
 MIDDLEWARE = [
@@ -114,3 +115,6 @@ GRAPHENE = {
 }
 
 AUTH_USER_MODEL = 'crux_auth.User'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'files')
+MEDIA_URL = '/files/'

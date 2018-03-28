@@ -18,21 +18,3 @@ class Dataset(models.Model):
                               on_delete=models.CASCADE)
 
     REQUIRED_FIELDS = [name, owner]
-
-
-class DatasetFile(models.Model):
-    name = models.CharField(
-        _('name'),
-        max_length=100,
-        help_text=_('Required. 100 characters or fewer.')
-    )
-
-    file = models.FileField()
-
-    dataset = models.ForeignKey(Dataset,
-                                on_delete=models.CASCADE)
-
-    uploaded_by = models.ForeignKey(get_user_model(),
-                                    on_delete=models.CASCADE)
-
-    REQUIRED_FIELDS = [name, file, dataset, uploaded_by]
