@@ -51,26 +51,25 @@ class Upload(graphene.Scalar):
         pass
 
 
-class CreateFile(graphene.Mutation):
+class UploadFiles(graphene.Mutation):
     success = graphene.Boolean()
 
     class Arguments:
-        # name = graphene.String(required=True)
         dataset_id = graphene.Int(required=True)
-        file = Upload()
+        files = Upload()
 
     @login_required
     def mutate(self, info, dataset_id):
-        print(info.context.FILES)
-        file = File(
-            file=info.context.FILES['file'],
-            dataset=Dataset.objects.get(id=dataset_id),
-            owner=info.context.user
-        )
-        file.save()
+        for f in info.context.FILES.getlist('files'):
+            file = File(
+                file=f,
+                dataset=Dataset.objects.get(id=dataset_id),
+                owner=info.context.user
+            )
+            file.save()
 
-        return CreateFile(success=True)
+        return UploadFiles(success=True)
 
 
 class Mutation(graphene.ObjectType):
-    create_file = CreateFile.Field()
+    upload_files = UploadFiles.Field()
