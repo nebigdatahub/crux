@@ -83,16 +83,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.\
+                UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.\
+                MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.\
+                CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.\
+                NumericPasswordValidator',
     },
 ]
 
@@ -118,3 +122,12 @@ AUTH_USER_MODEL = 'crux_auth.User'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'files')
 MEDIA_URL = '/files/'
+
+# ======================================
+# Static files (CSS, JavaScript, Images)
+# ======================================
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+STATIC_URL = '/assets/'
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_ROOT, 'client/public')
+]

@@ -25,7 +25,9 @@ class Query(graphene.ObjectType):
 
     @login_required
     def resolve_user_files(self, info, **kwargs):
-        return File.objects.filter(owner=info.context.user)
+        # return File.objects.filter(owner=info.context.user)
+        print(info.context.user)
+        return info.context.user.dataset_set
 
     @login_required
     def resolve_dataset_files(self, info, dataset_id, **kwargs):

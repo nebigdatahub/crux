@@ -2,8 +2,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 
-from crux_datasets.models import Dataset
-
 
 class File(models.Model):
     name = models.CharField(
@@ -14,10 +12,10 @@ class File(models.Model):
 
     file = models.FileField()
 
-    dataset = models.ForeignKey(Dataset,
-                                on_delete=models.CASCADE)
-
     owner = models.ForeignKey(get_user_model(),
                               on_delete=models.CASCADE)
 
-    REQUIRED_FIELDS = [file, dataset]
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    REQUIRED_FIELDS = [file]
