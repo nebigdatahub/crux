@@ -48,6 +48,9 @@ module.exports = {
     extensions: ["*", ".js", ".jsx"],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("development"),
+    }),
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       filename: "index.html",
@@ -57,9 +60,6 @@ module.exports = {
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify("development"),
-    }),
   ],
   devServer: {
     contentBase: path.join(__dirname, "..", "public"),

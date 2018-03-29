@@ -21,16 +21,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'graphene_django',
     'corsheaders',
     'crux_api',
     'crux_auth',
     'crux_datasets',
-    'crux_files'
+    'crux_files',
+    'graphene_django',
 ]
 
 MIDDLEWARE = [
+    'graphql_jwt.middleware.JSONWebTokenMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -39,7 +39,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'graphql_jwt.middleware.JSONWebTokenMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [

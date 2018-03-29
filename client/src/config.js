@@ -17,7 +17,7 @@ const stageSettings = {
 const settings =
   process.env.NODE_ENV == "production"
     ? prodSettings
-    : "staging" ? stageSettings : devSettings
+    : process.env.NODE_ENV == "staging" ? stageSettings : devSettings
 
 const config = {
   ...settings,

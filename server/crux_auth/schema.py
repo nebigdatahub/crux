@@ -8,6 +8,8 @@ from graphql_extensions.auth.decorators import (login_required,
 
 
 class UserType(DjangoObjectType):
+    token = graphene.String(source='get_token')
+
     class Meta:
         model = get_user_model()
 
@@ -16,7 +18,6 @@ class Query(graphene.ObjectType):
     all_users = graphene.List(UserType)
     current_user = graphene.Field(UserType)
 
-    # @login_required
     def resolve_current_user(self, info, **kwargs):
         if not info.context.user.is_anonymous:
             return info.context.user

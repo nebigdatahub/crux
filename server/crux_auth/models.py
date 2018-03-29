@@ -2,6 +2,12 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 
+import jwt
+import os
+from datetime import datetime, timedelta
+from calendar import timegm
+from django.conf import settings
+
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -57,5 +63,31 @@ class User(AbstractUser):
                            max_length=1000)
 
     objects = UserManager()
+
+    # def get_token(self):
+
+    #     def jwt_payload(user):
+    #         username = user.get_username()
+
+    #         if hasattr(username, 'pk'):
+    #             username = username.pk
+
+    #         payload = {
+    #             user.USERNAME_FIELD: username,
+    #             'exp': datetime.utcnow() + timedelta(seconds=60*5),
+    #         }
+
+    #         payload['orig_iat'] = timegm(datetime.utcnow().utctimetuple())
+
+    #         return payload
+
+    #     def jwt_encode(payload):
+    #         return jwt.encode(
+    #             payload,
+    #             settings.SECRET_KEY,
+    #             "HS256"
+    #         ).decode('utf-8')
+
+    #     return jwt_encode(jwt_payload(self))
 
     REQUIRED_FIELDS = []

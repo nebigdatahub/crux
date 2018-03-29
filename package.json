@@ -4,9 +4,10 @@
   "description": "",
   "scripts": {
     "install": "npm --prefix client install",
-    "start": "npm --prefix client start",
+    "start": "npm run django:dev & npm --prefix client run start",
     "postinstall": "npm run build",
-    "build": "npm --prefix client run build"
+    "build": "npm --prefix client run build",
+    "django:dev": "$(pipenv --venv)/bin/python server/manage.py runserver"
   },
   "repository": {
     "type": "git",
