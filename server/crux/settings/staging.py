@@ -3,8 +3,7 @@ import dj_database_url
 
 DEBUG = True
 
-with open(os.path.join(BASE_DIR, 'settings', 'secret_key.txt')) as f:
-    SECRET_KEY = f.read().strip()
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 ALLOWED_HOSTS = [
     'crux-nebigdatahub.herokuapp.com',
