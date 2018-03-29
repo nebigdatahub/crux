@@ -12,6 +12,6 @@ import os
 from django.core.wsgi import get_wsgi_application
 from whitenoise.django import DjangoWhiteNoise
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crux.settings.development")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crux.settings.production")
 
 application = DjangoWhiteNoise(get_wsgi_application())
