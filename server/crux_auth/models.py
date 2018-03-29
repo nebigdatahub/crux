@@ -49,7 +49,6 @@ class User(AbstractUser):
                             max_length=100)
     organization = models.CharField(_('username'),
                                     max_length=100,
-                                    unique=True,
                                     default=str(email).split('@')[0])
     username = models.CharField(_('username'),
                                 max_length=150,
