@@ -1,13 +1,15 @@
 const webpack = require("webpack")
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
+const CleanWebpackPlugin = require("clean-webpack-plugin")
+const UglifyJSPlugin = require("uglifyjs-webpack-plugin")
 const path = require("path")
 
 module.exports = {
-  entry: ["babel-polyfill", "react-hot-loader/patch", "./src/index.js"],
+  entry: ["babel-polyfill", "./src/index.js"],
   output: {
-    path: __dirname + "../dist",
-    publicPath: "/",
+    path: __dirname + "/../public",
+    publicPath: "/assets/",
     filename: "bundle.js",
   },
   module: {
@@ -27,15 +29,33 @@ module.exports = {
         use: ["css-hot-loader"].concat(
           ExtractTextPlugin.extract({
             fallback: "style-loader",
-            use: ["css-loader", "sass-loader"],
+            use: [
+              {
+                loader: "css-loader",
+                options: {
+                  minimize: true,
+                  sourceMap: true,
+                },
+              },
+              {
+                loader: "sass-loader",
+                options: {
+                  sourceMap: true,
+                },
+              },
+            ],
           })
         ),
         exclude: /node_modules/,
       },
       {
-        test: /\.(jpg|png|gif|ico)$/,
-        use: ["file-loader"],
-        exclude: /node_modules/,
+        test: /\.(png|jpg|gif|ico)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {},
+          },
+        ],
       },
       {
         test: /\.(gql|graphql)$/,
@@ -48,23 +68,21 @@ module.exports = {
     extensions: ["*", ".js", ".jsx"],
   },
   plugins: [
+    new CleanWebpackPlugin([path.join(__dirname, "..", "public")], {
+      allowExternal: true,
+    }),
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       filename: "index.html",
     }),
+    new UglifyJSPlugin({
+      sourceMap: true,
+    }),
     new ExtractTextPlugin({
       filename: "style.css",
     }),
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify("development"),
+      "process.env.NODE_ENV": JSON.stringify("staging"),
     }),
   ],
-  devServer: {
-    contentBase: path.join(__dirname, "..", "public"),
-    hot: true,
-    port: 3000,
-    historyApiFallback: true,
-  },
 }

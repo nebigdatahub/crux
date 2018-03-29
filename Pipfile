@@ -18,6 +18,7 @@ django-graphql-social-auth = "*"
 django-graphql-extensions = "*"
 django-cors-headers = "*"
 nbconvert = "*"
+dj-database-url = "*"
 
 
 [dev-packages]

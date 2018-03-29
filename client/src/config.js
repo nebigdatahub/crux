@@ -7,11 +7,17 @@ const devSettings = {
 }
 
 const prodSettings = {
+  ROOT_URI: "https://crux-nebigdatahub.herokuapp.com",
+}
+
+const stageSettings = {
   ROOT_URI: "https://crux-staging-nebigdatahub.herokuapp.com",
 }
 
 const settings =
-  process.env.NODE_ENV == "production" ? prodSettings : devSettings
+  process.env.NODE_ENV == "production"
+    ? prodSettings
+    : "staging" ? stageSettings : devSettings
 
 const config = {
   ...settings,

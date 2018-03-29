@@ -19,6 +19,6 @@ render(
   document.getElementById("app")
 )
 
-if (process.env.NODE_ENV != "production") {
+if (process.env.NODE_ENV == "development") {
   module.hot.accept()
 }

@@ -18,5 +18,6 @@
     "url": "https://github.com/nebigdatahub/crux/issues"
   },
   "homepage": "https://github.com/nebigdatahub/crux#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "cacheDirectories": ["client/node_modules"]
 }

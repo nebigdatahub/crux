@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --progress --colors --config config/webpack.dev.js",
-    "build": "webpack --config config/webpack.prod.js"
+    "start":
+      "webpack-dev-server --progress --colors --config config/webpack.dev.js",
+    "build":
+      "if [[ ${NODE_ENV} == \"production\" ]]; then npm run build:production; else npm run build:staging; fi",
+    "build:production": "webpack --config config/webpack.prod.js",
+    "build:staging": "webpack --config config/webpack.stage.js"
   },
   "repository": {
     "type": "git",
@@ -19,11 +23,7 @@
   },
   "homepage": "https://github.com/nebigdatahub/crux#readme",
   "babel": {
-    "presets": [
-      "env",
-      "react",
-      "stage-2"
-    ]
+    "presets": ["env", "react", "stage-2"]
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
