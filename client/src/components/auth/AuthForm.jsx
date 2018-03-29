@@ -24,21 +24,22 @@ class AuthForm extends Component {
   }
 
   logout = async () => {
-    const token = localStorage.getItem(config.TOKEN_NAME)
-    const result = await this.props
-      .refreshTokenMutation({
-        variables: {
-          token: token,
-        },
-      })
-      .then(({ data }) => {
-        this.props.client.resetStore()
-        localStorage.removeItem(config.TOKEN_NAME)
-        this.props.history.push("/login")
-      })
-      .catch(error => {
-        console.log("error in logout function")
-      })
+    localStorage.removeItem(config.TOKEN_NAME)
+    // const token = localStorage.getItem(config.TOKEN_NAME)
+    // const result = await this.props
+    //   .refreshTokenMutation({
+    //     variables: {
+    //       token: token,
+    //     },
+    //   })
+    //   .then(({ data }) => {
+    //     this.props.client.resetStore()
+    //     localStorage.removeItem(config.TOKEN_NAME)
+    //     this.props.history.push("/login")
+    //   })
+    //   .catch(error => {
+    //     console.log("error in logout function")
+    //   })
   }
 
   handleFormSubmit = async e => {
