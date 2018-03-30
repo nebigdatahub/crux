@@ -11,6 +11,15 @@ django = "*"
 djangorestframework = "*"
 gunicorn = "*"
 whitenoise = "*"
+graphene = "*"
+graphene-django = "*"
+django-graphql-jwt = "*"
+django-graphql-social-auth = "*"
+django-graphql-extensions = "*"
+django-cors-headers = "*"
+nbconvert = "*"
+dj-database-url = "*"
+"psycopg2" = "*"
 
 
 [dev-packages]

@@ -1,21 +1,24 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { createStore } from "redux";
-import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
+import React from "react"
+import { render } from "react-dom"
+import { BrowserRouter } from "react-router-dom"
 
-import App from './App'
+import { ApolloProvider } from "react-apollo"
 
-import './assets/styles/style.scss';
+import client from "./apollo"
+import App from "./App"
 
-// let store = createStore()
+import "./assets/styles/style.scss"
 
-ReactDOM.render(
-  // <Provider store={store}>
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
-  // </Provider>
-  , document.getElementById('app'))
+render(
+  <ApolloProvider client={client}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ApolloProvider>,
 
-module.hot.accept();
+  document.getElementById("app")
+)
+
+if (process.env.NODE_ENV == "development") {
+  module.hot.accept()
+}

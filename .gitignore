@@ -122,5 +122,7 @@ yarn-error.log*
 
 secret_key.txt
 public/
+files/
+etc
 
 *.sqlite3

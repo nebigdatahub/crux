@@ -5,7 +5,6 @@ import sys
 if __name__ == "__main__":
     DJANGO_SETTINGS_MODULE = os.environ.get(
         'DJANGO_SETTINGS_MODULE') or 'crux.settings.development'
-    print(DJANGO_SETTINGS_MODULE)
     os.environ.setdefault("DJANGO_SETTINGS_MODULE",
                           DJANGO_SETTINGS_MODULE)
     try:

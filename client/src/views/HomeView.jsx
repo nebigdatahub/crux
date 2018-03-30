@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 
 import Navbar from "../components/Navbar"
 import HomeViewContent from "../components/HomeViewContent"
-import DataSets from "../components/DataSets"
+import DatasetsPublic from "../components/datasets/DatasetsPublic"
 
 class HomeView extends Component {
   constructor(props) {
@@ -16,11 +16,10 @@ class HomeView extends Component {
         <HomeViewContent />
         <section className="section">
           <div className="container">
-            <h1 className="content has-text-weight-bold is-size-4">Browse popular datasets</h1>
-            <DataSets />
+            <DatasetsPublic />
           </div>
         </section>
-      </React.Fragment >
+      </React.Fragment>
     )
   }
 }

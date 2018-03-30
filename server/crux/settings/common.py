@@ -21,17 +21,28 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'corsheaders',
+    'crux_api',
+    'crux_auth',
+    'crux_app',
+    'graphene_django',
 ]
 
 MIDDLEWARE = [
+    'graphql_jwt.middleware.JSONWebTokenMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 ROOT_URLCONF = 'crux.urls'
@@ -95,3 +106,24 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# Graphene
+GRAPHENE = {
+    'SCHEMA': 'crux_api.schema.schema'
+}
+
+AUTH_USER_MODEL = 'crux_auth.User'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'files')
+MEDIA_URL = '/files/'
+
+# ======================================
+# Static files (CSS, JavaScript, Images)
+# ======================================
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+STATIC_URL = '/assets/'
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_ROOT, 'client/public')
+]
+
+APPEND_SLASH = True
