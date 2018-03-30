@@ -23,9 +23,9 @@ class AuthForm extends Component {
     })
   }
 
-  logout = async () => {
-    this.props.client.resetStore()
+  logout = () => {
     localStorage.removeItem(config.TOKEN_NAME)
+    this.props.client.resetStore()
     this.props.history.push("/login")
 
     // const token = localStorage.getItem(config.TOKEN_NAME)

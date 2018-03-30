@@ -24,8 +24,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'crux_api',
     'crux_auth',
-    'crux_datasets',
-    'crux_files',
+    'crux_app',
     'graphene_django',
 ]
 
@@ -126,3 +125,5 @@ STATIC_URL = '/assets/'
 STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, 'client/public')
 ]
+
+APPEND_SLASH = True

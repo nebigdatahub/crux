@@ -1,26 +1,23 @@
 import crux_auth.schema
-import crux_datasets.schema
-import crux_files.schema
+import crux_app.schema
 import graphene
 from graphene_django.types import DjangoObjectType
 
 QUERIES = [
     crux_auth.schema.Query,
-    crux_datasets.schema.Query,
-    crux_files.schema.Query,
+    crux_app.schema.Query,
     graphene.ObjectType
 ]
 
 MUTATIONS = [
     crux_auth.schema.Mutation,
-    crux_datasets.schema.Mutation,
-    crux_files.schema.Mutation,
+    crux_app.schema.Mutation,
     graphene.ObjectType
 ]
 
 
 class FileUpload(graphene.Scalar):
-    def serializer(self):
+    def serialize(self):
         pass
 
 
@@ -33,4 +30,4 @@ class Mutation(*MUTATIONS):
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation,
-                         types=[crux_files.schema.Upload])
+                         types=[FileUpload])
