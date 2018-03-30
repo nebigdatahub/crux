@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import { graphql, compose, withApollo } from "react-apollo"
 import { withRouter } from "react-router-dom"
+
 import {
   loginUserMutation,
   createUserMutation,
@@ -23,8 +24,8 @@ class AuthForm extends Component {
     })
   }
 
-  logout = () => {
-    localStorage.removeItem(config.TOKEN_NAME)
+  logout = async () => {
+    await localStorage.removeItem(config.TOKEN_NAME)
     this.props.client.resetStore()
     this.props.history.push("/login")
 

@@ -16,11 +16,6 @@ MUTATIONS = [
 ]
 
 
-class FileUpload(graphene.Scalar):
-    def serialize(self):
-        pass
-
-
 class Query(*QUERIES):
     pass
 
@@ -30,4 +25,4 @@ class Mutation(*MUTATIONS):
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation,
-                         types=[FileUpload])
+                         types=[crux_app.schema.FileUploadType])

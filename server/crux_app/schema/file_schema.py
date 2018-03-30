@@ -47,29 +47,30 @@ class Query(graphene.ObjectType):
             return None
 
 
-class Upload(graphene.Scalar):
+class FileUploadType(graphene.Scalar):
     def serialize(self):
         pass
 
 
 class UploadFiles(graphene.Mutation):
     success = graphene.Boolean()
+    uploaded_files = graphene.List(FileType)
 
     class Arguments:
-        dataset_id = graphene.Int(required=True)
-        files = Upload()
+        files = FileUploadType()
 
     @login_required
-    def mutate(self, info, dataset_id):
+    def mutate(self, info, **kwargs):
+        files = []
         for f in info.context.FILES.getlist('files'):
             file = File(
                 file=f,
-                dataset=Dataset.objects.get(id=dataset_id),
-                owner=info.context.user
+                **kwargs
             )
             file.save()
+            files.append(file)
 
-        return UploadFiles(success=True)
+        return UploadFiles(success=True, uploaded_files=files)
 
 
 class Mutation(graphene.ObjectType):

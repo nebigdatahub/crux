@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Dataset
-from .models import File
+from .models import Dataset, File
 
 
 class DatasetAdmin(admin.ModelAdmin):
