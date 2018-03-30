@@ -2,7 +2,6 @@ from .common import *
 import dj_database_url
 
 DEBUG = True
-
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 ALLOWED_HOSTS = [
