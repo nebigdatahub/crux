@@ -148,31 +148,6 @@ class DatasetNew extends Component {
               </div>
             </div>
 
-            {/* <div className="file has-name is-boxed">
-              <label className="file-label">
-                <input
-                  className="file-input"
-                  type="file"
-                  multiple
-                  onChange={({ target: { validity, files } }) => {
-                    validity.valid && this._handleFileChange(files)
-                  }}
-                />
-                <span className="file-cta">
-                  <span className="file-icon">
-                    <i className="fas fa-upload" />
-                  </span>
-                  <span className="file-label">Choose a file…</span>
-                </span>
-                <span className="file-name">
-                  {this.state.files &&
-                    Array.from(this.state.files).map(
-                      ({ name, size }) => `${name}\n`
-                    )}
-                </span>
-              </label>
-            </div> */}
-
             {this._renderFiles()}
 
             <div className="field">

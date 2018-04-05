@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import { graphql, compose } from "react-apollo"
 
 import { menuItems } from "../config"
-import { currentUserQuery } from "../queries/users.gql"
+import gql from "graphql-tag"
 
 import SidebarLayout from "./layouts/SidebarLayout"
 import QuickActionsLayout from "./layouts/QuickActionsLayout"
@@ -26,6 +26,17 @@ class DashboardView extends Component {
     )
   }
 }
+
+const currentUserQuery = gql`
+  query currentUserQuery {
+    currentUser {
+      email
+      firstName
+      lastName
+      username
+    }
+  }
+`
 
 export default compose(
   graphql(currentUserQuery, {

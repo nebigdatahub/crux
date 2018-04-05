@@ -3,10 +3,6 @@ import React, { Component } from "react"
 import { Link, NavLink } from "react-router-dom"
 
 class DatasetCard extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   static defaultProps = {
     name: "Dataset name",
     description:
@@ -15,7 +11,7 @@ class DatasetCard extends Component {
   }
 
   render() {
-    let { name, metadata, description, link } = this.props
+    const { name, metadata, description, link } = this.props
     return (
       <div className="card">
         <header className="card-header">

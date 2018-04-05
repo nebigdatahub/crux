@@ -1,5 +1,6 @@
 import crux_auth.schema
 import crux_app.schema
+
 import graphene
 from graphene_django.types import DjangoObjectType
 

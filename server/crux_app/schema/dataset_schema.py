@@ -15,10 +15,15 @@ class DatasetType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     all_datasets = graphene.List(DatasetType)
+    user_datasets = graphene.List(DatasetType)
 
     @staff_member_required
     def resolve_all_datasets(self, info, **kwargs):
         return Dataset.objects.all()
+
+    @login_required
+    def resolve_user_datasets(self, info, **kwargs):
+        return info.context.user.dataset_set.all()
 
 
 class CreateDataset(graphene.Mutation):

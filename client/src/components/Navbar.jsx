@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import { graphql, compose } from "react-apollo"
 import { config } from "../config"
-import { currentUserQuery } from "../queries/users.gql"
+import gql from "graphql-tag"
 
 import logo from "../assets/files/logo.png"
 
@@ -42,6 +42,17 @@ class Navbar extends Component {
     )
   }
 }
+
+const currentUserQuery = gql`
+  query currentUserQuery {
+    currentUser {
+      email
+      firstName
+      lastName
+      username
+    }
+  }
+`
 
 export default compose(
   graphql(currentUserQuery, {

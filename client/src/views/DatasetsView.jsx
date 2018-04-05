@@ -7,6 +7,7 @@ import QuickActionsLayout from "./layouts/QuickActionsLayout"
 
 import DatasetNew from "../components/datasets/DatasetNew"
 import DatasetsPublic from "../components/datasets/DatasetsPublic"
+import UsersDatasets from "../components/datasets/UsersDatasets"
 
 class DatasetsView extends Component {
   quickActions = {
@@ -14,7 +15,7 @@ class DatasetsView extends Component {
     subtitle: "Quick Actions",
     links: [
       { text: "Create New Dataset", url: "/new", component: DatasetNew },
-      { text: "My Datasets", url: "/all", component: DatasetsPublic },
+      { text: "My Datasets", url: "/all", component: UsersDatasets },
       { text: "Public Datasets", url: "/public", component: DatasetsPublic },
     ],
   }

@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import { graphql, compose, withApollo } from "react-apollo"
 import { withRouter } from "react-router-dom"
+import gql from "graphql-tag"
 
 import {
   loginUserMutation,
