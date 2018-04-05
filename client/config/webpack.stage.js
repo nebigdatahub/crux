@@ -49,6 +49,11 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        // exclude: /node_modules/,
+        use: ["file-loader"],
+      },
+      {
         test: /\.(png|jpg|gif|ico)$/,
         use: [
           {
