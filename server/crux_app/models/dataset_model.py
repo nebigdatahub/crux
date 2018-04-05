@@ -18,8 +18,7 @@ class Dataset(models.Model):
 
     owner = models.ForeignKey(get_user_model(),
                               on_delete=models.CASCADE,
-                              blank=True,
-                              null=True)
+                              blank=True)
 
     # files = models.ForeignKey(File,
     #                           on_delete=models.CASCADE,
@@ -28,12 +27,17 @@ class Dataset(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     updated_at = models.DateTimeField(auto_now_add=True)
-    updated_by = models.ManyToManyField(get_user_model(),
-                                        related_name='updated_by',
-                                        blank=True,
-                                        )
-    shared_with = models.ManyToManyField(get_user_model(),
-                                         related_name='shared_with',
-                                         blank=True)
+    updated_by = models.ForeignKey(get_user_model(),
+                                   on_delete=models.CASCADE,
+                                   related_name='updated_by',
+                                   blank=True,
+                                   null=True
+                                   )
+    shared_with = models.ForeignKey(get_user_model(),
+                                    on_delete=models.CASCADE,
+                                    related_name='shared_with',
+                                    blank=True,
+                                    null=True
+                                    )
 
     REQUIRED_FIELDS = [name, owner]

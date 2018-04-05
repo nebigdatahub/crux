@@ -5,15 +5,16 @@ import { compose, graphql } from "react-apollo"
 import gql from "graphql-tag"
 
 class DatasetNew extends Component {
-  constructor(props) {
-    super(props)
-    this.state = this.initialState
-  }
-
-  initialState = {
+  state = {
     name: "",
+    nameField: {
+      value: "",
+      inputClasses: ["input"],
+      helpClasses: [],
+    },
     files: [""],
     description: "",
+    success: false,
   }
 
   _handleInputChange = e => {
@@ -23,8 +24,23 @@ class DatasetNew extends Component {
     })
   }
 
+  _validateForm = () => {
+    const { nameField } = this.state
+    if (this.state.name == "") {
+      this.setState({
+        nameField: {
+          ...nameField,
+          inputClasses: ["input is-danger"],
+          helpClasses: ["help is-danger"],
+        },
+      })
+      return false
+    }
+  }
+
   _handleFormSubmit = async e => {
     e.preventDefault()
+    if (!this._validateForm()) return
     const { name, files } = this.state
     const result = await this.props
       .createDatasetMutation({
@@ -34,16 +50,15 @@ class DatasetNew extends Component {
         },
       })
       .then(({ data }) => {
-        console.log("Success!")
-        this.setState(
-          {
-            ...this.initialState,
-          },
-          () => {
-            console.log(this.state, this.initialState)
-          }
-        )
-        console.log("out", this.state)
+        this.setState({
+          success: true,
+          name: "",
+          description: "",
+          files: [""],
+        })
+        setTimeout(() => {
+          this.setState({ success: false })
+        }, 3000)
       })
       .catch(error => {
         console.log(error)
@@ -101,7 +116,9 @@ class DatasetNew extends Component {
                 </span>
                 <span className="file-label" />
               </span>
-              <span className="file-name">{file.name || "No file chosen"}</span>
+              <span className="file-name">
+                {(file && file.name) || "No file chosen"}
+              </span>
             </label>
             <span
               className="file-delete"
@@ -116,6 +133,8 @@ class DatasetNew extends Component {
   }
 
   render() {
+    const { nameField } = this.state
+
     return (
       <section className="columns">
         <div className="column is-half">
@@ -123,15 +142,27 @@ class DatasetNew extends Component {
           <form>
             <div className="field">
               <label className="label">Name</label>
-              <div className="control">
+              <div className="control has-icons-right">
                 <input
-                  className="input"
+                  className={nameField.inputClasses.join(" ")}
                   type="text"
                   placeholder="Dataset Name"
                   name="name"
+                  required
+                  value={this.state.name}
                   onChange={this._handleInputChange.bind(this)}
                 />
+                {nameField.helpClasses.length > 0 && (
+                  <span className="icon is-small is-right">
+                    <i className="fas fa-exclamation-triangle" />
+                  </span>
+                )}
               </div>
+              {this.state.nameField.helpClasses.length > 0 && (
+                <p className={nameField.helpClasses.join(" ")}>
+                  This field is required
+                </p>
+              )}
             </div>
 
             <div className="field">
@@ -160,11 +191,22 @@ class DatasetNew extends Component {
                 />
               </div>
             </div>
+            <SuccessMessage display={this.state.success} />
           </form>
         </div>
       </section>
     )
   }
+}
+
+const SuccessMessage = ({ display }) => {
+  if (!display) return ""
+  return (
+    <div class="notification is-success">
+      <button class="delete" />
+      Dataset created successfully!
+    </div>
+  )
 }
 
 const createDatasetMutation = gql`
