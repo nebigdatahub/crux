@@ -36,20 +36,19 @@ class CreateDataset(graphene.Mutation):
 
     class Arguments:
         name = graphene.String(required=True)
+        description = graphene.String()
         files = FileUploadType()
 
     @login_required
     def mutate(self, info, name, **kwargs):
         up_files = []
 
-        print('creating dataset')
         dataset = Dataset(
             name=name,
             owner=info.context.user,
             **kwargs
         )
         dataset.save()
-        print('files: ', info.context.FILES)
         for f in info.context.FILES.getlist('files'):
             file = File(
                 file=f,
