@@ -60,7 +60,7 @@ class DatasetNew extends Component {
 
   _removeFile = key => {
     let { files } = this.state
-    files.splice(key)
+    files.splice(key, 1)
     if (!files) files = [""]
     this.setState({
       files: files,
