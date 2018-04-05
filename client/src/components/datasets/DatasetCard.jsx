@@ -1,22 +1,22 @@
 import React, { Component } from "react"
 
-import { Link, NavLink } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 class DatasetCard extends Component {
   static defaultProps = {
     name: "Dataset name",
     description:
       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A blanditiis officia fugiat ullam quibusdam optio, neque perferendis necessitatibus modi distinctio?",
-    link: "/",
+    uuid: "/",
   }
 
   render() {
-    const { name, metadata, description, link } = this.props
+    const { name, description, uuid } = this.props
     return (
       <div className="card">
         <header className="card-header">
           <p className="card-header-title">
-            <Link to={link}>{name}</Link>
+            <Link to={uuid}>{name}</Link>
           </p>
         </header>
         <div className="card-content">

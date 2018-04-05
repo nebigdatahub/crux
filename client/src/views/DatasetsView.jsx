@@ -8,6 +8,7 @@ import QuickActionsLayout from "./layouts/QuickActionsLayout"
 import DatasetNew from "../components/datasets/DatasetNew"
 import DatasetsPublic from "../components/datasets/DatasetsPublic"
 import UsersDatasets from "../components/datasets/UsersDatasets"
+import DatasetDetail from "../components/datasets/DatasetDetail"
 
 class DatasetsView extends Component {
   quickActions = {
@@ -23,13 +24,19 @@ class DatasetsView extends Component {
     return (
       <SidebarLayout>
         <QuickActionsLayout {...this.quickActions} />
-        {this.quickActions.links.map((link, idx) => (
-          <Route
-            key={idx}
-            path={this.props.match.path + link.url}
-            component={link.component}
-          />
-        ))}
+        {this.quickActions.links.map((link, idx) => {
+          return (
+            <Route
+              key={idx}
+              path={this.props.match.path + link.url}
+              render={props => <link.component />}
+            />
+          )
+        })}
+        <Route
+          path="/datasets/:uuid([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"
+          render={props => <DatasetDetail {...props} />}
+        />
       </SidebarLayout>
     )
   }

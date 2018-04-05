@@ -36,17 +36,19 @@ class DatasetNew extends Component {
       })
       return false
     }
+    return true
   }
 
   _handleFormSubmit = async e => {
     e.preventDefault()
     if (!this._validateForm()) return
-    const { name, files } = this.state
+    const { name, files, description } = this.state
     const result = await this.props
       .createDatasetMutation({
         variables: {
           name: name,
           files: files,
+          description: description,
         },
       })
       .then(({ data }) => {
@@ -202,16 +204,16 @@ class DatasetNew extends Component {
 const SuccessMessage = ({ display }) => {
   if (!display) return ""
   return (
-    <div class="notification is-success">
-      <button class="delete" />
+    <div className="notification is-success">
+      <button className="delete" />
       Dataset created successfully!
     </div>
   )
 }
 
 const createDatasetMutation = gql`
-  mutation createDatasetMutation($name: String!) {
-    createDataset(name: $name) {
+  mutation createDatasetMutation($name: String!, $description: String) {
+    createDataset(name: $name, description: $description) {
       success
     }
   }

@@ -1,7 +1,9 @@
 import React, { Component } from "react"
+import { Route } from "react-router-dom"
 import DatasetCard from "./DatasetCard"
 import gql from "graphql-tag"
 import { compose, graphql, Query } from "react-apollo"
+import DatasetDetail from "./DatasetDetail"
 
 class UsersDatasets extends Component {
   render() {
@@ -27,6 +29,7 @@ const userDatasetsQuery = gql`
     userDatasets {
       name
       description
+      uuid
     }
   }
 `
