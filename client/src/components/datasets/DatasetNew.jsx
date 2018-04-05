@@ -5,29 +5,69 @@ import { compose, graphql } from "react-apollo"
 import gql from "graphql-tag"
 
 class DatasetNew extends Component {
-  state = {
+  constructor(props) {
+    super(props)
+    this.state = this.initialState
+  }
+
+  initialState = {
     name: "",
-    files: [{ name: "No file chosen", size: -1 }],
+    files: [""],
     description: "",
   }
 
-  handleFileChange = (key, e) => {
-    let { files } = this.state
-    files[key].name = e.target.files[0].name
-    files[key].size = e.target.files[0].size
-    this.setState({
-      files: files,
-    })
-  }
-
-  handleInputChange = e => {
+  _handleInputChange = e => {
     const { name, value } = e.target
     this.setState({
       [name]: value,
     })
   }
 
-  renderFiles = () => {
+  _handleFormSubmit = async e => {
+    e.preventDefault()
+    const { name, files } = this.state
+    const result = await this.props
+      .createDatasetMutation({
+        variables: {
+          name: name,
+          files: files,
+        },
+      })
+      .then(({ data }) => {
+        console.log("Success!")
+        this.setState(
+          {
+            ...this.initialState,
+          },
+          () => {
+            console.log(this.state, this.initialState)
+          }
+        )
+        console.log("out", this.state)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  _handleFileChange = (file, key) => {
+    let { files } = this.state
+    files[key] = file
+    this.setState({
+      files: files,
+    })
+  }
+
+  _removeFile = key => {
+    let { files } = this.state
+    files.splice(key)
+    if (!files) files = [""]
+    this.setState({
+      files: files,
+    })
+  }
+
+  _renderFiles = () => {
     return (
       <React.Fragment>
         <div className="field">
@@ -37,10 +77,7 @@ class DatasetNew extends Component {
               className="button"
               onClick={() => {
                 this.setState({
-                  files: [
-                    ...this.state.files,
-                    { name: "No file chosen", size: -1 },
-                  ],
+                  files: [...this.state.files, ""],
                 })
               }}
               value="Add another file"
@@ -48,43 +85,34 @@ class DatasetNew extends Component {
           </div>
         </div>
         {this.state.files.map((file, key) => (
-          <div className="file has-name" key={key}>
+          <div className="file has-name" key={key || 0}>
             <label className="file-label">
               <input
                 className="file-input"
                 type="file"
                 name="fileName"
-                onChange={this.handleFileChange.bind(this, key)}
+                onChange={({ target: { validity, files: [file] } }) => {
+                  validity.valid && this._handleFileChange(file, key)
+                }}
               />
               <span className="file-cta">
-                <span className="file-label">Choose a file</span>
+                <span className="file-icon">
+                  <i className="fas fa-upload" />
+                </span>
+                <span className="file-label" />
               </span>
-              <span className="file-name">{file.name}</span>
+              <span className="file-name">{file.name || "No file chosen"}</span>
             </label>
+            <span
+              className="file-delete"
+              onClick={this._removeFile.bind(this, key)}
+            >
+              <i className="far fa-trash-alt" />
+            </span>
           </div>
         ))}
       </React.Fragment>
     )
-  }
-
-  createDataset(e) {
-    e.preventDefault()
-  }
-
-  createTheDataset = async files => {
-    const result = await this.props
-      .createDatasetMutation({
-        variables: {
-          name: this.state.name,
-          files: files,
-        },
-      })
-      .then(({ data }) => {
-        console.log(data)
-      })
-      .catch(error => {
-        console.log(error)
-      })
   }
 
   render() {
@@ -101,7 +129,7 @@ class DatasetNew extends Component {
                   type="text"
                   placeholder="Dataset Name"
                   name="name"
-                  onChange={this.handleInputChange.bind(this)}
+                  onChange={this._handleInputChange.bind(this)}
                 />
               </div>
             </div>
@@ -115,30 +143,44 @@ class DatasetNew extends Component {
                   rows="5"
                   name="description"
                   value={this.state.description}
-                  onChange={this.handleInputChange.bind(this)}
+                  onChange={this._handleInputChange.bind(this)}
                 />
               </div>
             </div>
 
-            {/* {this.renderFiles()} */}
-
-            <div className="field">
-              <div className="control">
+            {/* <div className="file has-name is-boxed">
+              <label className="file-label">
                 <input
+                  className="file-input"
                   type="file"
+                  multiple
                   onChange={({ target: { validity, files } }) => {
-                    validity.valid && this.createTheDataset(files)
+                    validity.valid && this._handleFileChange(files)
                   }}
                 />
-              </div>
-            </div>
+                <span className="file-cta">
+                  <span className="file-icon">
+                    <i className="fas fa-upload" />
+                  </span>
+                  <span className="file-label">Choose a file…</span>
+                </span>
+                <span className="file-name">
+                  {this.state.files &&
+                    Array.from(this.state.files).map(
+                      ({ name, size }) => `${name}\n`
+                    )}
+                </span>
+              </label>
+            </div> */}
+
+            {this._renderFiles()}
 
             <div className="field">
               <div className="control">
                 <input
                   type="submit"
                   className="button is-info"
-                  onClick={this.createDataset.bind(this)}
+                  onClick={this._handleFormSubmit.bind(this)}
                   value="Create dataset"
                 />
               </div>

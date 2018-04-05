@@ -1,6 +1,10 @@
 $primary: #209cee;
 
 @import "~bulma/bulma.sass";
+$fa-font-path: "~@fortawesome/fontawesome-free-webfonts/webfonts";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-regular.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid.scss";
 
 .container {
   max-width: 90%;
@@ -17,6 +21,29 @@ $primary: #209cee;
 
 .file {
   margin-bottom: 0.75rem;
+}
+
+.file-name {
+  height: fit-content;
+}
+
+.file-delete {
+  @extend .file-icon;
+  height: 2.25em;
+  padding: 0 1em;
+  border-radius: 0 3px 3px 0;
+  margin-left: -1px;
+  align-items: center;
+  &:hover {
+    background-color: darken($file-cta-background-color, 2.5%);
+    color: $file-cta-hover-color;
+    border-color: darken($file-name-border-color, 2.5%);
+  }
+  &:active {
+    background-color: darken($file-cta-background-color, 5%);
+    color: $file-cta-active-color;
+    border-color: darken($file-name-border-color, 5%);
+  }
 }
 
 section.column {

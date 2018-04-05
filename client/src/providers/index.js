@@ -66,15 +66,6 @@ export const createUploadLink = ({
 
       delete jsonPayload.variables.files
       options.body.append("variables", JSON.stringify(jsonPayload.variables))
-      // options.body.append(
-      //   "map",
-      //   JSON.stringify(
-      //     files.reduce((map, { path }, index) => {
-      //       map[`${index}`] = [path]
-      //       return map
-      //     }, {})
-      //   )
-      // )
       files.forEach(({ file }, index) =>
         options.body.append("files", file, file.name)
       )
