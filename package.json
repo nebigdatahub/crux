@@ -20,5 +20,7 @@
   },
   "homepage": "https://github.com/nebigdatahub/crux#readme",
   "dependencies": {},
-  "cacheDirectories": ["client/node_modules"]
+  "cacheDirectories": [
+    "client/node_modules"
+  ]
 }

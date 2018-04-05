@@ -22,7 +22,7 @@ class Query(graphene.ObjectType):
 
 
 class CreateDataset(graphene.Mutation):
-    dataset = graphene.Field(DatasetType)
+    success = graphene.Boolean()
 
     class Arguments:
         name = graphene.String(required=True)
@@ -32,12 +32,14 @@ class CreateDataset(graphene.Mutation):
     def mutate(self, info, name, **kwargs):
         up_files = []
 
+        print('creating dataset')
         dataset = Dataset(
             name=name,
             owner=info.context.user,
             **kwargs
         )
         dataset.save()
+        print('files: ', info.context.FILES)
         for f in info.context.FILES.getlist('files'):
             file = File(
                 file=f,
@@ -46,7 +48,7 @@ class CreateDataset(graphene.Mutation):
             file.save()
             dataset.file_set.add(file)
 
-        return CreateDataset(dataset=dataset)
+        return CreateDataset(success=True)
 
 
 class Mutation(graphene.ObjectType):

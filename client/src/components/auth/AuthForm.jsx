@@ -28,22 +28,6 @@ class AuthForm extends Component {
     await localStorage.removeItem(config.TOKEN_NAME)
     this.props.client.resetStore()
     this.props.history.push("/login")
-
-    // const token = localStorage.getItem(config.TOKEN_NAME)
-    // const result = await this.props
-    //   .refreshTokenMutation({
-    //     variables: {
-    //       token: token,
-    //     },
-    //   })
-    //   .then(({ data }) => {
-    //     this.props.client.resetStore()
-    //     localStorage.removeItem(config.TOKEN_NAME)
-    //     this.props.history.push("/login")
-    //   })
-    //   .catch(error => {
-    //     console.log("error in logout function")
-    //   })
   }
 
   handleFormSubmit = async e => {

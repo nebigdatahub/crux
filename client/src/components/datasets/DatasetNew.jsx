@@ -1,6 +1,9 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 
+import { compose, graphql } from "react-apollo"
+import gql from "graphql-tag"
+
 class DatasetNew extends Component {
   state = {
     name: "",
@@ -68,6 +71,22 @@ class DatasetNew extends Component {
     e.preventDefault()
   }
 
+  createTheDataset = async files => {
+    const result = await this.props
+      .createDatasetMutation({
+        variables: {
+          name: this.state.name,
+          files: files,
+        },
+      })
+      .then(({ data }) => {
+        console.log(data)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
   render() {
     return (
       <section className="columns">
@@ -101,7 +120,18 @@ class DatasetNew extends Component {
               </div>
             </div>
 
-            {this.renderFiles()}
+            {/* {this.renderFiles()} */}
+
+            <div className="field">
+              <div className="control">
+                <input
+                  type="file"
+                  onChange={({ target: { validity, files } }) => {
+                    validity.valid && this.createTheDataset(files)
+                  }}
+                />
+              </div>
+            </div>
 
             <div className="field">
               <div className="control">
@@ -120,4 +150,14 @@ class DatasetNew extends Component {
   }
 }
 
-export default DatasetNew
+const createDatasetMutation = gql`
+  mutation createDatasetMutation($name: String!) {
+    createDataset(name: $name) {
+      success
+    }
+  }
+`
+
+export default compose(
+  graphql(createDatasetMutation, { name: "createDatasetMutation" })
+)(DatasetNew)
