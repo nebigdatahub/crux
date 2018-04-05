@@ -16,6 +16,7 @@ class DatasetType(DjangoObjectType):
 class Query(graphene.ObjectType):
     all_datasets = graphene.List(DatasetType)
     user_datasets = graphene.List(DatasetType)
+    dataset_by_uuid = graphene.Field(DatasetType, uuid=graphene.String())
 
     @staff_member_required
     def resolve_all_datasets(self, info, **kwargs):
@@ -24,6 +25,10 @@ class Query(graphene.ObjectType):
     @login_required
     def resolve_user_datasets(self, info, **kwargs):
         return info.context.user.dataset_set.all()
+
+    @login_required
+    def resolve_dataset_by_uuid(self, info, uuid, **kwargs):
+        return Dataset.objects.get(uuid=uuid)
 
 
 class CreateDataset(graphene.Mutation):

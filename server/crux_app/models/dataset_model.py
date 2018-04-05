@@ -1,8 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
-
-# from .file_model import File
+import uuid
 
 
 class Dataset(models.Model):
@@ -16,14 +15,16 @@ class Dataset(models.Model):
                                    help_text=_('500 characters or fewer.')
                                    )
 
+    uuid = models.UUIDField(_('UUID'),
+                            default=uuid.uuid4,
+                            unique=True,
+                            editable=False
+                            )
+
     owner = models.ForeignKey(get_user_model(),
                               on_delete=models.CASCADE,
                               blank=True)
 
-    # files = models.ForeignKey(File,
-    #                           on_delete=models.CASCADE,
-    #                           blank=True,
-    #                           null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     updated_at = models.DateTimeField(auto_now_add=True)
