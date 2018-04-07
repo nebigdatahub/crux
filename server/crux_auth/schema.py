@@ -20,9 +20,7 @@ class Query(graphene.ObjectType):
 
     @login_required
     def resolve_current_user(self, info, **kwargs):
-        if not info.context.user.is_anonymous:
-            return info.context.user
-        return None
+        return info.context.user
 
     @staff_member_required
     def resolve_all_users(self, info, **kwargs):
