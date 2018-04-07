@@ -30,13 +30,13 @@ class Dataset(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     updated_by = models.ForeignKey(get_user_model(),
                                    on_delete=models.CASCADE,
-                                   related_name='updated_by',
+                                   related_name='updated_by_set',
                                    blank=True,
                                    null=True
                                    )
     shared_with = models.ForeignKey(get_user_model(),
                                     on_delete=models.CASCADE,
-                                    related_name='shared_with',
+                                    related_name='shared_with_set',
                                     blank=True,
                                     null=True
                                     )

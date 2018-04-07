@@ -1,18 +1,21 @@
-import crux_auth.schema
-import crux_app.schema
+
+from crux_auth import schema
+from crux_app.schema import dataset_schema, task_schema, file_schema
 
 import graphene
 from graphene_django.types import DjangoObjectType
 
 QUERIES = [
-    crux_auth.schema.Query,
-    crux_app.schema.Query,
+    schema.Query,
+    dataset_schema.Query,
+    task_schema.Query,
     graphene.ObjectType
 ]
 
 MUTATIONS = [
-    crux_auth.schema.Mutation,
-    crux_app.schema.Mutation,
+    schema.Mutation,
+    dataset_schema.Mutation,
+    task_schema.Mutation,
     graphene.ObjectType
 ]
 
@@ -26,4 +29,4 @@ class Mutation(*MUTATIONS):
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation,
-                         types=[crux_app.schema.FileUploadType])
+                         types=[file_schema.FileUploadType])

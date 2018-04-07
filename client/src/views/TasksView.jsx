@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Route, Link, withRouter } from "react-router-dom"
 import { compose } from "react-apollo"
 
-import DatasetNew from "../components/datasets/DatasetNew"
+import TaskNew from "../components/tasks/TaskNew"
 import SidebarLayout from "./layouts/SidebarLayout"
 import QuickActionsLayout from "./layouts/QuickActionsLayout"
 
@@ -11,8 +11,8 @@ class TasksView extends Component {
     title: "Tasks",
     subtitle: "Quick Actions",
     links: [
-      { text: "Create New Task", url: "/new", component: DatasetNew },
-      { text: "My Tasks", url: "/all", component: DatasetNew },
+      { text: "Create New Task", url: "/new", component: TaskNew },
+      { text: "My Tasks", url: "/all", component: TaskNew },
     ],
   }
   render() {
@@ -21,7 +21,7 @@ class TasksView extends Component {
         <QuickActionsLayout {...this.props} {...this.quickActions} />
         <Route
           path={this.props.match.path + "/new"}
-          render={() => <DatasetNew {...this.props} />}
+          render={() => <TaskNew {...this.props} />}
         />
         <Route
           path={this.props.match.path + "/public"}
