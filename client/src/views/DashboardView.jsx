@@ -6,7 +6,7 @@ import { menuItems } from "../config"
 import gql from "graphql-tag"
 
 import SidebarLayout from "./layouts/SidebarLayout"
-import QuickActionsLayout from "./layouts/QuickActionsLayout"
+import QuickActions from "./layouts/QuickActions"
 
 class DashboardView extends Component {
   quickActions = {
@@ -18,7 +18,7 @@ class DashboardView extends Component {
     return (
       <SidebarLayout>
         {currentUserQuery && currentUserQuery.currentUser ? (
-          <QuickActionsLayout {...this.quickActions} />
+          <QuickActions {...this.quickActions} />
         ) : (
           "You need to be logged in"
         )}

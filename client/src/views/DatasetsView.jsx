@@ -3,7 +3,7 @@ import { Route, Link, withRouter } from "react-router-dom"
 import { compose } from "react-apollo"
 
 import SidebarLayout from "./layouts/SidebarLayout"
-import QuickActionsLayout from "./layouts/QuickActionsLayout"
+import QuickActions from "./layouts/QuickActions"
 
 import DatasetNew from "../components/datasets/DatasetNew"
 import DatasetsPublic from "../components/datasets/DatasetsPublic"
@@ -23,7 +23,7 @@ class DatasetsView extends Component {
   render() {
     return (
       <SidebarLayout>
-        <QuickActionsLayout {...this.quickActions} />
+        <QuickActions {...this.quickActions} />
         {this.quickActions.links.map((link, idx) => {
           return (
             <Route

@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Route, Link } from "react-router-dom"
 
 import SidebarLayout from "./layouts/SidebarLayout"
-import QuickActionsLayout from "./layouts/QuickActionsLayout"
+import QuickActions from "./layouts/QuickActions"
 
 class ProfileView extends Component {
   quickActions = {
@@ -12,7 +12,7 @@ class ProfileView extends Component {
   render() {
     return (
       <SidebarLayout>
-        <QuickActionsLayout {...this.quickActions} />
+        <QuickActions {...this.quickActions} />
       </SidebarLayout>
     )
   }

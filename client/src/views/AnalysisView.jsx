@@ -3,7 +3,7 @@ import { Route, withRouter } from "react-router-dom"
 import { compose } from "react-apollo"
 
 import SidebarLayout from "./layouts/SidebarLayout"
-import QuickActionsLayout from "./layouts/QuickActionsLayout"
+import QuickActions from "./layouts/QuickActions"
 
 class AnalysisView extends Component {
   quickActions = {
@@ -16,7 +16,7 @@ class AnalysisView extends Component {
   render() {
     return (
       <SidebarLayout>
-        <QuickActionsLayout {...this.quickActions} />
+        <QuickActions {...this.quickActions} />
         {this.quickActions.links.map((link, idx) => (
           <Route
             key={idx}

@@ -3,7 +3,7 @@ import { Route, Link } from "react-router-dom"
 
 import DatasetNew from "../components/datasets/DatasetNew"
 import SidebarLayout from "./layouts/SidebarLayout"
-import QuickActionsLayout from "./layouts/QuickActionsLayout"
+import QuickActions from "./layouts/QuickActions"
 
 class FilesView extends Component {
   quickActions = {
@@ -13,7 +13,7 @@ class FilesView extends Component {
   render() {
     return (
       <SidebarLayout>
-        <QuickActionsLayout {...this.quickActions} />
+        <QuickActions {...this.quickActions} />
       </SidebarLayout>
     )
   }

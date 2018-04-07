@@ -4,7 +4,7 @@ import { compose } from "react-apollo"
 
 import TaskNew from "../components/tasks/TaskNew"
 import SidebarLayout from "./layouts/SidebarLayout"
-import QuickActionsLayout from "./layouts/QuickActionsLayout"
+import QuickActions from "./layouts/QuickActions"
 
 class TasksView extends Component {
   quickActions = {
@@ -18,7 +18,7 @@ class TasksView extends Component {
   render() {
     return (
       <SidebarLayout>
-        <QuickActionsLayout {...this.props} {...this.quickActions} />
+        <QuickActions {...this.props} {...this.quickActions} />
         <Route
           path={this.props.match.path + "/new"}
           render={() => <TaskNew {...this.props} />}

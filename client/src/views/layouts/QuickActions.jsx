@@ -1,9 +1,10 @@
 import React, { Component } from "react"
 import { Link, withRouter } from "react-router-dom"
 
-class QuickActionsLayout extends Component {
+class QuickActions extends Component {
   render() {
     const { title, links, match } = this.props
+    const prependUrl = title == "Dashboard" ? "" : match.path
     return (
       <section>
         <h1 className="title">{title}</h1>
@@ -11,7 +12,7 @@ class QuickActionsLayout extends Component {
         <div className="buttons">
           {links.map((link, idx) => (
             <Link
-              to={match.path + link.url}
+              to={prependUrl + link.url}
               key={idx}
               className="button is-info"
             >
@@ -25,4 +26,4 @@ class QuickActionsLayout extends Component {
   }
 }
 
-export default withRouter(QuickActionsLayout)
+export default withRouter(QuickActions)
