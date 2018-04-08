@@ -27,8 +27,8 @@ class TaskNew extends Component {
     return (
       <Mutation mutation={CREATE_TASK}>
         {(createTask, { data }) => (
-          <section>
-            <div>
+          <section className="columns">
+            <div className="column is-half">
               <form
                 onSubmit={e => {
                   e.preventDefault()
