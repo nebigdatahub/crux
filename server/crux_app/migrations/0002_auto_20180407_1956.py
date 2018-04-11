@@ -18,26 +18,31 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='task',
             name='created_by',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='created_by', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='created_by', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='file',
             name='dataset',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='crux_app.Dataset'),
+            field=models.ForeignKey(
+                blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='crux_app.Dataset'),
         ),
         migrations.AddField(
             model_name='dataset',
             name='owner',
-            field=models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(
+                blank=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='dataset',
             name='shared_with',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='shared_with_set', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='shared_with_set', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='dataset',
             name='updated_by',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='updated_by_set', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='updated_by_set', to=settings.AUTH_USER_MODEL),
         ),
     ]

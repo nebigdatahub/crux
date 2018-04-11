@@ -12,7 +12,8 @@ class Dataset(models.Model):
 
     description = models.CharField(_('description'),
                                    max_length=500,
-                                   help_text=_('500 characters or fewer.')
+                                   help_text=_('500 characters or fewer.'),
+                                   blank=True
                                    )
 
     uuid = models.UUIDField(_('UUID'),
@@ -28,17 +29,23 @@ class Dataset(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     updated_at = models.DateTimeField(auto_now_add=True)
+
     updated_by = models.ForeignKey(get_user_model(),
                                    on_delete=models.CASCADE,
-                                   related_name='updated_by_set',
+                                   related_name='updated_by',
                                    blank=True,
                                    null=True
                                    )
-    shared_with = models.ForeignKey(get_user_model(),
-                                    on_delete=models.CASCADE,
-                                    related_name='shared_with_set',
-                                    blank=True,
-                                    null=True
-                                    )
+
+    users = models.ManyToManyField(get_user_model(),
+                                   related_name="datasets")
 
     REQUIRED_FIELDS = [name, owner]
+
+    class Meta:
+        permissions = (
+            ('owner', 'Superuser access'),
+            ('editor', 'Can view, edit, comment, share but not delete'),
+            ('commenter', 'Can view, comment but not edit or delete'),
+            ('viewer', 'Can only view dataset')
+        )

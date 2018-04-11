@@ -20,7 +20,13 @@ class Task(models.Model):
     created_by = models.ForeignKey(get_user_model(),
                                    on_delete=models.CASCADE,
                                    related_name='created_by')
+
     created_at = models.DateTimeField(auto_now_add=True)
+
     updated_at = models.DateTimeField(auto_now=True)
+
+    users = models.ManyToManyField(get_user_model(),
+                                   related_name="tasks",
+                                   )
 
     REQUIRED_FIELDS = [dataset, created_by]
