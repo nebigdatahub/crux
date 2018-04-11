@@ -1,3 +1,3 @@
-from .dataset_model import Dataset
-from .file_model import File
-from .task_model import Task
+from .dataset import Dataset
+from .file import File
+from .task import Task
