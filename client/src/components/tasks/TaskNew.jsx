@@ -111,10 +111,10 @@ class TaskNew extends Component {
                     <div className="select">
                       <select
                         onChange={this._handleInputChange.bind(this)}
-                        value={this.state.datasetId}
+                        value={this.state.datasetId || undefined}
                         name="datasetId"
                       >
-                        <option>Select</option>
+                        <option value={null}>Select</option>
                         <Query query={USER_DATASETS}>
                           {({ loading, error, data }) => {
                             if (error) return ""
