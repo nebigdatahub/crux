@@ -4,7 +4,7 @@ from graphene_django import DjangoObjectType
 from graphql_extensions.auth.decorators import (login_required,
                                                 staff_member_required)
 
-from .file_schema import FileType, FileUploadType
+from .file import FileType, FileUploadType
 from ..models import Dataset, File
 
 
@@ -13,7 +13,7 @@ class DatasetType(DjangoObjectType):
         model = Dataset
 
 
-class Query(graphene.ObjectType):
+class DatasetQuery(graphene.ObjectType):
     all_datasets = graphene.List(DatasetType)
     user_datasets = graphene.List(DatasetType)
     dataset_by_uuid = graphene.Field(DatasetType, uuid=graphene.String())
@@ -60,5 +60,5 @@ class CreateDataset(graphene.Mutation):
         return CreateDataset(success=True)
 
 
-class Mutation(graphene.ObjectType):
+class DatasetMutation(graphene.ObjectType):
     create_dataset = CreateDataset.Field()

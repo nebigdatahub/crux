@@ -12,13 +12,18 @@ class Task(models.Model):
         help_text=_('Required. 100 characters or fewer.')
     )
 
+    description = models.CharField(_('description'),
+                                   max_length=500)
+
     dataset = models.ForeignKey(Dataset,
                                 on_delete=models.CASCADE,
+                                related_name='tasks',
                                 blank=True,
                                 null=True),
 
     created_by = models.ForeignKey(get_user_model(),
                                    on_delete=models.CASCADE,
+                                   blank=True,
                                    related_name='created_by')
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -27,6 +32,6 @@ class Task(models.Model):
 
     users = models.ManyToManyField(get_user_model(),
                                    related_name="tasks",
-                                   )
+                                   blank=True)
 
     REQUIRED_FIELDS = [dataset, created_by]

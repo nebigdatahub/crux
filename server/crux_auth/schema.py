@@ -14,7 +14,7 @@ class UserType(DjangoObjectType):
         model = get_user_model()
 
 
-class Query(graphene.ObjectType):
+class UserQuery(graphene.ObjectType):
     all_users = graphene.List(UserType)
     current_user = graphene.Field(UserType)
 
@@ -44,7 +44,7 @@ class CreateUser(graphene.Mutation):
         return CreateUser(user=user)
 
 
-class Mutation(graphene.ObjectType):
+class UserMutation(graphene.ObjectType):
     create_user = CreateUser.Field()
     login_user = graphql_jwt.ObtainJSONWebToken.Field()
     verify_token = graphql_jwt.Verify.Field()

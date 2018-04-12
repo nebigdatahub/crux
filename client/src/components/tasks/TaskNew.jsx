@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { ApolloConsumer, Mutation } from "react-apollo"
+import { Query, Mutation } from "react-apollo"
 import gql from "graphql-tag"
 
 class TaskNew extends Component {
@@ -12,6 +12,7 @@ class TaskNew extends Component {
       inputClasses: ["input"],
       helpClasses: [],
     },
+    success: false,
   }
 
   _handleInputChange = ({ target: { name, value } }) => {
@@ -19,6 +20,17 @@ class TaskNew extends Component {
   }
 
   _validateForm = () => {
+    const { nameField } = this.state
+    if (this.state.name == "") {
+      this.setState({
+        nameField: {
+          ...nameField,
+          inputClasses: ["input is-danger"],
+          helpClasses: ["help is-danger"],
+        },
+      })
+      return false
+    }
     return true
   }
 
@@ -32,6 +44,7 @@ class TaskNew extends Component {
               <form
                 onSubmit={e => {
                   e.preventDefault()
+                  if (!this._validateForm()) return
                   createTask({
                     variables: {
                       name: this.state.name,
@@ -39,6 +52,20 @@ class TaskNew extends Component {
                       datasetId: this.state.datasetId,
                     },
                   })
+                    .then(({ data }) => {
+                      this.setState({
+                        success: true,
+                        name: "",
+                        description: "",
+                        files: [""],
+                      })
+                      setTimeout(() => {
+                        this.setState({ success: false })
+                      }, 3000)
+                    })
+                    .catch(error => {
+                      console.log(error)
+                    })
                 }}
               >
                 <div className="field">
@@ -80,6 +107,35 @@ class TaskNew extends Component {
                 </div>
                 <div className="field">
                   <div className="control">
+                    <label className="label">Choose dataset</label>
+                    <div className="select">
+                      <select
+                        onChange={this._handleInputChange.bind(this)}
+                        value={this.state.datasetId}
+                        name="datasetId"
+                      >
+                        <option>Select</option>
+                        <Query query={USER_DATASETS}>
+                          {({ loading, error, data }) => {
+                            if (error) return ""
+                            if (loading) return ""
+                            const userDatasets = data.userDatasets
+                            return (
+                              userDatasets &&
+                              userDatasets.map((dataset, idx) => (
+                                <option key={idx} value={dataset.id}>
+                                  {dataset.name}
+                                </option>
+                              ))
+                            )
+                          }}
+                        </Query>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div className="field">
+                  <div className="control">
                     <input
                       type="submit"
                       className="button is-info"
@@ -101,6 +157,14 @@ const CREATE_TASK = gql`
   mutation createTask($name: String!, $description: String, $datasetId: Int!) {
     createTask(name: $name, description: $description, datasetId: $datasetId) {
       success
+    }
+  }
+`
+const USER_DATASETS = gql`
+  query userDatasetsQuery {
+    userDatasets {
+      id
+      name
     }
   }
 `

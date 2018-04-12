@@ -9,10 +9,10 @@ from ..models import Dataset, Task
 
 class TaskType(DjangoObjectType):
     class Meta:
-        model = Dataset
+        model = Task
 
 
-class Query(graphene.ObjectType):
+class TaskQuery(graphene.ObjectType):
     all_tasks = graphene.List(TaskType)
     user_tasks = graphene.List(TaskType)
     task_by_dataset = graphene.Field(TaskType, uuid=graphene.String())
@@ -44,14 +44,14 @@ class CreateTask(graphene.Mutation):
         dataset = Dataset.objects.get(pk=dataset_id)
         task = Task(
             name=name,
-            owner=info.context.user,
-            **kwargs
+            created_by=info.context.user,
+            ** kwargs
         )
+        task.dataset = dataset
         task.save()
-        dataset.task_set.add(task)
 
         return CreateTask(success=True)
 
 
-class Mutation(graphene.ObjectType):
+class TaskMutation(graphene.ObjectType):
     create_task = CreateTask.Field()

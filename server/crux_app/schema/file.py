@@ -12,7 +12,7 @@ class FileType(DjangoObjectType):
         model = File
 
 
-class Query(graphene.ObjectType):
+class FileQuery(graphene.ObjectType):
     all_files = graphene.List(FileType)
     user_files = graphene.List(FileType)
     dataset_files = graphene.List(FileType)
@@ -73,5 +73,5 @@ class UploadFiles(graphene.Mutation):
         return UploadFiles(success=True, uploaded_files=files)
 
 
-class Mutation(graphene.ObjectType):
+class FileMutation(graphene.ObjectType):
     upload_files = UploadFiles.Field()
