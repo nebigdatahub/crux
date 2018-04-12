@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 
-from . import Dataset
+from .dataset import Dataset
 
 
 class Task(models.Model):
@@ -19,12 +19,12 @@ class Task(models.Model):
                                 on_delete=models.CASCADE,
                                 related_name='tasks',
                                 blank=True,
-                                null=True),
+                                null=True)
 
     created_by = models.ForeignKey(get_user_model(),
                                    on_delete=models.CASCADE,
                                    blank=True,
-                                   related_name='created_by')
+                                   related_name='my_tasks')
 
     created_at = models.DateTimeField(auto_now_add=True)
 

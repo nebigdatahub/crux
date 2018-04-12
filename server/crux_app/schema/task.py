@@ -23,7 +23,7 @@ class TaskQuery(graphene.ObjectType):
 
     @login_required
     def resolve_user_tasks(self, info, **kwargs):
-        return info.context.user.task_set.all()
+        return info.context.user.my_tasks.all()
 
     @login_required
     def resolve_task_by_dataset(self, info, dataset_id, **kwargs):

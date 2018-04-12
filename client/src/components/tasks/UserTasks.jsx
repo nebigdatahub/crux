@@ -1,25 +1,25 @@
 import React, { Component } from "react"
 import { Route } from "react-router-dom"
-import DatasetCard from "./DatasetCard"
 import gql from "graphql-tag"
 import { graphql, Query } from "react-apollo"
-import DatasetDetail from "./DatasetDetail"
 
-class UsersDatasets extends Component {
+import DatasetCard from "../datasets/DatasetCard"
+import DatasetDetail from "../datasets/DatasetDetail"
+
+class UserTasks extends Component {
   render() {
     return (
       <React.Fragment>
-        <h1 className="title">My datasets</h1>
+        <h1 className="title">My Tasks</h1>
         <section className="columns is-multiline is-mobile">
-          <Query query={USER_DATASETS}>
+          <Query query={USER_TASKS}>
             {({ loading, error, data }) => {
-              if (error) return ""
               if (loading) return ""
-
-              const { userDatasets } = data
+              if (error) return ""
+              const { userTasks } = data
               return (
-                userDatasets &&
-                userDatasets.map((dataset, idx) => (
+                userTasks &&
+                userTasks.map((dataset, idx) => (
                   <div key={idx} className="column is-3-desktop">
                     <DatasetCard {...dataset} />
                   </div>
@@ -33,14 +33,17 @@ class UsersDatasets extends Component {
   }
 }
 
-const USER_DATASETS = gql`
+const USER_TASKS = gql`
   query userDatasetsQuery {
-    userDatasets {
+    userTasks {
       name
       description
-      uuid
+      dataset {
+        name
+        uuid
+      }
     }
   }
 `
 
-export default UsersDatasets
+export default UserTasks

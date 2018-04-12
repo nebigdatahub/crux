@@ -9,6 +9,7 @@ import TasksView from "./views/TasksView"
 import ProfileView from "./views/ProfileView"
 import FilesView from "./views/FilesView"
 import AnalysisView from "./views/AnalysisView"
+import Figshare from "./components/auth/Figshare"
 
 class App extends Component {
   render() {
@@ -24,6 +25,10 @@ class App extends Component {
         <Route path="/files" render={() => <FilesView />} />
         <Route path="/profile" render={() => <ProfileView />} />
         <Route path="/analysis" render={() => <AnalysisView />} />
+        <Route
+          path="/oauth/figshare"
+          render={props => <Figshare {...props} />}
+        />
       </React.Fragment>
     )
   }

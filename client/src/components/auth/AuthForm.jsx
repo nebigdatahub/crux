@@ -156,7 +156,9 @@ class AuthForm extends Component {
           <input type="button" className="button" value="Google" />
           <input type="button" className="button" value="Twitter" />
           <input type="button" className="button" value="Facebook" />
-          <input type="button" className="button" value="Figshare" />
+          <a href="https://figshare.com/account/applications/authorize?client_id=607c859796024acc29dfe97a69ac2609a078de64&response_type=token&redirect_url=http://localhost:3000/oauth/figshare/callback">
+            <input type="button" className="button" value="Figshare" />
+          </a>
         </div>
       </form>
     )

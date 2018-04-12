@@ -7,6 +7,8 @@ import gql from "graphql-tag"
 
 import SidebarLayout from "./layouts/SidebarLayout"
 import QuickActions from "./layouts/QuickActions"
+import UsersDatasets from "../components/datasets/UsersDatasets"
+import UserTasks from "../components/tasks/UserTasks"
 
 class DashboardView extends Component {
   quickActions = {
@@ -22,6 +24,14 @@ class DashboardView extends Component {
         ) : (
           "You need to be logged in"
         )}
+        <section className="columns">
+          <div className="column is-half">
+            <UsersDatasets />
+          </div>
+          <div className="column is-half">
+            <UserTasks />
+          </div>
+        </section>
       </SidebarLayout>
     )
   }

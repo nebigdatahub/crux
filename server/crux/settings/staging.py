@@ -8,7 +8,8 @@ ALLOWED_HOSTS = [
     'crux-nebigdatahub.herokuapp.com',
     'crux-staging-nebigdatahub.herokuapp.com',
     '127.0.0.1',
-    'localhost'
+    'localhost',
+    'crux'
 ]
 
 CSRF_COOKIE_SECURE = True
