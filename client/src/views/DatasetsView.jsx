@@ -16,7 +16,7 @@ class DatasetsView extends Component {
     subtitle: "Quick Actions",
     links: [
       { text: "Create New Dataset", url: "/new", component: DatasetNew },
-      { text: "My Datasets", url: "/all", component: UsersDatasets },
+      { text: "My Datasets", url: "", component: UsersDatasets },
       { text: "Public Datasets", url: "/public", component: DatasetsPublic },
     ],
   }
@@ -30,6 +30,7 @@ class DatasetsView extends Component {
               key={idx}
               path={this.props.match.path + link.url}
               render={props => <link.component />}
+              exact={true}
             />
           )
         })}

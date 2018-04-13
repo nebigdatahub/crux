@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 
-import { compose, graphql } from "react-apollo"
+import { compose, graphql, Mutation } from "react-apollo"
 import gql from "graphql-tag"
 
 class DatasetNew extends Component {
@@ -39,18 +39,17 @@ class DatasetNew extends Component {
     return true
   }
 
-  _handleFormSubmit = async e => {
+  _handleFormSubmit = async (createDataset, e) => {
     e.preventDefault()
     if (!this._validateForm()) return
     const { name, files, description } = this.state
-    const result = await this.props
-      .createDatasetMutation({
-        variables: {
-          name: name,
-          files: files,
-          description: description,
-        },
-      })
+    await createDataset({
+      variables: {
+        name: name,
+        files: files,
+        description: description,
+      },
+    })
       .then(({ data }) => {
         this.setState({
           success: true,
@@ -69,6 +68,7 @@ class DatasetNew extends Component {
 
   _handleFileChange = (file, key) => {
     let { files } = this.state
+    console.log(files)
     files[key] = file
     this.setState({
       files: files,
@@ -138,65 +138,72 @@ class DatasetNew extends Component {
     const { nameField } = this.state
 
     return (
-      <section className="columns">
-        <div className="column is-half">
-          <h1 className="title">New dataset</h1>
-          <form>
-            <div className="field">
-              <label className="label">Name</label>
-              <div className="control has-icons-right">
-                <input
-                  className={nameField.inputClasses.join(" ")}
-                  type="text"
-                  placeholder="Dataset Name"
-                  name="name"
-                  required
-                  value={this.state.name}
-                  onChange={this._handleInputChange.bind(this)}
-                />
-                {nameField.helpClasses.length > 0 && (
-                  <span className="icon is-small is-right">
-                    <i className="fas fa-exclamation-triangle" />
-                  </span>
-                )}
-              </div>
-              {this.state.nameField.helpClasses.length > 0 && (
-                <p className={nameField.helpClasses.join(" ")}>
-                  This field is required
-                </p>
-              )}
-            </div>
+      <Mutation mutation={CREATE_DATASET}>
+        {(createDataset, { data }) => {
+          return (
+            <section className="columns">
+              <div className="column is-half">
+                <h1 className="title">New dataset</h1>
+                <form
+                  onSubmit={this._handleFormSubmit.bind(this, createDataset)}
+                >
+                  <div className="field">
+                    <label className="label">Name</label>
+                    <div className="control has-icons-right">
+                      <input
+                        className={nameField.inputClasses.join(" ")}
+                        type="text"
+                        placeholder="Dataset Name"
+                        name="name"
+                        required
+                        value={this.state.name}
+                        onChange={this._handleInputChange.bind(this)}
+                      />
+                      {nameField.helpClasses.length > 0 && (
+                        <span className="icon is-small is-right">
+                          <i className="fas fa-exclamation-triangle" />
+                        </span>
+                      )}
+                    </div>
+                    {this.state.nameField.helpClasses.length > 0 && (
+                      <p className={nameField.helpClasses.join(" ")}>
+                        This field is required
+                      </p>
+                    )}
+                  </div>
 
-            <div className="field">
-              <label className="label">Description</label>
-              <div className="control">
-                <textarea
-                  className="textarea"
-                  placeholder="Enter a description for your dataset"
-                  rows="5"
-                  name="description"
-                  value={this.state.description}
-                  onChange={this._handleInputChange.bind(this)}
-                />
-              </div>
-            </div>
+                  <div className="field">
+                    <label className="label">Description</label>
+                    <div className="control">
+                      <textarea
+                        className="textarea"
+                        placeholder="Enter a description for your dataset"
+                        rows="5"
+                        name="description"
+                        value={this.state.description}
+                        onChange={this._handleInputChange.bind(this)}
+                      />
+                    </div>
+                  </div>
 
-            {this._renderFiles()}
+                  {this._renderFiles()}
 
-            <div className="field">
-              <div className="control">
-                <input
-                  type="submit"
-                  className="button is-info"
-                  onClick={this._handleFormSubmit.bind(this)}
-                  value="Create dataset"
-                />
+                  <div className="field">
+                    <div className="control">
+                      <input
+                        type="submit"
+                        className="button is-info"
+                        value="Create dataset"
+                      />
+                    </div>
+                  </div>
+                  <SuccessMessage display={this.state.success} />
+                </form>
               </div>
-            </div>
-            <SuccessMessage display={this.state.success} />
-          </form>
-        </div>
-      </section>
+            </section>
+          )
+        }}
+      </Mutation>
     )
   }
 }
@@ -211,7 +218,7 @@ const SuccessMessage = ({ display }) => {
   )
 }
 
-const createDatasetMutation = gql`
+const CREATE_DATASET = gql`
   mutation createDatasetMutation($name: String!, $description: String) {
     createDataset(name: $name, description: $description) {
       success
@@ -219,6 +226,4 @@ const createDatasetMutation = gql`
   }
 `
 
-export default compose(
-  graphql(createDatasetMutation, { name: "createDatasetMutation" })
-)(DatasetNew)
+export default DatasetNew

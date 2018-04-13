@@ -40,7 +40,7 @@ class CreateDataset(graphene.Mutation):
         files = FileUploadType()
 
     @login_required
-    def mutate(self, info, name, **kwargs):
+    def mutate(self, info, name, description, **kwargs):
         up_files = []
 
         dataset = Dataset(
@@ -52,10 +52,11 @@ class CreateDataset(graphene.Mutation):
         for f in info.context.FILES.getlist('files'):
             file = File(
                 file=f,
-                **kwargs
+                file_type='DS',
+                ** kwargs
             )
             file.save()
-            dataset.file_set.add(file)
+            dataset.files.add(file)
 
         return CreateDataset(success=True)
 

@@ -42,7 +42,7 @@ class File(models.Model):
 
     REQUIRED_FIELDS = [file]
 
-    def clean_fields(self, *args, **kwargs):
+    def clean(self, *args, **kwargs):
         if not self.dataset and not self.task:
             raise ValidationError(
                 _('File must be associated with a task or a dataset'))

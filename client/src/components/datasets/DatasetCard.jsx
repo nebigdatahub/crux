@@ -16,7 +16,7 @@ class DatasetCard extends Component {
       <div className="card">
         <header className="card-header">
           <p className="card-header-title">
-            <Link to={uuid}>{name}</Link>
+            <Link to={"/datasets/" + uuid}>{name}</Link>
           </p>
         </header>
         <div className="card-content">
