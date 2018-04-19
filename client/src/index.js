@@ -9,6 +9,20 @@ import App from "./App"
 
 import "./assets/styles/style.scss"
 
+function log(strings) {
+  console.log(strings.raw[0])
+}
+
+log`
+   ____    ____     _     _  __     __
+  / __ \  |  _  \  | |   | | \ \   / /
+ / /  \_\ | |_\  \ | |   | |  \ \ / /
+| |       |  _  /  | |   | |   |   |
+ \ \__/ \ | | \ \  | |___| |  / / \ \
+  \____/  |_|  \_\  \_____/  /_/   \_\
+
+`
+
 render(
   <ApolloProvider client={client}>
     <BrowserRouter>
