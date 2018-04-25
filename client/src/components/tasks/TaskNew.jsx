@@ -174,7 +174,7 @@ const SuccessMessage = ({ display }) => {
   return (
     <div className="notification is-success">
       <button className="delete" />
-      Dataset created successfully!
+      Task created successfully!
     </div>
   )
 }

@@ -34,10 +34,10 @@ class DatasetsView extends Component {
             />
           )
         })}
-        <Route
+        {/* <Route
           path="/datasets/:uuid([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"
           render={props => <DatasetDetail {...props} />}
-        />
+        /> */}
       </SidebarLayout>
     )
   }

@@ -34,12 +34,6 @@ class DatasetDetail extends Component {
   }
 }
 
-// <section className="columns">
-//             <div className="column is-half">
-//               <h1 className="title">{dataset.name}</h1>
-//             </div>
-//           </section>
-
 const datasetQuery = gql`
   query datasetQuery($uuid: String!) {
     datasetByUuid(uuid: $uuid) {

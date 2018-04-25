@@ -4,6 +4,8 @@ import { Link } from "react-router-dom"
 import { compose, graphql, Mutation } from "react-apollo"
 import gql from "graphql-tag"
 
+import { userDatasetsQuery } from "../../queries/datasets.gql"
+
 class DatasetNew extends Component {
   state = {
     name: "",
@@ -138,7 +140,18 @@ class DatasetNew extends Component {
     const { nameField } = this.state
 
     return (
-      <Mutation mutation={CREATE_DATASET}>
+      <Mutation
+        mutation={CREATE_DATASET}
+        update={(cache, { data: { createDataset } }) => {
+          // const datasets = cache.readQuery({ query: USER_DATASETS })
+          console.log(cache)
+          console.log(createDataset)
+          // cache.writeQuery({
+          //   query: USER_DATASETS,
+          //   data: { userDatasets: userDatasets.concat([createDataset]) },
+          // })
+        }}
+      >
         {(createDataset, { data }) => {
           return (
             <section className="columns">
@@ -222,6 +235,16 @@ const CREATE_DATASET = gql`
   mutation createDatasetMutation($name: String!, $description: String) {
     createDataset(name: $name, description: $description) {
       success
+    }
+  }
+`
+
+const USER_DATASETS = gql`
+  query userDatasetsQuery {
+    userDatasets {
+      name
+      description
+      uuid
     }
   }
 `

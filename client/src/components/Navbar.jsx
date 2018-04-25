@@ -9,25 +9,33 @@ import logo from "../assets/files/logo.png"
 class Navbar extends Component {
   render() {
     return (
-      <header>
+      <React.Fragment>
         <nav className="navbar" role="navigation" aria-label="main navigation">
-          <div className="navbar-brand">
-            <Link className="navbar-item" to="/">
-              <img src={logo} /> CRUX
-            </Link>
-          </div>
-          <div className="navbar-menu is-active">
-            <div className="navbar-end">
-              <div className="navbar-item">
-                <Link to="/dashboard">Dashboard</Link>
-              </div>
-              <div className="navbar-item">
-                <CurrentUser />
+          <div className="container">
+            <div className="navbar-brand">
+              <Link className="navbar-item" to="/">
+                <img src={logo} /> CRUX
+              </Link>
+            </div>
+            <div className="navbar-menu is-active">
+              <div className="navbar-end">
+                <div className="navbar-item">
+                  <Link to="/dashboard">Dashboard</Link>
+                </div>
+                <div className="navbar-item">
+                  <Link to="/datasets">Datasets</Link>
+                </div>
+                <div className="navbar-item">
+                  <Link to="/analysis">Analysis</Link>
+                </div>
+                <div className="navbar-item">
+                  <CurrentUser />
+                </div>
               </div>
             </div>
           </div>
         </nav>
-      </header>
+      </React.Fragment>
     )
   }
 }
@@ -47,12 +55,28 @@ const CurrentUser = () => {
         const displayName =
           "" + firstName
             ? firstName + " " + lastName
-            : username ? username : email
+            : username
+              ? username
+              : email
         return (
-          <React.Fragment>
-            Welcome, {displayName}
-            <Link to="/logout"> | Logout</Link>
-          </React.Fragment>
+          <div className="navbar-item has-dropdown is-hoverable">
+            <a className="navbar-link">
+              <span className="icon">
+                <i className="fa fa-user-circle" />
+              </span>
+            </a>
+            <div className="navbar-dropdown is-right">
+              <div className="navbar-item">
+                <Link to={"/" + username}>{displayName}</Link>
+              </div>
+              <hr className="navbar-divider" />
+              <div className="navbar-item">
+                <Link to="/logout">Logout</Link>
+              </div>
+            </div>
+            {/* Welcome, {displayName}
+            <Link to="/logout"> | Logout</Link> */}
+          </div>
         )
       }}
     </Query>

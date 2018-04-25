@@ -7,7 +7,11 @@ $fa-font-path: "~@fortawesome/fontawesome-free-webfonts/webfonts";
 @import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid.scss";
 
 .container {
-  max-width: 90%;
+  max-width: 70%;
+}
+
+.navbar {
+  background-color: #12121212;
 }
 
 #signup-form {

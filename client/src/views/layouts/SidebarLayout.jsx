@@ -7,14 +7,10 @@ class SidebarLayout extends Component {
     return (
       <React.Fragment>
         <Navbar />
-        <main className="columns">
-          <nav className="column menu is-2-desktop">
-            <Sidebar />
-          </nav>
-          <section className="column is-10-desktop">
-            {this.props.children}
-          </section>
-        </main>
+        {/* <div className="columns"> */}
+        {/* <nav className="column menu is-2-desktop"> <Sidebar /> </nav> */}
+        <main className="container">{this.props.children}</main>
+        {/* </div> */}
       </React.Fragment>
     )
   }

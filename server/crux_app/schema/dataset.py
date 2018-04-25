@@ -58,7 +58,7 @@ class CreateDataset(graphene.Mutation):
             file.save()
             dataset.files.add(file)
 
-        return CreateDataset(success=True)
+        return CreateDataset(dataset)
 
 
 class DatasetMutation(graphene.ObjectType):
