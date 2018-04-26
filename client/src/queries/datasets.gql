@@ -27,8 +27,8 @@ query allDatasets {
   }
 }
 
-query allAnalysis {
-  allAnalysis {
+query allAnalyses {
+  allAnalyses {
     name
     uuid
     dataset {

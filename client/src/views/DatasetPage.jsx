@@ -15,7 +15,7 @@ import AnalysisCard from "../components/analysis/AnalysisCard"
 class DatasetPage extends Component {
   state = {
     activeTab: 0,
-    tabs: [{ text: "Data", url: "/" }, { text: "Analyses", url: "/analyses" }],
+    tabs: [{ text: "Analyses", url: "/analyses" }, { text: "Data", url: "/" }],
   }
 
   _setActiveTab = idx => this.setState({ activeTab: idx })

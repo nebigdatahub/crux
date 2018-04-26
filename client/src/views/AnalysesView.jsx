@@ -11,7 +11,7 @@ class AnalysesView extends Component {
   state = {
     activeTab: 0,
     tabs: [
-      { text: "Start new analysis", url: "/" },
+      { text: "Public", url: "/" },
       { text: "My analyses", url: "/personal" },
     ],
   }

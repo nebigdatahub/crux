@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Query } from "react-apollo"
 
-import { allAnalysis } from "../../queries/datasets.gql"
+import { allAnalyses } from "../../queries/datasets.gql"
 import AnalysisCard from "./AnalysisCard"
 
 class AnalysesPublic extends Component {
@@ -17,15 +17,15 @@ class AnalysesPublic extends Component {
 }
 
 const Analyses = () => (
-  <Query query={allAnalysis}>
+  <Query query={allAnalyses}>
     {({ error, loading, data }) => {
       if (error) return "error"
       if (loading) return "loading"
 
-      const { allAnalysis } = data
+      const { allAnalyses } = data
       return (
-        allAnalysis &&
-        allAnalysis.map((dataset, idx) => (
+        allAnalyses &&
+        allAnalyses.map((dataset, idx) => (
           <div key={idx} className="column is-4-desktop">
             <AnalysisCard {...dataset} />
           </div>
