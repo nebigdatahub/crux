@@ -13,6 +13,5 @@ urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
     re_path(r'^graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
     re_path(r'^notebook', views.notebook, name='notebook'),
-    re_path(r'^api/', include('crux_api.urls')),
     re_path(r'', views.home, name='home'),
 ]

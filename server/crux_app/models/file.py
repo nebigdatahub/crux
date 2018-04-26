@@ -2,9 +2,10 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
 
 from .dataset import Dataset
-from .task import Task
+from .analysis import Analysis
 
 
 class File(models.Model):
@@ -20,17 +21,19 @@ class File(models.Model):
                                 related_name='files',
                                 blank=True,
                                 null=True,)
-    task = models.ForeignKey(Task,
-                             on_delete=models.CASCADE,
-                             related_name='files',
-                             blank=True,
-                             null=True)
+    analysis = models.ForeignKey(Analysis,
+                                 on_delete=models.CASCADE,
+                                 related_name='files',
+                                 blank=True,
+                                 null=True)
+
+    uuid = models.SlugField(_('Slug'))
 
     DATASET = 'DS'
-    TASK = 'TA'
+    ANALYSIS = 'AN'
     FILE_TYPE_CHOICES = (
         (DATASET, 'Dataset'),
-        (TASK, 'Task')
+        (ANALYSIS, 'Analysis')
     )
     file_type = models.CharField(_('file_type'),
                                  max_length=2,
@@ -47,4 +50,8 @@ class File(models.Model):
             raise ValidationError(
                 _('File must be associated with a task or a dataset'))
         else:
-            self.file_type = self.DATASET if self.dataset else self.TASK
+            self.file_type = self.DATASET if self.dataset else self.ANALYSIS
+
+    def save(self, *args, **kwargs):
+        self.uuid = slugify(self.name)
+        super().save(*args, *kwargs)

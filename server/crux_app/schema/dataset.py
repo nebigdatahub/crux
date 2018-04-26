@@ -18,7 +18,6 @@ class DatasetQuery(graphene.ObjectType):
     user_datasets = graphene.List(DatasetType)
     dataset_by_uuid = graphene.Field(DatasetType, uuid=graphene.String())
 
-    @staff_member_required
     def resolve_all_datasets(self, info, **kwargs):
         return Dataset.objects.all()
 

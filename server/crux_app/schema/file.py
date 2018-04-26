@@ -5,46 +5,28 @@ from graphene_django import DjangoObjectType
 from graphql_extensions.auth.decorators import (login_required,
                                                 staff_member_required)
 from ..models import Dataset, File
+from crux.settings.common import BASE_DIR
 
 
 class FileType(DjangoObjectType):
+    content = graphene.String()
+
     class Meta:
         model = File
 
 
 class FileQuery(graphene.ObjectType):
-    all_files = graphene.List(FileType)
-    user_files = graphene.List(FileType)
-    dataset_files = graphene.List(FileType)
-    file = graphene.Field(FileType)
+    file = graphene.Field(FileType, uuid=graphene.String())
 
-    @staff_member_required
-    def resolve_all_files(self, info, **kwargs):
-        return File.objects.all()
+    def resolve_file(self, info, uuid, **kwargs):
+        file = File.objects.get(uuid=uuid)
+        from nbconvert import HTMLExporter
 
-    @login_required
-    def resolve_user_files(self, info, **kwargs):
-        # return File.objects.filter(owner=info.context.user)
-        print(info.context.user)
-        return info.context.user.dataset_set
+        with file.file.open() as f:
+            body, resources = HTMLExporter(template_file='basic').from_file(f)
 
-    @login_required
-    def resolve_dataset_files(self, info, dataset_id, **kwargs):
-        dataset = Dataset.objects.get(pk=dataset_id)
-        if dataset is not None:
-            return File.objects.filter(dataset=dataset)
-        else:
-            # Raise some error
-            return None
-
-    def resolve_file(self, info, file_id, **kwargs):
-        file = File.objects.get(pk=file_id)
-        # TODO: Check if user has permissions to view the file
-        if not file:
-            return file
-        else:
-            # Raise some error
-            return None
+        file.content = body
+        return file
 
 
 class FileUploadType(graphene.Scalar):

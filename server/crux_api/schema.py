@@ -3,6 +3,7 @@ from crux_auth.schema import UserQuery, UserMutation
 from crux_app.schema import DatasetQuery, DatasetMutation
 from crux_app.schema import FileQuery, FileMutation, FileUploadType
 from crux_app.schema import TaskQuery, TaskMutation
+from crux_app.schema import AnalysisQuery, AnalysisMutation
 
 import graphene
 from graphene_django.types import DjangoObjectType
@@ -12,6 +13,7 @@ QUERIES = [
     FileQuery,
     DatasetQuery,
     TaskQuery,
+    AnalysisQuery,
     graphene.ObjectType
 ]
 
@@ -20,6 +22,7 @@ MUTATIONS = [
     FileMutation,
     DatasetMutation,
     TaskMutation,
+    AnalysisMutation,
     graphene.ObjectType
 ]
 
