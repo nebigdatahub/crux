@@ -3,10 +3,14 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import { graphql, compose } from "react-apollo"
 
 import { menuItems } from "../config"
-import { currentUserQuery } from "../queries/users.gql"
+import gql from "graphql-tag"
 
-import SidebarLayout from "./layouts/SidebarLayout"
-import QuickActionsLayout from "./layouts/QuickActionsLayout"
+import QuickActions from "./layouts/QuickActions"
+import MyDatasets from "../components/datasets/MyDatasets"
+import UserTasks from "../components/tasks/UserTasks"
+import Navbar from "../components/Navbar"
+import DatasetsPublic from "../components/datasets/DatasetsPublic"
+import AnalysesPublic from "../components/analysis/AnalysesPublic"
 
 class DashboardView extends Component {
   quickActions = {
@@ -16,16 +20,31 @@ class DashboardView extends Component {
   render() {
     const { currentUserQuery } = this.props
     return (
-      <SidebarLayout>
-        {currentUserQuery && currentUserQuery.currentUser ? (
-          <QuickActionsLayout {...this.quickActions} />
-        ) : (
-          "You need to be logged in"
-        )}
-      </SidebarLayout>
+      <React.Fragment>
+        <Navbar />
+        <section className="section container">
+          <h1 className="title">Datasets</h1>
+          <DatasetsPublic />
+          <h2 className="subtitle">My Datasets</h2>
+          <MyDatasets />
+          <h1 className="title">Analyses</h1>
+          <AnalysesPublic />
+        </section>
+      </React.Fragment>
     )
   }
 }
+
+const currentUserQuery = gql`
+  query currentUserQuery {
+    currentUser {
+      email
+      firstName
+      lastName
+      username
+    }
+  }
+`
 
 export default compose(
   graphql(currentUserQuery, {

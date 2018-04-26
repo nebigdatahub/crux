@@ -14,15 +14,13 @@ class UserType(DjangoObjectType):
         model = get_user_model()
 
 
-class Query(graphene.ObjectType):
+class UserQuery(graphene.ObjectType):
     all_users = graphene.List(UserType)
     current_user = graphene.Field(UserType)
 
     @login_required
     def resolve_current_user(self, info, **kwargs):
-        if not info.context.user.is_anonymous:
-            return info.context.user
-        return None
+        return info.context.user
 
     @staff_member_required
     def resolve_all_users(self, info, **kwargs):
@@ -46,7 +44,7 @@ class CreateUser(graphene.Mutation):
         return CreateUser(user=user)
 
 
-class Mutation(graphene.ObjectType):
+class UserMutation(graphene.ObjectType):
     create_user = CreateUser.Field()
     login_user = graphql_jwt.ObtainJSONWebToken.Field()
     verify_token = graphql_jwt.Verify.Field()

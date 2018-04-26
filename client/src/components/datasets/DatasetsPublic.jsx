@@ -1,23 +1,39 @@
 import React, { Component } from "react"
+import { Query } from "react-apollo"
 
 import DatasetCard from "./DatasetCard"
 
-class DatasetsPublic extends Component {
-  datasets = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+import { allDatasets } from "../../queries/datasets.gql"
 
+class DatasetsPublic extends Component {
   render() {
     return (
       <React.Fragment>
-        <h1 className="title">Browse popular datasets</h1>
         <section className="columns is-multiline is-mobile">
-          {this.datasets.map((dataset, idx) => (
-            <div key={idx} className="column is-3-desktop">
-              <DatasetCard />
-            </div>
-          ))}
+          <Datasets />
         </section>
       </React.Fragment>
     )
   }
 }
+
+const Datasets = () => (
+  <Query query={allDatasets}>
+    {({ error, loading, data }) => {
+      if (error) return "error"
+      if (loading) return "loading"
+
+      const { allDatasets } = data
+      return (
+        allDatasets &&
+        allDatasets.map((dataset, idx) => (
+          <div key={idx} className="column is-4-desktop">
+            <DatasetCard {...dataset} />
+          </div>
+        ))
+      )
+    }}
+  </Query>
+)
+
 export default DatasetsPublic

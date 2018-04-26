@@ -63,30 +63,4 @@ class User(AbstractUser):
 
     objects = UserManager()
 
-    # def get_token(self):
-
-    #     def jwt_payload(user):
-    #         username = user.get_username()
-
-    #         if hasattr(username, 'pk'):
-    #             username = username.pk
-
-    #         payload = {
-    #             user.USERNAME_FIELD: username,
-    #             'exp': datetime.utcnow() + timedelta(seconds=60*5),
-    #         }
-
-    #         payload['orig_iat'] = timegm(datetime.utcnow().utctimetuple())
-
-    #         return payload
-
-    #     def jwt_encode(payload):
-    #         return jwt.encode(
-    #             payload,
-    #             settings.SECRET_KEY,
-    #             "HS256"
-    #         ).decode('utf-8')
-
-    #     return jwt_encode(jwt_payload(self))
-
     REQUIRED_FIELDS = []

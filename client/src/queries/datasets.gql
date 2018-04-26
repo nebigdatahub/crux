@@ -1,0 +1,77 @@
+query userDatasets {
+  userDatasets {
+    name
+    description
+    uuid
+  }
+}
+
+query datasetByUuid($uuid: String!) {
+  datasetByUuid(uuid: $uuid) {
+    uuid
+    name
+    description
+    analysisList {
+      name
+      description
+      uuid
+    }
+  }
+}
+
+query allDatasets {
+  allDatasets {
+    uuid
+    name
+    description
+  }
+}
+
+query allAnalyses {
+  allAnalyses {
+    name
+    uuid
+    dataset {
+      uuid
+      name
+      description
+    }
+  }
+}
+
+query userAnalyses {
+  userAnalyses {
+    name
+    uuid
+    dataset {
+      uuid
+      name
+      description
+    }
+  }
+}
+
+query analysisByUuid($uuid: String!) {
+  analysisByUuid(uuid: $uuid) {
+    name
+    description
+    uuid
+    files {
+      uuid
+    }
+  }
+}
+
+query fileByUuid($uuid: String!) {
+  file(uuid: $uuid) {
+    name
+    file
+    content
+  }
+}
+
+mutation createDataset($name: String!, $description: String) {
+  createDataset(name: $name, description: $description) {
+    success
+  }
+}

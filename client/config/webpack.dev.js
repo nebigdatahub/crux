@@ -38,6 +38,11 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        // exclude: /node_modules/,
+        use: ["file-loader"],
+      },
+      {
         test: /\.(gql|graphql)$/,
         use: "graphql-tag/loader",
         exclude: /node_modules/,
@@ -66,5 +71,6 @@ module.exports = {
     hot: true,
     port: 3000,
     historyApiFallback: true,
+    https: true,
   },
 }

@@ -5,10 +5,10 @@ import HomeView from "./views/HomeView"
 import AuthView from "./views/AuthView"
 import DashboardView from "./views/DashboardView"
 import DatasetsView from "./views/DatasetsView"
-import TasksView from "./views/TasksView"
-import ProfileView from "./views/ProfileView"
-import FilesView from "./views/FilesView"
-import AnalysisView from "./views/AnalysisView"
+import AnalysesView from "./views/AnalysesView"
+import Figshare from "./components/auth/Figshare"
+import DatasetPage from "./views/DatasetPage"
+import AnalysisPage from "./views/AnalysisPage"
 
 class App extends Component {
   render() {
@@ -20,10 +20,19 @@ class App extends Component {
         <Route path="/logout" render={props => <AuthView {...props} />} />
         <Route path="/dashboard" render={() => <DashboardView />} />
         <Route path="/datasets" render={() => <DatasetsView />} />
-        <Route path="/tasks" render={() => <TasksView />} />
-        <Route path="/files" render={() => <FilesView />} />
-        <Route path="/profile" render={() => <ProfileView />} />
-        <Route path="/analysis" render={() => <AnalysisView />} />
+        <Route path="/analyses" render={() => <AnalysesView />} />
+        <Route
+          path="/oauth/figshare"
+          render={props => <Figshare {...props} />}
+        />
+        <Route
+          path="/dataset/:uuid([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"
+          render={() => <DatasetPage />}
+        />
+        <Route
+          path="/analysis/:uuid([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"
+          render={() => <AnalysisPage />}
+        />
       </React.Fragment>
     )
   }

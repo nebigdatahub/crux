@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'guardian',
     'corsheaders',
     'crux_api',
     'crux_auth',
@@ -43,6 +44,7 @@ MIDDLEWARE = [
 AUTHENTICATION_BACKENDS = [
     'graphql_jwt.backends.JSONWebTokenBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend'
 ]
 
 ROOT_URLCONF = 'crux.urls'

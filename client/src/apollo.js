@@ -3,7 +3,7 @@ import { InMemoryCache } from "apollo-cache-inmemory"
 import { HttpLink } from "apollo-link-http"
 import { onError } from "apollo-link-error"
 import { ApolloLink } from "apollo-link"
-import { createUploadLink } from "apollo-upload-client"
+import { createUploadLink } from "./providers"
 
 import { config } from "./config"
 
@@ -57,18 +57,10 @@ const uploadLink = createUploadLink({
 })
 
 const client = new ApolloClient({
-  link: ApolloLink.from([errorLink, requestLink, uploadLink, httpLink]),
+  link: ApolloLink.from([errorLink, requestLink, uploadLink]),
   connectToDevTools:
     process.env.NODE_ENV == "development" || process.env.NODE_ENV == "staging",
   cache: new InMemoryCache(),
-  // request: async operation => {
-  //   const token = await localStorage.getItem("token")
-  //   operation.setContext({
-  //     headers: {
-  //       authorization: token ? `JWT ${token}` : "",
-  //     },
-  //   })
-  // },
 })
 
 export default client
