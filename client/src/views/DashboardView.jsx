@@ -8,6 +8,9 @@ import gql from "graphql-tag"
 import QuickActions from "./layouts/QuickActions"
 import MyDatasets from "../components/datasets/MyDatasets"
 import UserTasks from "../components/tasks/UserTasks"
+import Navbar from "../components/Navbar"
+import DatasetsPublic from "../components/datasets/DatasetsPublic"
+import AnalysesPublic from "../components/analysis/AnalysesPublic"
 
 class DashboardView extends Component {
   quickActions = {
@@ -18,18 +21,14 @@ class DashboardView extends Component {
     const { currentUserQuery } = this.props
     return (
       <React.Fragment>
-        {currentUserQuery && currentUserQuery.currentUser ? (
-          <QuickActions {...this.quickActions} />
-        ) : (
-          "You need to be logged in"
-        )}
-        <section className="columns">
-          <div className="column is-half">
-            <MyDatasets />
-          </div>
-          <div className="column is-half">
-            <UserTasks />
-          </div>
+        <Navbar />
+        <section className="section container">
+          <h1 className="title">Datasets</h1>
+          <DatasetsPublic />
+          <h2 className="subtitle">My Datasets</h2>
+          <MyDatasets />
+          <h1 className="title">Analyses</h1>
+          <AnalysesPublic />
         </section>
       </React.Fragment>
     )
