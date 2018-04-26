@@ -2,12 +2,12 @@ import React, { Component } from "react"
 
 import { Link } from "react-router-dom"
 
-const DatasetCard = ({ name, uuid, description }) => {
+const AnalysisCard = ({ name, uuid, description }) => {
   return (
     <div className="card">
       <header className="card-header">
         <p className="card-header-title">
-          <Link to={"/dataset/" + uuid}>{name}</Link>
+          <Link to={"/analysis/" + uuid}>{name}</Link>
         </p>
       </header>
       <div className="card-content">
@@ -17,4 +17,4 @@ const DatasetCard = ({ name, uuid, description }) => {
   )
 }
 
-export default DatasetCard
+export default AnalysisCard

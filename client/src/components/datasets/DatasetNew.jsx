@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { compose, graphql, Mutation } from "react-apollo"
 import gql from "graphql-tag"
 
-import { userDatasetsQuery } from "../../queries/datasets.gql"
+import { userDatasets, createDataset } from "../../queries/datasets.gql"
 
 class DatasetNew extends Component {
   state = {
@@ -110,7 +110,12 @@ class DatasetNew extends Component {
                 className="file-input"
                 type="file"
                 name="fileName"
-                onChange={({ target: { validity, files: [file] } }) => {
+                onChange={({
+                  target: {
+                    validity,
+                    files: [file],
+                  },
+                }) => {
                   validity.valid && this._handleFileChange(file, key)
                 }}
               />
@@ -141,7 +146,7 @@ class DatasetNew extends Component {
 
     return (
       <Mutation
-        mutation={CREATE_DATASET}
+        mutation={createDataset}
         update={(cache, { data: { createDataset } }) => {
           // const datasets = cache.readQuery({ query: USER_DATASETS })
           console.log(cache)
@@ -156,7 +161,7 @@ class DatasetNew extends Component {
           return (
             <section className="columns">
               <div className="column is-half">
-                <h1 className="title">New dataset</h1>
+                <h1 className="title is-4">New dataset</h1>
                 <form
                   onSubmit={this._handleFormSubmit.bind(this, createDataset)}
                 >
@@ -230,23 +235,5 @@ const SuccessMessage = ({ display }) => {
     </div>
   )
 }
-
-const CREATE_DATASET = gql`
-  mutation createDatasetMutation($name: String!, $description: String) {
-    createDataset(name: $name, description: $description) {
-      success
-    }
-  }
-`
-
-const USER_DATASETS = gql`
-  query userDatasetsQuery {
-    userDatasets {
-      name
-      description
-      uuid
-    }
-  }
-`
 
 export default DatasetNew

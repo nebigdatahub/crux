@@ -1,11 +1,12 @@
 import React, { Component } from "react"
-import { Query } from "react-apollo"
-
+import { Route, Link, withRouter } from "react-router-dom"
 import DatasetCard from "./DatasetCard"
+import gql from "graphql-tag"
+import { graphql, Query, compose } from "react-apollo"
 
-import { allDatasets } from "../../queries/datasets.gql"
+import { userDatasets } from "../../queries/datasets.gql"
 
-class DatasetsPublic extends Component {
+class MyDatasets extends Component {
   render() {
     return (
       <React.Fragment>
@@ -18,15 +19,15 @@ class DatasetsPublic extends Component {
 }
 
 const Datasets = () => (
-  <Query query={allDatasets}>
+  <Query query={userDatasets}>
     {({ error, loading, data }) => {
       if (error) return "error"
       if (loading) return "loading"
 
-      const { allDatasets } = data
+      const { userDatasets } = data
       return (
-        allDatasets &&
-        allDatasets.map((dataset, idx) => (
+        userDatasets &&
+        userDatasets.map((dataset, idx) => (
           <div key={idx} className="column is-4-desktop">
             <DatasetCard {...dataset} />
           </div>
@@ -36,4 +37,4 @@ const Datasets = () => (
   </Query>
 )
 
-export default DatasetsPublic
+export default compose(withRouter)(MyDatasets)

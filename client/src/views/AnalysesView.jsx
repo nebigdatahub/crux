@@ -1,30 +1,18 @@
 import React, { Component } from "react"
-import { Route, Link, withRouter } from "react-router-dom"
+import { Route, withRouter, Link } from "react-router-dom"
 import { compose } from "react-apollo"
 
 import QuickActions from "./layouts/QuickActions"
-
-import DatasetNew from "../components/datasets/DatasetNew"
-import DatasetsPublic from "../components/datasets/DatasetsPublic"
-import MyDatasets from "../components/datasets/MyDatasets"
 import Navbar from "../components/Navbar"
+import AnalysesPublic from "../components/analysis/AnalysesPublic"
+import MyAnalyses from "../components/analysis/MyAnalyses"
 
-class DatasetsView extends Component {
+class AnalysesView extends Component {
   state = {
     activeTab: 0,
     tabs: [
-      {
-        text: "Public Datasets",
-        url: "/",
-      },
-      {
-        text: "My Datasets",
-        url: "/personal",
-      },
-      {
-        text: "Create New Dataset",
-        url: "/new",
-      },
+      { text: "Start new analysis", url: "/" },
+      { text: "My analyses", url: "/personal" },
     ],
   }
 
@@ -33,7 +21,6 @@ class DatasetsView extends Component {
       activeTab: idx,
     })
   }
-
   render() {
     const { tabs, activeTab } = this.state
     return (
@@ -41,7 +28,7 @@ class DatasetsView extends Component {
         <Navbar />
         <section className="hero is-dark">
           <div className="container hero-body">
-            <h1 className="title">Datasets</h1>
+            <h1 className="title">Analysis</h1>
           </div>
         </section>
         <main className="container">
@@ -51,13 +38,7 @@ class DatasetsView extends Component {
               activeTab={activeTab}
               setActiveTab={this._setActiveTab}
             />
-            <Route
-              path="/datasets/"
-              exact={true}
-              render={() => <DatasetsPublic />}
-            />
-            <Route path="/datasets/personal" render={() => <MyDatasets />} />
-            <Route path="/datasets/new" render={() => <DatasetNew />} />
+            <Routes />
           </section>
         </main>
       </React.Fragment>
@@ -74,11 +55,19 @@ const Tabs = ({ tabs, activeTab, setActiveTab }) => (
           className={idx == activeTab ? "is-active" : ""}
           onClick={() => setActiveTab(idx)}
         >
-          <Link to={"/datasets" + tab.url}>{tab.text}</Link>
+          <Link to={"/analyses" + tab.url}>{tab.text}</Link>
         </li>
       ))}
     </ul>
   </div>
 )
 
-export default compose(withRouter)(DatasetsView)
+const Routes = () => (
+  <React.Fragment>
+    <Route path="/analyses/" exact={true} render={() => <AnalysesPublic />} />
+    <Route path="/analyses/personal" render={() => <MyAnalyses />} />
+    {/* <Route path="/analyses/new" render={() => <DatasetNew />} /> */}
+  </React.Fragment>
+)
+
+export default compose(withRouter)(AnalysesView)

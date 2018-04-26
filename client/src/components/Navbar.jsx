@@ -26,7 +26,7 @@ class Navbar extends Component {
                   <Link to="/datasets">Datasets</Link>
                 </div>
                 <div className="navbar-item">
-                  <Link to="/analysis">Analysis</Link>
+                  <Link to="/analyses">Analyses</Link>
                 </div>
                 <div className="navbar-item">
                   <CurrentUser />
@@ -74,8 +74,6 @@ const CurrentUser = () => {
                 <Link to="/logout">Logout</Link>
               </div>
             </div>
-            {/* Welcome, {displayName}
-            <Link to="/logout"> | Logout</Link> */}
           </div>
         )
       }}

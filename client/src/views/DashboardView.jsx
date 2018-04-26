@@ -5,9 +5,8 @@ import { graphql, compose } from "react-apollo"
 import { menuItems } from "../config"
 import gql from "graphql-tag"
 
-import SidebarLayout from "./layouts/SidebarLayout"
 import QuickActions from "./layouts/QuickActions"
-import UsersDatasets from "../components/datasets/UsersDatasets"
+import MyDatasets from "../components/datasets/MyDatasets"
 import UserTasks from "../components/tasks/UserTasks"
 
 class DashboardView extends Component {
@@ -18,7 +17,7 @@ class DashboardView extends Component {
   render() {
     const { currentUserQuery } = this.props
     return (
-      <SidebarLayout>
+      <React.Fragment>
         {currentUserQuery && currentUserQuery.currentUser ? (
           <QuickActions {...this.quickActions} />
         ) : (
@@ -26,13 +25,13 @@ class DashboardView extends Component {
         )}
         <section className="columns">
           <div className="column is-half">
-            <UsersDatasets />
+            <MyDatasets />
           </div>
           <div className="column is-half">
             <UserTasks />
           </div>
         </section>
-      </SidebarLayout>
+      </React.Fragment>
     )
   }
 }

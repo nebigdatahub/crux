@@ -4,7 +4,6 @@ import gql from "graphql-tag"
 import { graphql, Query } from "react-apollo"
 
 import DatasetCard from "../datasets/DatasetCard"
-import DatasetDetail from "../datasets/DatasetDetail"
 
 class UserTasks extends Component {
   render() {

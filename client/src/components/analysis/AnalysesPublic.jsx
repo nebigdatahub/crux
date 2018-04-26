@@ -1,34 +1,33 @@
 import React, { Component } from "react"
 import { Query } from "react-apollo"
 
-import DatasetCard from "./DatasetCard"
+import { allAnalysis } from "../../queries/datasets.gql"
+import AnalysisCard from "./AnalysisCard"
 
-import { allDatasets } from "../../queries/datasets.gql"
-
-class DatasetsPublic extends Component {
+class AnalysesPublic extends Component {
   render() {
     return (
       <React.Fragment>
         <section className="columns is-multiline is-mobile">
-          <Datasets />
+          <Analyses />
         </section>
       </React.Fragment>
     )
   }
 }
 
-const Datasets = () => (
-  <Query query={allDatasets}>
+const Analyses = () => (
+  <Query query={allAnalysis}>
     {({ error, loading, data }) => {
       if (error) return "error"
       if (loading) return "loading"
 
-      const { allDatasets } = data
+      const { allAnalysis } = data
       return (
-        allDatasets &&
-        allDatasets.map((dataset, idx) => (
+        allAnalysis &&
+        allAnalysis.map((dataset, idx) => (
           <div key={idx} className="column is-4-desktop">
-            <DatasetCard {...dataset} />
+            <AnalysisCard {...dataset} />
           </div>
         ))
       )
@@ -36,4 +35,4 @@ const Datasets = () => (
   </Query>
 )
 
-export default DatasetsPublic
+export default AnalysesPublic
