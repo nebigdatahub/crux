@@ -41,16 +41,18 @@ class Navbar extends Component {
 }
 
 const CurrentUser = () => {
+  const token = localStorage.getItem(config.TOKEN_NAME)
+  if (token === null)
+    return (
+      <Link to="/login" className="is-primary">
+        Log In
+      </Link>
+    )
   return (
     <Query query={CURRENT_USER}>
       {({ loading, error, data }) => {
-        if (loading) return "loading"
-        if (error)
-          return (
-            <Link to="/login" className="is-primary">
-              Log In
-            </Link>
-          )
+        if (loading) return ""
+
         const { firstName, lastName, username, email } = data.currentUser
         const displayName =
           "" + firstName
