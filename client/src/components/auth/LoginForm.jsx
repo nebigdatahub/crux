@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { compose, graphql, withApollo } from "react-apollo"
 import { Link, withRouter } from "react-router-dom"
-import { config } from "../../config"
+import { TOKEN_NAME } from "../../config"
 import { loginUser } from "../../queries/users.gql"
 
 class LoginForm extends Component {
@@ -30,7 +30,7 @@ class LoginForm extends Component {
         },
       })
       .then(({ data }) => {
-        localStorage.setItem(config.TOKEN_NAME, data.loginUser.token)
+        localStorage.setItem(TOKEN_NAME, data.loginUser.token)
         this.props.history.push("/dashboard")
       })
       .catch(error => {
