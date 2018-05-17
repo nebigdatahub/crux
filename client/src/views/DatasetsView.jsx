@@ -1,13 +1,10 @@
 import React, { Component } from "react"
-import { Route, Link, withRouter } from "react-router-dom"
 import { compose } from "react-apollo"
-
-import QuickActions from "./layouts/QuickActions"
-
+import { Link, Route, withRouter } from "react-router-dom"
+import Navbar from "../components/Navbar"
 import DatasetNew from "../components/datasets/DatasetNew"
 import DatasetsPublic from "../components/datasets/DatasetsPublic"
 import MyDatasets from "../components/datasets/MyDatasets"
-import Navbar from "../components/Navbar"
 
 class DatasetsView extends Component {
   state = {

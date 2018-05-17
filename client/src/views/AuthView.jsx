@@ -1,8 +1,8 @@
 import React, { Component } from "react"
-import { Link } from "react-router-dom"
-
 import Navbar from "../components/Navbar"
-import { LoginForm, SignupForm, LogoutForm } from "../components/auth/AuthForm"
+import LoginForm from "../components/auth/LoginForm"
+import LogoutForm from "../components/auth/LogoutForm"
+import SignupForm from "../components/auth/SignupForm"
 
 class AuthView extends Component {
   render() {

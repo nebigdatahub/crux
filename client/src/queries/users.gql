@@ -1,4 +1,4 @@
-mutation createUser($email: String!, $password: String!) {
+mutation createUser($email: String!, $password: String) {
   createUser(email: $email, password: $password) {
     user {
       id
@@ -8,6 +8,15 @@ mutation createUser($email: String!, $password: String!) {
 
 mutation loginUser($email: String!, $password: String!) {
   loginUser(email: $email, password: $password) {
+    token
+  }
+}
+
+mutation socialAuth($provider: String!, $accessToken: String!) {
+  socialAuth(provider: $provider, accessToken: $accessToken) {
+    social {
+      uid
+    }
     token
   }
 }

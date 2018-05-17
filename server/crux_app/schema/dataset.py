@@ -21,11 +21,11 @@ class DatasetQuery(graphene.ObjectType):
     def resolve_all_datasets(self, info, **kwargs):
         return Dataset.objects.all()
 
-    @login_required
     def resolve_user_datasets(self, info, **kwargs):
+        if info.context.user.is_anonymous:
+            return None
         return info.context.user.dataset_set.all()
 
-    @login_required
     def resolve_dataset_by_uuid(self, info, uuid, **kwargs):
         return Dataset.objects.get(uuid=uuid)
 

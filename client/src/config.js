@@ -1,6 +1,4 @@
-import React, { Component } from "react"
-import DashboardView from "./views/DashboardView"
-import DatasetsView from "./views/DatasetsView"
+import React from "react"
 
 const devSettings = {
   ROOT_URI: "http://localhost:8000",
@@ -17,12 +15,15 @@ const stageSettings = {
 const settings =
   process.env.NODE_ENV == "production"
     ? prodSettings
-    : process.env.NODE_ENV == "staging" ? stageSettings : devSettings
+    : process.env.NODE_ENV == "staging"
+      ? stageSettings
+      : devSettings
 
 const config = {
   ...settings,
   GRAPHQL_URI: "/graphql",
   TOKEN_NAME: "token",
+  FIGSHARE_TOKEN: "figshare_token",
 }
 
 export { config }

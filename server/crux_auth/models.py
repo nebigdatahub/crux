@@ -24,10 +24,10 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self, email, password=None):
+    def create_user(self, email, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
-        return self._create_user(username, email, password, **extra_fields)
+        return self._create_user(email, password, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
@@ -48,12 +48,10 @@ class User(AbstractUser):
     name = models.CharField(_('Full name'),
                             max_length=100)
     organization = models.CharField(_('username'),
-                                    max_length=100,
-                                    default=str(email).split('@')[0])
+                                    max_length=100)
     username = models.CharField(_('username'),
                                 max_length=150,
-                                help_text=_('Required. 150 characters or fewer.\
-                                            Letters, digits and ./-/_ only.'),
+                                unique=True
                                 )
 
     bio = models.CharField(_('bio'),
