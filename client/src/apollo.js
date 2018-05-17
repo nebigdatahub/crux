@@ -1,14 +1,13 @@
-import { ApolloClient } from "apollo-client"
 import { InMemoryCache } from "apollo-cache-inmemory"
-import { HttpLink } from "apollo-link-http"
-import { onError } from "apollo-link-error"
+import { ApolloClient } from "apollo-client"
 import { ApolloLink } from "apollo-link"
+import { onError } from "apollo-link-error"
+import { HttpLink } from "apollo-link-http"
+import { GRAPHQL_URI, ROOT_URI, TOKEN_NAME } from "./config"
 import { createUploadLink } from "./providers"
 
-import { config } from "./config"
-
 const request = async operation => {
-  const token = await localStorage.getItem("token")
+  const token = await localStorage.getItem(TOKEN_NAME)
   operation.setContext({
     headers: {
       authorization: token ? `JWT ${token}` : "",
@@ -39,21 +38,16 @@ const requestLink = new ApolloLink(
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) console.log()
-  // graphQLErrors.map(({ message, locations, path }) =>
-  //   // console.error(
-  //   //   `[GraphQL Error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-  //   // )
-  // )
-  if (networkError) console.error("[Network Error]: ${networkError}")
+  if (networkError) console.error(`[Network Error]: ${networkError}`)
 })
 
 const httpLink = new HttpLink({
-  uri: config.ROOT_URI + config.GRAPHQL_URI,
+  uri: ROOT_URI + GRAPHQL_URI,
   credentials: "same-origin",
 })
 
 const uploadLink = createUploadLink({
-  uri: config.ROOT_URI + config.GRAPHQL_URI,
+  uri: ROOT_URI + GRAPHQL_URI,
 })
 
 const client = new ApolloClient({

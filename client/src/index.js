@@ -1,16 +1,13 @@
 import React from "react"
+import { ApolloProvider } from "react-apollo"
 import { render } from "react-dom"
 import { BrowserRouter } from "react-router-dom"
-
-import { ApolloProvider } from "react-apollo"
-
-import client from "./apollo"
 import App from "./App"
-
+import client from "./apollo"
 import "./assets/styles/style.scss"
 
 function log(strings) {
-  console.log(strings.raw[0])
+  if (process.env.NODE_ENV == "production") console.log(strings.raw[0])
 }
 
 log`

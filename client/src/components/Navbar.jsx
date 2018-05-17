@@ -1,10 +1,9 @@
-import React, { Component } from "react"
-import { Link } from "react-router-dom"
-import { graphql, compose, Query } from "react-apollo"
-import { config } from "../config"
 import gql from "graphql-tag"
-
+import React, { Component } from "react"
+import { Query } from "react-apollo"
+import { Link } from "react-router-dom"
 import logo from "../assets/files/logo.png"
+import { TOKEN_NAME } from "../config"
 
 class Navbar extends Component {
   render() {
@@ -41,7 +40,7 @@ class Navbar extends Component {
 }
 
 const CurrentUser = () => {
-  const token = localStorage.getItem(config.TOKEN_NAME)
+  const token = localStorage.getItem(TOKEN_NAME)
   if (token === null)
     return (
       <Link to="/login" className="is-primary">
