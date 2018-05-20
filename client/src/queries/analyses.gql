@@ -1,0 +1,48 @@
+query allAnalyses {
+  allAnalyses {
+    name
+    uuid
+    dataset {
+      uuid
+      name
+      description
+    }
+  }
+}
+
+query userAnalyses {
+  userAnalyses {
+    name
+    uuid
+    dataset {
+      uuid
+      name
+      description
+    }
+  }
+}
+
+query analysisByUuid($uuid: String!) {
+  analysisByUuid(uuid: $uuid) {
+    name
+    description
+    uuid
+    files {
+      uuid
+    }
+  }
+}
+
+mutation createAnalysis(
+  $name: String!
+  $description: String
+  $datasetId: Int!
+) {
+  createAnalysis(
+    name: $name
+    description: $description
+    datasetId: $datasetId
+  ) {
+    success
+  }
+}

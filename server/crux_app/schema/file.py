@@ -9,7 +9,8 @@ from crux.settings.common import BASE_DIR
 
 
 class FileType(DjangoObjectType):
-    content = graphene.String()
+    body = graphene.String()
+    resources = graphene.String()
 
     class Meta:
         model = File
@@ -20,12 +21,16 @@ class FileQuery(graphene.ObjectType):
 
     def resolve_file(self, info, uuid, **kwargs):
         file = File.objects.get(uuid=uuid)
+        import nbformat
         from nbconvert import HTMLExporter
 
         with file.file.open() as f:
-            body, resources = HTMLExporter(template_file='basic').from_file(f)
+            notebook = nbformat.reads(f.read(), as_version=4)
+            html_exporter = HTMLExporter()
+            body, resources = html_exporter.from_notebook_node(notebook)
 
-        file.content = body
+        file.body = body
+        file.resources = ' '.join(resources['inlining']['css'])
         return file
 
 

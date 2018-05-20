@@ -1,14 +1,14 @@
 import React, { Component } from "react"
-import { Route, Switch } from "react-router-dom"
-
-import HomeView from "./views/HomeView"
+import { Route } from "react-router-dom"
+import Figshare from "./components/auth/Figshare"
+import AnalysesView from "./views/AnalysesView"
+import AnalysisPage from "./views/AnalysisPage"
 import AuthView from "./views/AuthView"
 import DashboardView from "./views/DashboardView"
-import DatasetsView from "./views/DatasetsView"
-import AnalysesView from "./views/AnalysesView"
-import Figshare from "./components/auth/Figshare"
 import DatasetPage from "./views/DatasetPage"
-import AnalysisPage from "./views/AnalysisPage"
+import DatasetsView from "./views/DatasetsView"
+import HomeView from "./views/HomeView"
+import UserPage from "./views/UserPage"
 
 class App extends Component {
   render() {
@@ -32,6 +32,11 @@ class App extends Component {
         <Route
           path="/analysis/:uuid([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"
           render={() => <AnalysisPage />}
+        />
+        <Route
+          exact
+          path="/:username(([a-z0-9]+){1})"
+          render={props => <UserPage {...props} />}
         />
       </React.Fragment>
     )

@@ -1,10 +1,8 @@
 import React, { Component } from "react"
-import { Route, Link, withRouter } from "react-router-dom"
-import AnalysisCard from "./AnalysisCard"
-import gql from "graphql-tag"
-import { graphql, Query, compose } from "react-apollo"
-
+import { Query, compose } from "react-apollo"
+import { withRouter } from "react-router-dom"
 import { datasetAnalyses } from "../../queries/datasets.gql"
+import AnalysisCard from "./AnalysisCard"
 
 class MyAnalyses extends Component {
   render() {

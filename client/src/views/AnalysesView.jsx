@@ -1,18 +1,18 @@
 import React, { Component } from "react"
-import { Route, withRouter, Link } from "react-router-dom"
 import { compose } from "react-apollo"
-
-import QuickActions from "./layouts/QuickActions"
+import { Link, Route, withRouter } from "react-router-dom"
 import Navbar from "../components/Navbar"
 import AnalysesPublic from "../components/analysis/AnalysesPublic"
+import AnalysisNew from "../components/analysis/AnalysisNew"
 import MyAnalyses from "../components/analysis/MyAnalyses"
 
 class AnalysesView extends Component {
   state = {
     activeTab: 0,
     tabs: [
-      { text: "Public", url: "/" },
-      { text: "My analyses", url: "/personal" },
+      { text: "Public", url: "/public" },
+      { text: "My analyses", url: "/" },
+      { text: "New Analysis", url: "/create" },
     ],
   }
 
@@ -47,7 +47,7 @@ class AnalysesView extends Component {
 }
 
 const Tabs = ({ tabs, activeTab, setActiveTab }) => (
-  <div className="tabs">
+  <div className="tabs is-boxed is-centered">
     <ul>
       {tabs.map((tab, idx) => (
         <li
@@ -64,9 +64,13 @@ const Tabs = ({ tabs, activeTab, setActiveTab }) => (
 
 const Routes = () => (
   <React.Fragment>
-    <Route path="/analyses/" exact={true} render={() => <AnalysesPublic />} />
-    <Route path="/analyses/personal" render={() => <MyAnalyses />} />
-    {/* <Route path="/analyses/new" render={() => <DatasetNew />} /> */}
+    <Route
+      path="/analyses/public"
+      exact={true}
+      render={() => <AnalysesPublic />}
+    />
+    <Route exact path="/analyses" render={() => <MyAnalyses />} />
+    <Route path="/analyses/create" render={() => <AnalysisNew />} />
   </React.Fragment>
 )
 

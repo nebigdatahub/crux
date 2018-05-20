@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import { Query } from "react-apollo"
-
-import { allAnalyses } from "../../queries/datasets.gql"
+import { allAnalyses } from "../../queries/analyses.gql"
 import AnalysisCard from "./AnalysisCard"
 
 class AnalysesPublic extends Component {

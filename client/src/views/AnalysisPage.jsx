@@ -1,17 +1,11 @@
 import React, { Component } from "react"
-import {
-  Query,
-  ApolloConsumer,
-  compose,
-  graphql,
-  withApollo,
-} from "react-apollo"
-import { withRouter, Link, Route } from "react-router-dom"
+import { Query, compose } from "react-apollo"
+import { withRouter } from "react-router-dom"
 import Navbar from "../components/Navbar"
-import { Title, Subtitle } from "../components/elements"
-import { analysisByUuid, fileByUuid } from "../queries/datasets.gql"
 import AnalysisCard from "../components/analysis/AnalysisCard"
-
+import { Subtitle, Title } from "../components/elements"
+import { analysisByUuid } from "../queries/analyses.gql"
+import { fileByUuid } from "../queries/datasets.gql"
 class AnalysisPage extends Component {
   render() {
     const { uuid } = this.props.match.params
@@ -51,18 +45,19 @@ const Analysis = ({ uuid }) => (
 const Notebook = ({ uuid }) => (
   <Query query={fileByUuid} variables={{ uuid: uuid }}>
     {({ loading, error, data }) => {
-      console.log(uuid)
-
       if (loading) return "loading"
       if (error) return "error"
 
-      const { content } = data.file
+      const { body, resources } = data.file
 
       return (
-        <section className="section container">
-          <div
-            className="notebook"
-            dangerouslySetInnerHTML={{ __html: content }}
+        <section className="section container notebook">
+          <iframe
+            src={"data:text/html; charset=utf-8," + escape(body)}
+            scrolling="no"
+            frameBorder="0"
+            height="100%"
+            width="100%"
           />
         </section>
       )

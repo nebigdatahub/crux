@@ -6,6 +6,7 @@ from graphql_extensions.auth.decorators import (login_required,
 
 from .file import FileType, FileUploadType
 from ..models import Dataset, File, Analysis
+from .dataset import DatasetType
 
 
 class AnalysisType(DjangoObjectType):
@@ -35,14 +36,15 @@ class CreateAnalysis(graphene.Mutation):
     class Arguments:
         name = graphene.String(required=True)
         description = graphene.String()
+        dataset_id = graphene.Int(required=True)
         files = FileUploadType()
 
     @login_required
-    def mutate(self, info, name, description, **kwargs):
-        up_files = []
-
+    def mutate(self, info, name, description, dataset_id, **kwargs):
+        dataset = Dataset.objects.get(pk=dataset_id)
         analysis = Analysis(name=name,
                             owner=info.context.user,
+                            dataset=dataset,
                             **kwargs)
         analysis.save()
         for f in info.context.FILES.getlist('files'):
@@ -50,10 +52,10 @@ class CreateAnalysis(graphene.Mutation):
                         file_type='DS',
                         ** kwargs)
             file.save()
-            Analysis.files.add(file)
+            analysis.files.add(file)
 
         return CreateAnalysis(Analysis)
 
 
 class AnalysisMutation(graphene.ObjectType):
-    create_analyses = CreateAnalysis.Field()
+    create_analysis = CreateAnalysis.Field()

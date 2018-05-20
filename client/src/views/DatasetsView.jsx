@@ -12,15 +12,15 @@ class DatasetsView extends Component {
     tabs: [
       {
         text: "Public Datasets",
-        url: "/",
+        url: "/public",
       },
       {
         text: "My Datasets",
-        url: "/personal",
+        url: "/",
       },
       {
         text: "Create New Dataset",
-        url: "/new",
+        url: "/create",
       },
     ],
   }
@@ -48,13 +48,9 @@ class DatasetsView extends Component {
               activeTab={activeTab}
               setActiveTab={this._setActiveTab}
             />
-            <Route
-              path="/datasets/"
-              exact={true}
-              render={() => <DatasetsPublic />}
-            />
-            <Route path="/datasets/personal" render={() => <MyDatasets />} />
-            <Route path="/datasets/new" render={() => <DatasetNew />} />
+            <Route path="/datasets/public" render={() => <DatasetsPublic />} />
+            <Route exact path="/datasets/" render={() => <MyDatasets />} />
+            <Route path="/datasets/create" render={() => <DatasetNew />} />
           </section>
         </main>
       </React.Fragment>
@@ -63,7 +59,7 @@ class DatasetsView extends Component {
 }
 
 const Tabs = ({ tabs, activeTab, setActiveTab }) => (
-  <div className="tabs">
+  <div className="tabs is-boxed is-centered">
     <ul>
       {tabs.map((tab, idx) => (
         <li

@@ -1,5 +1,6 @@
 query userDatasets {
   userDatasets {
+    id
     name
     description
     uuid
@@ -27,46 +28,12 @@ query allDatasets {
   }
 }
 
-query allAnalyses {
-  allAnalyses {
-    name
-    uuid
-    dataset {
-      uuid
-      name
-      description
-    }
-  }
-}
-
-query userAnalyses {
-  userAnalyses {
-    name
-    uuid
-    dataset {
-      uuid
-      name
-      description
-    }
-  }
-}
-
-query analysisByUuid($uuid: String!) {
-  analysisByUuid(uuid: $uuid) {
-    name
-    description
-    uuid
-    files {
-      uuid
-    }
-  }
-}
-
 query fileByUuid($uuid: String!) {
   file(uuid: $uuid) {
     name
     file
-    content
+    body
+    resources
   }
 }
 
