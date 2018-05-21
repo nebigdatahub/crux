@@ -1,2 +1,2 @@
-release: python server/manage.py migrate
+release: server/scripts/release.sh
 web: gunicorn --pythonpath server crux.wsgi --log-file -
