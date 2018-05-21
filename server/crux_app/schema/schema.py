@@ -1,9 +1,8 @@
-
-from crux_auth.schema import UserQuery, UserMutation
-from crux_app.schema import DatasetQuery, DatasetMutation
-from crux_app.schema import FileQuery, FileMutation, FileUploadType
-from crux_app.schema import TaskQuery, TaskMutation
-from crux_app.schema import AnalysisQuery, AnalysisMutation
+from .dataset import DatasetQuery, DatasetMutation
+from .file import FileQuery, FileMutation, FileUploadType
+from .task import TaskQuery, TaskMutation
+from .analysis import AnalysisQuery, AnalysisMutation
+from .user import UserQuery, UserMutation
 
 import graphene
 from graphene_django.types import DjangoObjectType

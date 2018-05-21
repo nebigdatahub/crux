@@ -1,56 +1,67 @@
+import itertools
+
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth import get_user_model
-import uuid
 
 from .dataset import Dataset
 from .task import Task
+from .user import User
 
 
 class Analysis(models.Model):
-    name = models.CharField(_('name'),
-                            max_length=100,
-                            help_text=_('Required. 100 characters or fewer.')
-                            )
+    name = models.CharField(
+        max_length=100,
+    )
 
-    description = models.CharField(_('description'),
-                                   max_length=500,
-                                   help_text=_('500 characters or fewer.'),
-                                   blank=True
-                                   )
+    readme = models.TextField(
+        null=True,
+        blank=True
+    )
 
-    uuid = models.UUIDField(_('UUID'),
-                            default=uuid.uuid4,
-                            unique=True,
-                            editable=False
-                            )
+    slug = models.SlugField(
+        unique=True,
+        editable=False
+    )
 
-    dataset = models.ForeignKey(Dataset,
-                                on_delete=models.CASCADE,
-                                related_name="analysis_list",
-                                blank=True)
+    dataset = models.ForeignKey(
+        Dataset,
+        on_delete=models.CASCADE,
+        blank=True
+    )
 
-    task = models.ForeignKey(Task,
-                             on_delete=models.CASCADE,
-                             related_name="analysis_list",
-                             blank=True,
-                             null=True)
+    task = models.ForeignKey(
+        Task,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
 
-    owner = models.ForeignKey(get_user_model(),
-                              on_delete=models.CASCADE,
-                              related_name="analysis_list",
-                              blank=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        blank=True
+    )
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    REQUIRED_FIELDS = [name, created_by, dataset]
 
-    updated_at = models.DateTimeField(auto_now_add=True)
+    def _slug(self):
+        username = self.created_by.get_username()
+        slug = f'{username}-{slugify(self.name)}'
 
-    REQUIRED_FIELDS = [name, owner]
+        for i in itertools.count(1):
+            if not Analysis.objects.filter(slug=slug).exists():
+                break
+            else:
+                slug = f'{slug}-{i}'
+        return slug
+
+    def save(self, *args, **kwargs):
+        self.slug = self._slug()
+        super().save(*args, **kwargs)
 
     class Meta:
-        permissions = (
-            ('owner', 'Superuser access'),
-            ('editor', 'Can view, edit, comment, share but not delete'),
-            ('commenter', 'Can view, comment but not edit or delete'),
-            ('viewer', 'Can only view dataset')
-        )
+        default_related_name = 'analyses'
+        verbose_name_plural = 'Analyses'

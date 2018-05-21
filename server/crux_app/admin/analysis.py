@@ -7,4 +7,4 @@ from ..models import Analysis
 @admin.register(Analysis)
 class AnalysisAdmin(GuardedModelAdmin):
     list_display_links = ('id', 'name')
-    list_display = ('id', 'name', 'owner', 'description')
+    list_display = ('id', 'name', 'created_by', 'readme')

@@ -1,12 +1,12 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.utils.translation import gettext_lazy as _
+import os
+from calendar import timegm
+from datetime import datetime, timedelta
 
 import jwt
-import os
-from datetime import datetime, timedelta
-from calendar import timegm
 from django.conf import settings
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class UserManager(BaseUserManager):

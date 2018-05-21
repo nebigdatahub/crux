@@ -17,7 +17,7 @@ class AnalysisType(DjangoObjectType):
 class AnalysisQuery(graphene.ObjectType):
     all_analyses = graphene.List(AnalysisType)
     user_analyses = graphene.List(AnalysisType)
-    analysis_by_uuid = graphene.Field(AnalysisType, uuid=graphene.String())
+    analysis_by_slug = graphene.Field(AnalysisType, slug=graphene.String())
 
     def resolve_all_analyses(self, info, **kwargs):
         return Analysis.objects.all()
@@ -26,8 +26,8 @@ class AnalysisQuery(graphene.ObjectType):
     def resolve_user_analyses(self, info, **kwargs):
         return info.context.user.analysis_list.all()
 
-    def resolve_analysis_by_uuid(self, info, uuid, **kwargs):
-        return Analysis.objects.get(uuid=uuid)
+    def resolve_analysis_by_slug(self, info, slug, **kwargs):
+        return Analysis.objects.get(slug=slug)
 
 
 class CreateAnalysis(graphene.Mutation):

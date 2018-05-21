@@ -3,19 +3,19 @@ query userDatasets {
     id
     name
     description
-    uuid
+    slug
   }
 }
 
-query datasetByUuid($uuid: String!) {
-  datasetByUuid(uuid: $uuid) {
-    uuid
+query datasetBySlug($slug: String!) {
+  datasetBySlug(slug: $slug) {
+    slug
     name
     description
     analysisList {
       name
       description
-      uuid
+      slug
     }
   }
 }

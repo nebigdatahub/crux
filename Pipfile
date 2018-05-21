@@ -7,7 +7,7 @@ name = "pypi"
 
 [packages]
 
-Django = "*"
+django = "*"
 djangorestframework = "*"
 gunicorn = "*"
 whitenoise = "*"
@@ -18,10 +18,11 @@ django-graphql-extensions = "*"
 django-cors-headers = "*"
 nbconvert = "*"
 dj-database-url = "*"
-"psycopg2" = "*"
 django-guardian = "*"
 django-graphql-social-auth = {extras = ["jwt"]}
 social-auth-app-django = "*"
+pyyaml = "*"
+"psycopg2-binary" = "*"
 
 
 [dev-packages]

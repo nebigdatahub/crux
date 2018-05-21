@@ -24,8 +24,6 @@ INSTALLED_APPS = [
     'social_django',
     'guardian',
     'corsheaders',
-    'crux_api',
-    'crux_auth',
     'crux_app',
     'graphene_django',
 ]
@@ -113,10 +111,10 @@ USE_TZ = True
 
 # Graphene
 GRAPHENE = {
-    'SCHEMA': 'crux_api.schema.schema'
+    'SCHEMA': 'crux_app.schema.schema'
 }
 
-AUTH_USER_MODEL = 'crux_auth.User'
+AUTH_USER_MODEL = 'crux_app.User'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'files')
 MEDIA_URL = '/files/'

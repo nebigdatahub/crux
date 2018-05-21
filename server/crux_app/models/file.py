@@ -4,9 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 
-from .dataset import Dataset
-from .analysis import Analysis
-
 
 class File(models.Model):
     name = models.CharField(
@@ -16,18 +13,20 @@ class File(models.Model):
     )
 
     file = models.FileField()
-    dataset = models.ForeignKey(Dataset,
-                                on_delete=models.CASCADE,
-                                related_name='files',
-                                blank=True,
-                                null=True,)
-    analysis = models.ForeignKey(Analysis,
-                                 on_delete=models.CASCADE,
-                                 related_name='files',
-                                 blank=True,
-                                 null=True)
+    dataset = models.ForeignKey(
+        'Dataset',
+        on_delete=models.CASCADE,
+        related_name='files',
+        blank=True,
+        null=True,)
+    analysis = models.ForeignKey(
+        'Analysis',
+        on_delete=models.CASCADE,
+        related_name='files',
+        blank=True,
+        null=True)
 
-    uuid = models.SlugField(_('Slug'))
+    slug = models.SlugField(_('Slug'))
 
     DATASET = 'DS'
     ANALYSIS = 'AN'
@@ -35,13 +34,11 @@ class File(models.Model):
         (DATASET, 'Dataset'),
         (ANALYSIS, 'Analysis')
     )
-    file_type = models.CharField(_('file_type'),
-                                 max_length=2,
-                                 choices=FILE_TYPE_CHOICES,
-                                 blank=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    file_type = models.CharField(
+        _('file_type'),
+        max_length=2,
+        choices=FILE_TYPE_CHOICES,
+        blank=True)
 
     REQUIRED_FIELDS = [file]
 
@@ -53,5 +50,5 @@ class File(models.Model):
             self.file_type = self.DATASET if self.dataset else self.ANALYSIS
 
     def save(self, *args, **kwargs):
-        self.uuid = slugify(self.name)
+        self.slug = slugify(self.name)
         super().save(*args, *kwargs)
