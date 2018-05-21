@@ -1,0 +1,15 @@
+- model: crux_app.dataset
+  pk: 1
+  fields:
+    name: Titanic
+    slug: titanic
+    readme: Analyze deaths on the Titanic
+    created_by: 1
+
+- model: crux_app.dataset
+  pk: 2
+  fields:
+    name: Youtube
+    slug: youtube
+    readme: Analyze user behavior patterns on https://www.youtube.com
+    created_by: 1
