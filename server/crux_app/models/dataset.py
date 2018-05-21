@@ -43,9 +43,8 @@ class Dataset(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = self._slug()
+        print(self._slug())
 
-        if not self.id:
-            self.create
         super().save(*args, **kwargs)
 
     class Meta:
