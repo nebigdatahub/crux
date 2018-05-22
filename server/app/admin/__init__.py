@@ -3,4 +3,4 @@ from .dataset import DatasetAdmin
 from .file import FileAdmin
 from .task import TaskAdmin
 from .user import UserAdmin
-from .activity import AnalysisActivityAdmin
+from .activity import ActivityAdmin

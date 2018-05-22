@@ -1,4 +1,4 @@
-from .activity import AnalysisActivity, DatasetActivity, TaskActivity
+from .activity import Activity
 from .analysis import Analysis
 from .dataset import Dataset
 from .file import File

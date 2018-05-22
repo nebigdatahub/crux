@@ -8,7 +8,7 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.fields import GenericRelation
 
-from .activity import DatasetActivity
+from .activity import Activity
 from .file import File
 
 
@@ -33,6 +33,7 @@ class Dataset(models.Model):
     )
 
     files = GenericRelation(File)
+    activity = GenericRelation(Activity)
 
     REQUIRED_FIELDS = [name, created_by]
 

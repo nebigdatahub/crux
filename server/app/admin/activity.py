@@ -1,22 +1,10 @@
 from django.contrib import admin
 from guardian.admin import GuardedModelAdmin
 
-from ..models import DatasetActivity, AnalysisActivity, TaskActivity
+from ..models import Activity
 
 
-@admin.register(AnalysisActivity)
-class AnalysisActivityAdmin(GuardedModelAdmin):
-    list_display_links = ('id', 'on', 'at', 'act_type')
-    list_display = ('id', 'on', 'at', 'act_type')
-
-
-@admin.register(DatasetActivity)
-class DatasetActivityAdmin(GuardedModelAdmin):
-    list_display_links = ('id', 'on', 'at', 'act_type')
-    list_display = ('id', 'on', 'at', 'act_type')
-
-
-@admin.register(TaskActivity)
-class TaskActivityAdmin(GuardedModelAdmin):
-    list_display_links = ('id', 'on', 'at', 'act_type')
-    list_display = ('id', 'on', 'at', 'act_type')
+@admin.register(Activity)
+class ActivityAdmin(GuardedModelAdmin):
+    list_display_links = ('id', 'at', 'kind')
+    list_display = ('id', 'at', 'kind', 'by')
