@@ -1,11 +1,11 @@
 query allAnalyses {
   allAnalyses {
     name
-    uuid
+    slug
     dataset {
-      uuid
+      slug
       name
-      description
+      readme
     }
   }
 }
@@ -13,36 +13,32 @@ query allAnalyses {
 query userAnalyses {
   userAnalyses {
     name
-    uuid
+    slug
     dataset {
-      uuid
+      slug
       name
-      description
+      readme
     }
   }
 }
 
-query analysisByUuid($uuid: String!) {
-  analysisByUuid(uuid: $uuid) {
+query analysisBySlug($slug: String!) {
+  analysisBySlug(slug: $slug) {
     name
-    description
-    uuid
+    readme
+    slug
     files {
-      uuid
+      slug
     }
   }
 }
 
-mutation createAnalysis(
-  $name: String!
-  $description: String
-  $datasetId: Int!
-) {
-  createAnalysis(
-    name: $name
-    description: $description
-    datasetId: $datasetId
-  ) {
-    success
+mutation createAnalysis($name: String!, $readme: String, $datasetId: Int!) {
+  createAnalysis(name: $name, readme: $readme, datasetId: $datasetId) {
+    analysis {
+      id
+      name
+      slug
+    }
   }
 }

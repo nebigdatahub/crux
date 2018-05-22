@@ -2,7 +2,7 @@ query userDatasets {
   userDatasets {
     id
     name
-    description
+    readme
     slug
   }
 }
@@ -11,10 +11,10 @@ query datasetBySlug($slug: String!) {
   datasetBySlug(slug: $slug) {
     slug
     name
-    description
+    readme
     analysisList {
       name
-      description
+      readme
       slug
     }
   }
@@ -22,14 +22,14 @@ query datasetBySlug($slug: String!) {
 
 query allDatasets {
   allDatasets {
-    uuid
+    slug
     name
-    description
+    readme
   }
 }
 
-query fileByUuid($uuid: String!) {
-  file(uuid: $uuid) {
+query fileBySlug($slug: String!) {
+  file(slug: $slug) {
     name
     file
     body
@@ -37,8 +37,8 @@ query fileByUuid($uuid: String!) {
   }
 }
 
-mutation createDataset($name: String!, $description: String) {
-  createDataset(name: $name, description: $description) {
+mutation createDataset($name: String!, $readme: String) {
+  createDataset(name: $name, readme: $readme) {
     success
   }
 }
