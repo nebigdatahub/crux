@@ -24,9 +24,9 @@ const Analyses = () => (
       const { allAnalyses } = data
       return (
         allAnalyses &&
-        allAnalyses.map((dataset, idx) => (
+        allAnalyses.map((analysis, idx) => (
           <div key={idx} className="column is-4-desktop">
-            <AnalysisCard {...dataset} />
+            <AnalysisCard {...analysis} />
           </div>
         ))
       )

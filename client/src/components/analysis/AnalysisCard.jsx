@@ -1,13 +1,14 @@
-import React, { Component } from "react"
-
+import React from "react"
 import { Link } from "react-router-dom"
 
-const AnalysisCard = ({ name, uuid, description }) => {
+const AnalysisCard = ({ name, slug, description }) => {
   return (
     <div className="card">
       <header className="card-header">
         <p className="card-header-title">
-          <Link to={"/analysis/" + uuid}>{name}</Link>
+          <Link to={`/${slug.split("-__-")[0]}/a/${slug.split("-__-")[1]}`}>
+            {name}
+          </Link>
         </p>
       </header>
       <div className="card-content">

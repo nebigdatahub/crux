@@ -50,7 +50,7 @@ class Analysis(models.Model):
 
     def _slug(self):
         username = self.created_by.username
-        slug = f'{username}-{slugify(self.name)}'
+        slug = f'{username}-__-{slugify(self.name)}'
 
         i = itertools.count(1)
         while(Analysis.objects.filter(slug=slug).exists()):

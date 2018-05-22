@@ -1,47 +1,51 @@
 import React, { Component } from "react"
-import {
-  Query,
-  ApolloConsumer,
-  compose,
-  graphql,
-  withApollo,
-} from "react-apollo"
-import { withRouter, Link, Route } from "react-router-dom"
+import { Query, compose } from "react-apollo"
+import { Link, Route, withRouter } from "react-router-dom"
 import Navbar from "../components/Navbar"
-import { Title, Subtitle } from "../components/elements"
-import { datasetByUuid } from "../queries/datasets.gql"
 import AnalysisCard from "../components/analysis/AnalysisCard"
+import { Subtitle, Title } from "../components/elements"
+import { datasetBySlug } from "../queries/datasets.gql"
 
 class DatasetPage extends Component {
   state = {
     activeTab: 0,
-    tabs: [{ text: "Analyses", url: "/analyses" }, { text: "Data", url: "/" }],
+    tabs: [
+      {
+        text: "Data",
+        url: "/",
+      },
+      {
+        text: "Analyses",
+        url: "/analyses",
+      },
+    ],
   }
 
   _setActiveTab = idx => this.setState({ activeTab: idx })
 
   render() {
-    const { uuid } = this.props.match.params
+    const { username, slug } = this.props.match.params
+    const finalSlug = `${username}-__-${slug}`
     return (
       <React.Fragment>
         <Navbar />
-        <Dataset uuid={uuid} />
+        <DatasetHeader slug={finalSlug} />
         <Tabs
           tabs={this.state.tabs}
           setActiveTab={this._setActiveTab}
-          uuid={uuid}
+          slug={finalSlug}
         />
         <Route
           exact
-          path={`/dataset/${uuid}/analyses`}
-          render={({ match }) => <Analyses uuid={uuid} />}
+          path={`/${username}/d/${slug}/analyses`}
+          render={({ match }) => <Analyses slug={finalSlug} />}
         />
       </React.Fragment>
     )
   }
 }
 
-const Tabs = ({ tabs, activeTab, setActiveTab, uuid }) => (
+const Tabs = ({ tabs, activeTab, setActiveTab, slug }) => (
   <div className="container">
     <div className="tabs">
       <ul>
@@ -51,7 +55,13 @@ const Tabs = ({ tabs, activeTab, setActiveTab, uuid }) => (
             className={idx == activeTab ? "is-active" : ""}
             onClick={() => setActiveTab(idx)}
           >
-            <Link to={`/dataset/${uuid}${tab.url}`}>{tab.text}</Link>
+            <Link
+              to={`/${slug.split("-__-")[0]}/d/${slug.split("-__-")[1]}${
+                tab.url
+              }`}
+            >
+              {tab.text}
+            </Link>
           </li>
         ))}
       </ul>
@@ -59,17 +69,16 @@ const Tabs = ({ tabs, activeTab, setActiveTab, uuid }) => (
   </div>
 )
 
-const Dataset = ({ uuid }) => (
+const DatasetHeader = ({ slug }) => (
   <section className="hero is-dark is-small">
     <div className="hero-body">
       <div className="container">
-        <Query query={datasetByUuid} variables={{ uuid: uuid }}>
+        <Query query={datasetBySlug} variables={{ slug: slug }}>
           {({ loading, error, data }) => {
             if (loading) return "loading"
             if (error) return "error"
 
-            const { name, description, analysis } = data.datasetByUuid
-            console.log(uuid)
+            const { name, description, analysis } = data.datasetBySlug
             return (
               <React.Fragment>
                 <Title text={name} />
@@ -83,18 +92,19 @@ const Dataset = ({ uuid }) => (
   </section>
 )
 
-const Analyses = ({ uuid }) => (
+const Analyses = ({ slug }) => (
   <div className="section container">
-    <Query query={datasetByUuid} variables={{ uuid: uuid }}>
+    <Query query={datasetBySlug} variables={{ slug: slug }}>
       {({ loading, error, data }) => {
         if (loading) return "loading"
         if (error) return "error"
 
-        const { analysisList } = data.datasetByUuid
+        const { analyses } = data.datasetBySlug
+        console.log(analyses)
         return (
           <React.Fragment>
             <div className="columns is-multiline is-mobile">
-              {analysisList.map((analysis, idx) => (
+              {analyses.map((analysis, idx) => (
                 <AnalysisCard key={idx} {...analysis} />
               ))}
             </div>

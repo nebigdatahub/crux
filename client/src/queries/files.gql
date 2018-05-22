@@ -1,0 +1,8 @@
+query fileBySlug($slug: String!) {
+  file(slug: $slug) {
+    name
+    file
+    body
+    resources
+  }
+}

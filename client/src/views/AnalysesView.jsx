@@ -47,7 +47,7 @@ class AnalysesView extends Component {
 }
 
 const Tabs = ({ tabs, activeTab, setActiveTab }) => (
-  <div className="tabs is-boxed is-centered">
+  <div className="tabs is-toggle is-fullwidth">
     <ul>
       {tabs.map((tab, idx) => (
         <li

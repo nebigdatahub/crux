@@ -1,30 +1,57 @@
 import React, { Component } from "react"
 import { Query, compose } from "react-apollo"
-import { withRouter } from "react-router-dom"
+import { Link, Route, withRouter } from "react-router-dom"
 import Navbar from "../components/Navbar"
 import AnalysisCard from "../components/analysis/AnalysisCard"
 import { Subtitle, Title } from "../components/elements"
-import { analysisByUuid } from "../queries/analyses.gql"
-import { fileByUuid } from "../queries/datasets.gql"
+import { analysisBySlug } from "../queries/analyses.gql"
+import { fileBySlug } from "../queries/files.gql"
 class AnalysisPage extends Component {
+  state = {
+    activeTab: 0,
+    tabs: [
+      {
+        text: "Notebook",
+        url: "/",
+      },
+      {
+        text: "Data",
+        url: "/dataset",
+      },
+    ],
+  }
+
+  _setActiveTab = idx => this.setState({ activeTab: idx })
+
   render() {
-    const { uuid } = this.props.match.params
+    const { username, slug } = this.props.match.params
+    const finalSlug = `${username}-__-${slug}`
     return (
       <React.Fragment>
         <Navbar />
-        <Analysis uuid={uuid} />
+        <AnalysisHeader slug={finalSlug} />
+        <Tabs
+          tabs={this.state.tabs}
+          setActiveTab={this._setActiveTab}
+          slug={finalSlug}
+        />
+        <Route
+          exact
+          path={`/${username}/a/${slug}/dataset`}
+          render={({ match }) => <Analyses slug={finalSlug} />}
+        />
       </React.Fragment>
     )
   }
 }
 
-const Analysis = ({ uuid }) => (
-  <Query query={analysisByUuid} variables={{ uuid: uuid }}>
+const AnalysisHeader = ({ slug }) => (
+  <Query query={analysisBySlug} variables={{ slug: slug }}>
     {({ loading, error, data }) => {
       if (loading) return "loading"
       if (error) return "error"
 
-      const { name, description, files } = data.analysisByUuid
+      const { name, description, files } = data.analysisBySlug
       return (
         <React.Fragment>
           <section className="hero is-dark is-small">
@@ -35,15 +62,39 @@ const Analysis = ({ uuid }) => (
               </div>
             </div>
           </section>
-          <Notebook uuid={files[0].uuid} />
+          <Notebook slug={files[0].slug} />
         </React.Fragment>
       )
     }}
   </Query>
 )
 
-const Notebook = ({ uuid }) => (
-  <Query query={fileByUuid} variables={{ uuid: uuid }}>
+const Tabs = ({ tabs, activeTab, setActiveTab, slug }) => (
+  <div className="container">
+    <div className="tabs">
+      <ul>
+        {tabs.map((tab, idx) => (
+          <li
+            key={idx}
+            className={idx == activeTab ? "is-active" : ""}
+            onClick={() => setActiveTab(idx)}
+          >
+            <Link
+              to={`/${slug.split("-__-")[0]}/a/${slug.split("-__-")[1]}${
+                tab.url
+              }`}
+            >
+              {tab.text}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+)
+
+const Notebook = ({ slug }) => (
+  <Query query={fileBySlug} variables={{ slug: slug }}>
     {({ loading, error, data }) => {
       if (loading) return "loading"
       if (error) return "error"
@@ -65,18 +116,18 @@ const Notebook = ({ uuid }) => (
   </Query>
 )
 
-const Analyses = ({ uuid }) => (
+const Analyses = ({ slug }) => (
   <div className="section container">
-    <Query query={analysisByUuid} variables={{ uuid: uuid }}>
+    <Query query={analysisBySlug} variables={{ slug: slug }}>
       {({ loading, error, data }) => {
         if (loading) return "loading"
         if (error) return "error"
 
-        const { analysisList } = data.analysisByUuid
+        const { analyses } = data.analysisBySlug
         return (
           <React.Fragment>
             <div className="columns is-multiline is-mobile">
-              {analysisList.map((analysis, idx) => (
+              {analyses.map((analysis, idx) => (
                 <AnalysisCard key={idx} {...analysis} />
               ))}
             </div>

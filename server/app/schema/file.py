@@ -19,10 +19,10 @@ class FileType(DjangoObjectType):
 
 
 class FileQuery(graphene.ObjectType):
-    file = graphene.Field(FileType, uuid=graphene.String())
+    notebook = graphene.Field(FileType, slug=graphene.String())
 
-    def resolve_file(self, info, uuid, **kwargs):
-        file = File.objects.get(uuid=uuid)
+    def resolve_notebook(self, info, slug, **kwargs):
+        file = File.objects.get(slug=slug)
         import nbformat
         from nbconvert import HTMLExporter
 

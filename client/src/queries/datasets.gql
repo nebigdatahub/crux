@@ -12,7 +12,7 @@ query datasetBySlug($slug: String!) {
     slug
     name
     readme
-    analysisList {
+    analyses {
       name
       readme
       slug
@@ -28,17 +28,12 @@ query allDatasets {
   }
 }
 
-query fileBySlug($slug: String!) {
-  file(slug: $slug) {
-    name
-    file
-    body
-    resources
-  }
-}
-
 mutation createDataset($name: String!, $readme: String) {
   createDataset(name: $name, readme: $readme) {
-    success
+    dataset {
+      id
+      name
+      slug
+    }
   }
 }

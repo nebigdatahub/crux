@@ -26,11 +26,11 @@ class App extends Component {
           render={props => <Figshare {...props} />}
         />
         <Route
-          path="/dataset/:uuid([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"
+          path="/:username([a-z0-9]+)/d/:slug([0-9a-z-_]*)"
           render={() => <DatasetPage />}
         />
         <Route
-          path="/analysis/:uuid([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"
+          path="/:username([a-z0-9]+)/a/:slug([0-9a-z-_]*)"
           render={() => <AnalysisPage />}
         />
         <Route

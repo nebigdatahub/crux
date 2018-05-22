@@ -12,15 +12,15 @@ class DatasetsView extends Component {
     tabs: [
       {
         text: "Public Datasets",
-        url: "/public",
+        url: "/datasets/public",
       },
       {
         text: "My Datasets",
-        url: "/",
+        url: "/datasets/",
       },
       {
         text: "Create New Dataset",
-        url: "/create",
+        url: "/datasets/create",
       },
     ],
   }
@@ -59,15 +59,15 @@ class DatasetsView extends Component {
 }
 
 const Tabs = ({ tabs, activeTab, setActiveTab }) => (
-  <div className="tabs is-boxed is-centered">
+  <div className="tabs is-toggle is-fullwidth">
     <ul>
-      {tabs.map((tab, idx) => (
+      {tabs.map(({ url, text }, idx) => (
         <li
           key={idx}
           className={idx == activeTab ? "is-active" : ""}
           onClick={() => setActiveTab(idx)}
         >
-          <Link to={"/datasets" + tab.url}>{tab.text}</Link>
+          <Link to={url}>{text}</Link>
         </li>
       ))}
     </ul>

@@ -24,7 +24,7 @@ class DatasetQuery(graphene.ObjectType):
     def resolve_user_datasets(self, info, **kwargs):
         if info.context.user.is_anonymous:
             return None
-        return info.context.user.dataset_set.all()
+        return info.context.user.datasets.all()
 
     def resolve_dataset_by_slug(self, info, slug, **kwargs):
         return Dataset.objects.get(slug=slug)
@@ -35,11 +35,11 @@ class CreateDataset(graphene.Mutation):
 
     class Arguments:
         name = graphene.String(required=True)
-        description = graphene.String()
+        readme = graphene.String()
         files = FileUploadType()
 
     @login_required
-    def mutate(self, info, name, description, **kwargs):
+    def mutate(self, info, name, readme=None, **kwargs):
         dataset = Dataset(
             name=name,
             created_by=info.context.user,

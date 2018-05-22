@@ -24,7 +24,7 @@ class AnalysisQuery(graphene.ObjectType):
 
     @login_required
     def resolve_user_analyses(self, info, **kwargs):
-        return info.context.user.analysis_list.all()
+        return info.context.user.analyses.all()
 
     def resolve_analysis_by_slug(self, info, slug, **kwargs):
         return Analysis.objects.get(slug=slug)
@@ -35,12 +35,12 @@ class CreateAnalysis(graphene.Mutation):
 
     class Arguments:
         name = graphene.String(required=True)
-        description = graphene.String()
+        readme = graphene.String()
         dataset_id = graphene.Int(required=True)
         files = FileUploadType()
 
     @login_required
-    def mutate(self, info, name, dataset_id, description=None, **kwargs):
+    def mutate(self, info, name, dataset_id, readme=None, **kwargs):
         dataset = Dataset.objects.get(pk=dataset_id)
         analysis = Analysis(name=name,
                             created_by=info.context.user,
