@@ -12,6 +12,7 @@ from .dataset import Dataset
 from .file import File
 from .task import Task
 from .user import User
+from .activity import Activity
 
 
 class Analysis(models.Model):
@@ -49,6 +50,7 @@ class Analysis(models.Model):
     )
 
     files = GenericRelation(File)
+    activity = GenericRelation(Activity)
 
     REQUIRED_FIELDS = [name, created_by, dataset]
 

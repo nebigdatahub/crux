@@ -43,6 +43,10 @@ class File(models.Model):
 
     def _slug(self, name):
         username = self.uploaded_by.username
-        slug = slugify(self.name)
+        slug = final_slug = slugify(self.name)
 
         i = itertools.count(1)
+        while(File.objects.filter(slug=final_slug).exists()):
+            final_slug = f'{username}-__-{slug}{next(i)}'
+
+        return final_slug
