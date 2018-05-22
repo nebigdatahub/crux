@@ -6,8 +6,10 @@ from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+from django.contrib.contenttypes.fields import GenericRelation
 
 from .activity import DatasetActivity
+from .file import File
 
 
 class Dataset(models.Model):
@@ -29,6 +31,8 @@ class Dataset(models.Model):
         on_delete=models.CASCADE,
         blank=True
     )
+
+    files = GenericRelation(File)
 
     REQUIRED_FIELDS = [name, created_by]
 

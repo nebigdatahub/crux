@@ -1,54 +1,48 @@
-from django.db import models
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
+import itertools
+
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from django.db import models
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
+
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
+from .user import User
 
 
 class File(models.Model):
     name = models.CharField(
-        _('name'),
         max_length=100,
         help_text=_('Required. 100 characters or fewer.')
     )
-
-    file = models.FileField()
-    dataset = models.ForeignKey(
-        'Dataset',
-        on_delete=models.CASCADE,
-        related_name='files',
-        blank=True,
-        null=True,)
-    analysis = models.ForeignKey(
-        'Analysis',
-        on_delete=models.CASCADE,
-        related_name='files',
-        blank=True,
-        null=True)
-
-    slug = models.SlugField(_('Slug'))
-
-    DATASET = 'DS'
-    ANALYSIS = 'AN'
-    FILE_TYPE_CHOICES = (
-        (DATASET, 'Dataset'),
-        (ANALYSIS, 'Analysis')
+    uploaded_by = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
     )
-    file_type = models.CharField(
-        _('file_type'),
-        max_length=2,
-        choices=FILE_TYPE_CHOICES,
-        blank=True)
+    file = models.FileField()
+    slug = models.SlugField(editable=False)
 
-    REQUIRED_FIELDS = [file]
+    # Fields for GenericRelation
+    content_type = models.ForeignKey(
+        ContentType,
+        on_delete=models.CASCADE
+    )
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey()
 
-    def clean(self, *args, **kwargs):
-        if not self.dataset and not self.task:
-            raise ValidationError(
-                _('File must be associated with a task or a dataset'))
-        else:
-            self.file_type = self.DATASET if self.dataset else self.ANALYSIS
+    REQUIRED_FIELDS = [file, slug]
+
+    class Meta:
+        default_related_name = 'files'
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        self.slug = self._slug(self.name)
         super().save(*args, *kwargs)
+
+    def _slug(self, name):
+        username = self.uploaded_by.username
+        slug = slugify(self.name)
+
+        i = itertools.count(1)

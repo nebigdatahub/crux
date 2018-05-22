@@ -1,5 +1,6 @@
 import itertools
 
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -8,6 +9,7 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from .dataset import Dataset
+from .file import File
 from .task import Task
 from .user import User
 
@@ -45,6 +47,8 @@ class Analysis(models.Model):
         on_delete=models.CASCADE,
         blank=True
     )
+
+    files = GenericRelation(File)
 
     REQUIRED_FIELDS = [name, created_by, dataset]
 
