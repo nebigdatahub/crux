@@ -9,8 +9,13 @@ from ..models import Dataset, File, User
 
 
 class DatasetType(DjangoObjectType):
+    files = graphene.List(FileType)
+
     class Meta:
         model = Dataset
+
+    def resolve_files(self, info, **kwargs):
+        return self.files.all()
 
 
 class DatasetQuery(graphene.ObjectType):
