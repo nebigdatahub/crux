@@ -57,3 +57,4 @@ class Analysis(models.Model):
     class Meta:
         default_related_name = 'analyses'
         verbose_name_plural = 'Analyses'
+        unique_together = ('created_by', 'slug')

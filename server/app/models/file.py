@@ -37,3 +37,4 @@ class File(models.Model):
 
     class Meta:
         default_related_name = 'files'
+        unique_together = ('created_by', 'slug')

@@ -19,6 +19,7 @@ class UserType(DjangoObjectType):
 class UserQuery(graphene.ObjectType):
     all_users = graphene.List(UserType)
     current_user = graphene.Field(UserType)
+    user_profile = graphene.Field(UserType, username=graphene.String())
 
     def resolve_current_user(self, info, **kwargs):
         if info.context.user.is_anonymous:
@@ -27,6 +28,9 @@ class UserQuery(graphene.ObjectType):
 
     def resolve_user_by_email(self, info, email, **kwargs):
         return User.objects.get(email=email)
+
+    def resolve_user_profile(self, info, username, **kwargs):
+        return User.objects.get(username=username)
 
     @staff_member_required
     def resolve_all_users(self, info, **kwargs):

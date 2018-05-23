@@ -38,3 +38,4 @@ class Dataset(models.Model):
 
     class Meta:
         default_related_name = 'datasets'
+        unique_together = ('created_by', 'slug')

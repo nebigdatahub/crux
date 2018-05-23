@@ -5,7 +5,7 @@ from graphql_extensions.auth.decorators import (login_required,
                                                 staff_member_required)
 
 from .file import FileType, FileUploadType
-from ..models import Dataset, File
+from ..models import Dataset, File, User
 
 
 class DatasetType(DjangoObjectType):
@@ -15,16 +15,18 @@ class DatasetType(DjangoObjectType):
 
 class DatasetQuery(graphene.ObjectType):
     all_datasets = graphene.List(DatasetType)
-    user_datasets = graphene.List(DatasetType)
+    users_datasets = graphene.List(DatasetType, username=graphene.String())
     dataset_by_slug = graphene.Field(DatasetType, slug=graphene.String())
 
     def resolve_all_datasets(self, info, **kwargs):
         return Dataset.objects.all()
 
-    def resolve_user_datasets(self, info, **kwargs):
+    def resolve_users_datasets(self, info, username=None, **kwargs):
         if info.context.user.is_anonymous:
             return None
-        return info.context.user.datasets.all()
+        if not username:
+            return info.context.user.datasets.all()
+        return User.objects.get(username=username).datasets.all()
 
     def resolve_dataset_by_slug(self, info, slug, **kwargs):
         return Dataset.objects.get(slug=slug)

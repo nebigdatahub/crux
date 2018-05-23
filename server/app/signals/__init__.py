@@ -29,11 +29,11 @@ def _generate_slug(sender, instance):
         return
     if instance.slug:
         return
-    username = instance.created_by.username
-    slug = f'{username}-__-{slugify(instance.name)}'
+    user = instance.created_by
+    slug = final_slug = f'{slugify(instance.name)}'
 
     i = itertools.count(1)
-    while(sender.objects.filter(slug=slug).exists()):
-        slug = f'{username}-__-{slugify(instance.name)}{next(i)}'
-    instance.slug = slug
+    while(sender.objects.filter(created_by=user, slug=final_slug).exists()):
+        final_slug = f'{slug}{next(i)}'
+    instance.slug = final_slug
     instance.save()

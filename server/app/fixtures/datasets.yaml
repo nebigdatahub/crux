@@ -10,7 +10,7 @@
   fields:
     name: Youtube
     readme: Analyze user behavior patterns on https://www.youtube.com
-    created_by: 1
+    created_by: 2
 
 - model: app.task
   pk: 1
