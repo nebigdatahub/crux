@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-const DatasetCard = ({ name, slug, description }) => {
+const DatasetCard = ({ name, slug, readme }) => {
   return (
     <div className="card">
       <header className="card-header">
@@ -12,7 +12,7 @@ const DatasetCard = ({ name, slug, description }) => {
         </p>
       </header>
       <div className="card-content">
-        <p className="content">{description}</p>
+        <p className="content">{readme}</p>
       </div>
     </div>
   )
