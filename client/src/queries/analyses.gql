@@ -2,10 +2,15 @@ query allAnalyses {
   allAnalyses {
     name
     slug
+    readme
     dataset {
-      slug
       name
+      slug
       readme
+      files {
+        name
+        file
+      }
     }
   }
 }
@@ -14,10 +19,15 @@ query userAnalyses {
   userAnalyses {
     name
     slug
+    readme
     dataset {
-      slug
       name
+      slug
       readme
+      files {
+        name
+        file
+      }
     }
   }
 }

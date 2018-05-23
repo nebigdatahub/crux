@@ -4,7 +4,7 @@ import { Link, Route, withRouter } from "react-router-dom"
 import Navbar from "../components/Navbar"
 import AnalysisCard from "../components/analysis/AnalysisCard"
 import { Subtitle, Title } from "../components/elements"
-import { datasetBySlug } from "../queries/datasets.gql"
+import { dataset } from "../queries/datasets.gql"
 
 class DatasetPage extends Component {
   state = {
@@ -25,43 +25,37 @@ class DatasetPage extends Component {
 
   render() {
     const { username, slug } = this.props.match.params
-    const finalSlug = `${username}-__-${slug}`
     return (
       <React.Fragment>
         <Navbar />
-        <DatasetHeader slug={finalSlug} />
+        <DatasetHeader username={username} slug={slug} />
         <Tabs
           tabs={this.state.tabs}
           setActiveTab={this._setActiveTab}
-          slug={finalSlug}
+          username={username}
+          slug={slug}
         />
         <Route
           exact
           path={`/${username}/d/${slug}/analyses`}
-          render={({ match }) => <Analyses slug={finalSlug} />}
+          render={() => <Analyses username={username} slug={slug} />}
         />
       </React.Fragment>
     )
   }
 }
 
-const Tabs = ({ tabs, activeTab, setActiveTab, slug }) => (
+const Tabs = ({ tabs, activeTab, setActiveTab, username, slug }) => (
   <div className="container">
     <div className="tabs">
       <ul>
-        {tabs.map((tab, idx) => (
+        {tabs.map(({ url, text }, idx) => (
           <li
             key={idx}
             className={idx == activeTab ? "is-active" : ""}
             onClick={() => setActiveTab(idx)}
           >
-            <Link
-              to={`/${slug.split("-__-")[0]}/d/${slug.split("-__-")[1]}${
-                tab.url
-              }`}
-            >
-              {tab.text}
-            </Link>
+            <Link to={`/${username}/d/${slug}${url}`}>{text}</Link>
           </li>
         ))}
       </ul>
@@ -69,16 +63,16 @@ const Tabs = ({ tabs, activeTab, setActiveTab, slug }) => (
   </div>
 )
 
-const DatasetHeader = ({ slug }) => (
+const DatasetHeader = ({ username, slug }) => (
   <section className="hero is-dark is-small">
     <div className="hero-body">
       <div className="container">
-        <Query query={datasetBySlug} variables={{ slug: slug }}>
+        <Query query={dataset} variables={{ username: username, slug: slug }}>
           {({ loading, error, data }) => {
             if (loading) return "loading"
             if (error) return "error"
 
-            const { name, description, analysis } = data.datasetBySlug
+            const { name, description } = data.dataset
             return (
               <React.Fragment>
                 <Title text={name} />
@@ -92,14 +86,14 @@ const DatasetHeader = ({ slug }) => (
   </section>
 )
 
-const Analyses = ({ slug }) => (
+const Analyses = ({ username, slug }) => (
   <div className="section container">
-    <Query query={datasetBySlug} variables={{ slug: slug }}>
+    <Query query={dataset} variables={{ username: username, slug: slug }}>
       {({ loading, error, data }) => {
         if (loading) return "loading"
         if (error) return "error"
 
-        const { analyses } = data.datasetBySlug
+        const { analyses } = data.dataset
         console.log(analyses)
         return (
           <React.Fragment>

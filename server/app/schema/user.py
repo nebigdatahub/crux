@@ -26,9 +26,6 @@ class UserQuery(graphene.ObjectType):
             return None
         return info.context.user
 
-    def resolve_user_by_email(self, info, email, **kwargs):
-        return User.objects.get(email=email)
-
     def resolve_user_profile(self, info, username, **kwargs):
         return User.objects.get(username=username)
 

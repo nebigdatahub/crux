@@ -10,7 +10,7 @@ class AnalysesView extends Component {
   state = {
     activeTab: 0,
     tabs: [
-      { text: "Public", url: "/public" },
+      { text: "All", url: "/all" },
       { text: "My analyses", url: "/" },
       { text: "New Analysis", url: "/create" },
     ],
@@ -49,13 +49,13 @@ class AnalysesView extends Component {
 const Tabs = ({ tabs, activeTab, setActiveTab }) => (
   <div className="tabs is-toggle is-fullwidth">
     <ul>
-      {tabs.map((tab, idx) => (
+      {tabs.map(({ url, text }, idx) => (
         <li
           key={idx}
           className={idx == activeTab ? "is-active" : ""}
           onClick={() => setActiveTab(idx)}
         >
-          <Link to={"/analyses" + tab.url}>{tab.text}</Link>
+          <Link to={"/analyses" + url}>{text}</Link>
         </li>
       ))}
     </ul>
@@ -65,7 +65,7 @@ const Tabs = ({ tabs, activeTab, setActiveTab }) => (
 const Routes = () => (
   <React.Fragment>
     <Route
-      path="/analyses/public"
+      path="/analyses/all"
       exact={true}
       render={() => <AnalysesPublic />}
     />

@@ -1,9 +1,7 @@
 import React, { Component } from "react"
 import { Query } from "react-apollo"
-
-import DatasetCard from "./DatasetCard"
-
 import { allDatasets } from "../../queries/datasets.gql"
+import DatasetCard from "./DatasetCard"
 
 class DatasetsPublic extends Component {
   render() {

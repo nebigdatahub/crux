@@ -11,7 +11,7 @@ query usersDatasets {
 }
 
 query dataset($username: String!, $slug: String!) {
-  dataset(username: $username!, slug: $slug) {
+  dataset(username: $username, slug: $slug) {
     slug
     name
     readme
@@ -28,6 +28,9 @@ query allDatasets {
     slug
     name
     readme
+    createdBy {
+      username
+    }
   }
 }
 

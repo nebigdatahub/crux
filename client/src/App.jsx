@@ -9,6 +9,7 @@ import DatasetPage from "./views/DatasetPage"
 import DatasetsView from "./views/DatasetsView"
 import HomeView from "./views/HomeView"
 import UserPage from "./views/UserPage"
+import UsersDatasets from "./views/UsersDatasets"
 
 class App extends Component {
   render() {
@@ -34,8 +35,11 @@ class App extends Component {
           render={() => <AnalysisPage />}
         />
         <Route
-          exact
-          path="/:username(([a-z0-9]+){1})"
+          path="/:username([a-z0-9]+)/datasets"
+          render={() => <UsersDatasets />}
+        />
+        <Route
+          path="/:username([a-z0-9]+)/profile"
           render={props => <UserPage {...props} />}
         />
       </React.Fragment>
