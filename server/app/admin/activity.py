@@ -6,5 +6,5 @@ from ..models import Activity
 
 @admin.register(Activity)
 class ActivityAdmin(GuardedModelAdmin):
-    list_display_links = ('id', 'at', 'kind')
-    list_display = ('id', 'at', 'kind', 'by')
+    list_display_links = ('id', 'kind')
+    list_display = ('id', 'content_type', 'kind', 'by', 'at')

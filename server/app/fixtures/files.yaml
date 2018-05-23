@@ -1,0 +1,36 @@
+- model: app.file
+  pk: 1
+  fields:
+    name: Titanic Analysis
+    created_by: 1
+    file: titanic1.py
+    content_type: 15
+    object_id: 1
+
+- model: app.file
+  pk: 2
+  fields:
+    name: Youtube analysis
+    created_by: 1
+    file: titanic2.py
+    content_type: 15
+    object_id: 2
+
+- model: app.file
+  pk: 3
+  fields:
+    name: titanic analysis
+    created_by: 2
+    file: youtube1.py
+    content_type: 15
+    object_id: 3
+
+- model: app.file
+  pk: 4
+  fields:
+    name: Youtube dataset notebook
+    created_by: 2
+    file: youtube2.py
+    content_type: 15
+    object_id: 4
+

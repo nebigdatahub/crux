@@ -1,8 +1,11 @@
-from django.db import models
-from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.fields import GenericRelation
+from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.translation import gettext_lazy as _
+
+from .activity import Activity
 
 
 class Task(models.Model):
@@ -22,6 +25,8 @@ class Task(models.Model):
         'User',
         on_delete=models.CASCADE
     )
+
+    activity = GenericRelation(Activity)
 
     REQUIRED_FIELDS = [dataset, created_by]
 

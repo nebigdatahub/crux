@@ -54,19 +54,6 @@ class Analysis(models.Model):
 
     REQUIRED_FIELDS = [name, created_by, dataset]
 
-    def _slug(self):
-        username = self.created_by.username
-        slug = f'{username}-__-{slugify(self.name)}'
-
-        i = itertools.count(1)
-        while(Analysis.objects.filter(slug=slug).exists()):
-            slug = f'{username}-__-{slugify(self.name)}{next(i)}'
-        return slug
-
-    def save(self, *args, **kwargs):
-        self.slug = self._slug()
-        super().save(*args, **kwargs)
-
     class Meta:
         default_related_name = 'analyses'
         verbose_name_plural = 'Analyses'

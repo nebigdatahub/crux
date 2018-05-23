@@ -1,0 +1,37 @@
+- model: app.analysis
+  pk: 1
+  fields: 
+    name: Titanic Analysis
+    readme: Analysis for Titanic dataset
+    slug: sabnatarajan-__-titanic-analysis
+    dataset: 1
+    task: 1
+    created_by: 1
+
+- model: app.analysis
+  pk: 2
+  fields: 
+    name: Titanic dataset Analysis
+    readme: Analyzing deaths on the Titanic
+    slug: sn2744-__-titanic-analysis
+    dataset: 1
+    created_by: 2
+
+- model: app.analysis
+  pk: 3
+  fields: 
+    name: Youtube users Analysis
+    readme: Analysis for Youtube dataset
+    slug: sabnatarajan-__-youtube-analysis
+    dataset: 2
+    task: 1
+    created_by: 1
+
+- model: app.analysis
+  pk: 4
+  fields: 
+    name: Analysis of Youtube usage behavior
+    readme: Analysis of Youtube usage behavior
+    slug: sn2744-__-youtube-user-analysis
+    dataset: 2
+    created_by: 2

@@ -36,17 +36,5 @@ class Dataset(models.Model):
 
     REQUIRED_FIELDS = [name, created_by]
 
-    def _slug(self):
-        username = self.created_by.username
-        slug = f'{username}-__-{slugify(self.name)}'
-        counter = itertools.count(1)
-        while Dataset.objects.filter(slug=slug).exists():
-            slug = f'{username}-__-{slugify(self.name)}{next(counter)}'
-        return slug
-
-    def save(self, *args, **kwargs):
-        self.slug = self._slug()
-        super().save(*args, **kwargs)
-
     class Meta:
         default_related_name = 'datasets'

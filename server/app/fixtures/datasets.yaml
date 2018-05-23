@@ -2,7 +2,6 @@
   pk: 1
   fields:
     name: Titanic
-    slug: sabnatarajan-__-titanic
     readme: Analyze deaths on the Titanic
     created_by: 1
 
@@ -10,6 +9,13 @@
   pk: 2
   fields:
     name: Youtube
-    slug: sabnatarajan-__-youtube
     readme: Analyze user behavior patterns on https://www.youtube.com
+    created_by: 1
+
+- model: app.task
+  pk: 1
+  fields:
+    name: Who died on the Titanic?
+    readme: Predict the survival of passengers on the Titanic
+    dataset: 1
     created_by: 1
