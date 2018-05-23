@@ -1,14 +1,17 @@
-query userDatasets {
-  userDatasets {
+query usersDatasets {
+  usersDatasets {
     id
     name
     readme
     slug
+    createdBy {
+      username
+    }
   }
 }
 
-query datasetBySlug($slug: String!) {
-  datasetBySlug(slug: $slug) {
+query dataset($username: String!, $slug: String!) {
+  dataset(username: $username!, slug: $slug) {
     slug
     name
     readme

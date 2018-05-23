@@ -16,7 +16,8 @@ class DatasetType(DjangoObjectType):
 class DatasetQuery(graphene.ObjectType):
     all_datasets = graphene.List(DatasetType)
     users_datasets = graphene.List(DatasetType, username=graphene.String())
-    dataset_by_slug = graphene.Field(DatasetType, slug=graphene.String())
+    dataset = graphene.Field(
+        DatasetType, username=graphene.String(), slug=graphene.String())
 
     def resolve_all_datasets(self, info, **kwargs):
         return Dataset.objects.all()
@@ -28,8 +29,9 @@ class DatasetQuery(graphene.ObjectType):
             return info.context.user.datasets.all()
         return User.objects.get(username=username).datasets.all()
 
-    def resolve_dataset_by_slug(self, info, slug, **kwargs):
-        return Dataset.objects.get(slug=slug)
+    def resolve_dataset(self, info, username, slug, **kwargs):
+        user = User.objects.get(username=username)
+        return Dataset.objects.get(created_by=user, slug=slug)
 
 
 class CreateDataset(graphene.Mutation):
