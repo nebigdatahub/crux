@@ -1,8 +1,7 @@
-query fileBySlug($slug: String!) {
-  file(slug: $slug) {
+query notebook($slug: String!) {
+  notebook(slug: $slug) {
     name
     file
-    body
-    resources
+    content
   }
 }

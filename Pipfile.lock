@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3b01b925bfb63524e570317496bf9ec594f706a90f876e28c0682294391227ce"
+            "sha256": "165ea9df8c6cd493be5159b664140c2a51612143fff70ba0447f1d71df50de76"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -67,7 +67,6 @@
                 "sha256:702a91ade2968a82beb0db1e0766a6a273f33d4616a6ce8cde475d8e09853b20",
                 "sha256:24d7f2f94f7f3cb6061acb215685e5125fbcdc40a857eff9de22518820b0a4f4"
             ],
-            "markers": "python_version >= '3.0'",
             "version": "==0.5.0"
         },
         "dj-database-url": {
@@ -160,6 +159,13 @@
                 "sha256:70d9358bc48c806b6a9458e8344f0a1211cd1f1ef923a092aa55e6bcacc2c3fc"
             ],
             "version": "==2.0.0"
+        },
+        "graphene-django-extras": {
+            "hashes": [
+                "sha256:681a44ae198e5f4bf5506ad46de4a8788a493305d7d8dc37875ea73083532c44",
+                "sha256:3cf89ee228ba83881aa29215cfbd87669efd85d0a2bc06460911d3078aeff392"
+            ],
+            "version": "==0.3.7"
         },
         "graphql-core": {
             "hashes": [
@@ -260,10 +266,10 @@
         },
         "oauthlib": {
             "hashes": [
-                "sha256:09d438bcac8f004ae348e721e9d8a7792a9e23cd574634e973173344046287f5",
-                "sha256:909665297635fa11fe9914c146d875f2ed41c8c2d78e21a529dd71c0ba756508"
+                "sha256:d883b36b21a6ad813953803edfa563b1b579d79ca758fe950d1bc9e8b326025b",
+                "sha256:ac35665a61c1685c56336bda97d5eefa246f1202618a1d6f34fccb1bdd404162"
             ],
-            "version": "==2.0.7"
+            "version": "==2.1.0"
         },
         "pandocfilters": {
             "hashes": [

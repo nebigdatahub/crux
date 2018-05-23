@@ -28,7 +28,9 @@ query analysisBySlug($slug: String!) {
     readme
     slug
     files {
+      name
       slug
+      content
     }
   }
 }

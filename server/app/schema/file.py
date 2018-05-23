@@ -1,9 +1,11 @@
 import graphene
 import graphql_jwt
+import nbformat
 from django.contrib.auth import get_user_model
 from graphene_django import DjangoObjectType
 from graphql_extensions.auth.decorators import (login_required,
                                                 staff_member_required)
+from nbconvert import HTMLExporter
 
 from settings.common import BASE_DIR
 
@@ -11,29 +13,26 @@ from ..models import Dataset, File
 
 
 class FileType(DjangoObjectType):
-    body = graphene.String()
-    resources = graphene.String()
-
     class Meta:
         model = File
 
 
-class FileQuery(graphene.ObjectType):
-    notebook = graphene.Field(FileType, slug=graphene.String())
+class NotebookType(DjangoObjectType):
+    content = graphene.String()
 
-    def resolve_notebook(self, info, slug, **kwargs):
-        file = File.objects.get(slug=slug)
-        import nbformat
-        from nbconvert import HTMLExporter
+    class Meta:
+        model = File
 
-        with file.file.open() as f:
+    def resolve_content(self, info, **kwargs):
+        with self.file.open() as f:
             notebook = nbformat.reads(f.read(), as_version=4)
             html_exporter = HTMLExporter()
             body, resources = html_exporter.from_notebook_node(notebook)
+        return body
 
-        file.body = body
-        file.resources = ' '.join(resources['inlining']['css'])
-        return file
+
+class FileQuery(graphene.ObjectType):
+    pass
 
 
 class FileUploadType(graphene.Scalar):
@@ -42,7 +41,6 @@ class FileUploadType(graphene.Scalar):
 
 
 class UploadFiles(graphene.Mutation):
-    success = graphene.Boolean()
     uploaded_files = graphene.List(FileType)
 
     class Arguments:
@@ -59,7 +57,7 @@ class UploadFiles(graphene.Mutation):
             file.save()
             files.append(file)
 
-        return UploadFiles(success=True, uploaded_files=files)
+        return UploadFiles(uploaded_files=files)
 
 
 class FileMutation(graphene.ObjectType):

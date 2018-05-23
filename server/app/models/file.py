@@ -15,7 +15,6 @@ from .user import User
 class File(models.Model):
     name = models.CharField(
         max_length=100,
-        help_text=_('Required. 100 characters or fewer.')
     )
     uploaded_by = models.ForeignKey(
         User,

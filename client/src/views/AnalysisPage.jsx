@@ -5,7 +5,6 @@ import Navbar from "../components/Navbar"
 import AnalysisCard from "../components/analysis/AnalysisCard"
 import { Subtitle, Title } from "../components/elements"
 import { analysisBySlug } from "../queries/analyses.gql"
-import { fileBySlug } from "../queries/files.gql"
 class AnalysisPage extends Component {
   state = {
     activeTab: 0,
@@ -29,63 +28,68 @@ class AnalysisPage extends Component {
     return (
       <React.Fragment>
         <Navbar />
-        <AnalysisHeader slug={finalSlug} />
-        <Tabs
-          tabs={this.state.tabs}
-          setActiveTab={this._setActiveTab}
-          slug={finalSlug}
-        />
+        <AnalysisProvider slug={finalSlug}>
+          <AnalysisHeader />
+          <Tabs
+            tabs={this.state.tabs}
+            setActiveTab={this._setActiveTab}
+            username={username}
+            slug={slug}
+          />
+          {/* <Route
+            exact
+            path={`/${username}/a/${slug}/dataset`}
+            render={({ match }) => <Analyses slug={finalSlug} />}
+          /> */}
+        </AnalysisProvider>
         <Route
           exact
-          path={`/${username}/a/${slug}/dataset`}
-          render={({ match }) => <Analyses slug={finalSlug} />}
+          path={`/${username}/a/${slug}/`}
+          render={() => <Notebook slug={finalSlug} />}
         />
       </React.Fragment>
     )
   }
 }
 
-const AnalysisHeader = ({ slug }) => (
+const AnalysisProvider = ({ slug, children }) => (
   <Query query={analysisBySlug} variables={{ slug: slug }}>
     {({ loading, error, data }) => {
       if (loading) return "loading"
       if (error) return "error"
 
-      const { name, description, files } = data.analysisBySlug
-      return (
-        <React.Fragment>
-          <section className="hero is-dark is-small">
-            <div className="hero-body">
-              <div className="container">
-                <Title text={name} />
-                <Subtitle text={description} />
-              </div>
-            </div>
-          </section>
-          <Notebook slug={files[0].slug} />
-        </React.Fragment>
+      const { analysisBySlug } = data
+      return React.Children.map(children, child =>
+        React.cloneElement(child, { analysis: analysisBySlug })
       )
     }}
   </Query>
 )
 
-const Tabs = ({ tabs, activeTab, setActiveTab, slug }) => (
+const AnalysisHeader = ({ analysis: { name, description } }) => (
+  <React.Fragment>
+    <section className="hero is-dark is-small">
+      <div className="hero-body">
+        <div className="container">
+          <Title text={name} />
+          <Subtitle text={description} />
+        </div>
+      </div>
+    </section>
+  </React.Fragment>
+)
+
+const Tabs = ({ tabs, activeTab, setActiveTab, username, slug }) => (
   <div className="container">
     <div className="tabs">
       <ul>
-        {tabs.map((tab, idx) => (
+        {tabs.map(({ url, text }, idx) => (
           <li
             key={idx}
             className={idx == activeTab ? "is-active" : ""}
             onClick={() => setActiveTab(idx)}
           >
-            <Link
-              to={`/${slug.split("-__-")[0]}/a/${slug.split("-__-")[1]}${
-                tab.url
-              }`}
-            >
-              {tab.text}
-            </Link>
+            <Link to={`/${username}/a/${slug}${url}`}>{text}</Link>
           </li>
         ))}
       </ul>
@@ -94,18 +98,21 @@ const Tabs = ({ tabs, activeTab, setActiveTab, slug }) => (
 )
 
 const Notebook = ({ slug }) => (
-  <Query query={fileBySlug} variables={{ slug: slug }}>
+  <Query query={analysisBySlug} variables={{ slug: slug }}>
     {({ loading, error, data }) => {
       if (loading) return "loading"
       if (error) return "error"
 
-      const { body, resources } = data.file
+      const {
+        analysisBySlug: { files },
+      } = data
 
+      const { content } = files && files[0]
       return (
         <section className="section container notebook">
           <iframe
-            src={"data:text/html; charset=utf-8," + escape(body)}
-            scrolling="no"
+            src={"data:text/html; charset=utf-8," + escape(content)}
+            // scrolling="no"
             frameBorder="0"
             height="100%"
             width="100%"

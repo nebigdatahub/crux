@@ -4,14 +4,19 @@ from graphene_django import DjangoObjectType
 from graphql_extensions.auth.decorators import (login_required,
                                                 staff_member_required)
 
-from .file import FileType, FileUploadType
+from .file import FileType, FileUploadType, NotebookType
 from ..models import Dataset, File, Analysis
 from .dataset import DatasetType
 
 
 class AnalysisType(DjangoObjectType):
+    files = graphene.List(NotebookType)
+
     class Meta:
         model = Analysis
+
+    def resolve_files(self, info, **kwargs):
+        return self.files.all()
 
 
 class AnalysisQuery(graphene.ObjectType):
@@ -48,11 +53,11 @@ class CreateAnalysis(graphene.Mutation):
                             **kwargs)
         analysis.save()
         for f in info.context.FILES.getlist('files'):
-            file = File(file=f,
-                        file_type='DS',
-                        ** kwargs)
-            file.save()
-            analysis.files.add(file)
+            analysis.files.create(
+                name=f'{name}-file',
+                file=f,
+                uploaded_by=info.context.user
+            )
 
         return CreateAnalysis(analysis=analysis)
 

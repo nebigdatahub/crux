@@ -15,7 +15,6 @@ from .file import File
 class Dataset(models.Model):
     name = models.CharField(
         max_length=100,
-        help_text=_('Required. 100 characters or fewer.')
     )
 
     readme = models.TextField(

@@ -23,6 +23,7 @@ django-graphql-social-auth = {extras = ["jwt"]}
 social-auth-app-django = "*"
 pyyaml = "*"
 "psycopg2-binary" = "*"
+graphene-django-extras = "*"
 
 
 [dev-packages]
