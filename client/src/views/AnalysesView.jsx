@@ -17,7 +17,7 @@ class AnalysesView extends Component {
     })
   }
   render() {
-    const username = "sabnatarajan"
+    const username = localStorage.getItem("username")
     const { activeTab } = this.state
     return (
       <React.Fragment>

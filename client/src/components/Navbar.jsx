@@ -53,6 +53,7 @@ const CurrentUser = () => {
         if (loading) return ""
 
         const { firstName, lastName, username, email } = data.currentUser
+        localStorage.setItem("username", username)
         const displayName = `${firstName} ${lastName}` || `${username}`
         return (
           <div className="navbar-item has-dropdown is-hoverable">
