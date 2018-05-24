@@ -12,7 +12,7 @@
 - model: app.user
   pk: 2
   fields:
-    email: sn2744@gmail.com
+    email: sn2744@columbia.edu
     password: pbkdf2_sha256$100000$fgKEIZHhv3rh$vWyZQAxVZMJtiO2jRQ5u/VThuVvwL2mSZ1ceJ1eLRrg=
     first_name: Sab
     last_name: Natarajan
