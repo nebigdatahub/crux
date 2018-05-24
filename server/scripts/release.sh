@@ -1,7 +1,5 @@
 #!/bin/bash
 
-pipenv shell
-
 echo "+--------------------------+"
 echo "|    Running migrations    |"
 echo "+--------------------------+"
