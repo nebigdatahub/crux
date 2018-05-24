@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo "+--------------------------+"
-echo "|    Running migrations    |"
-echo "+--------------------------+"
-python server/manage.py migrate
+# echo "+--------------------------+"
+# echo "|    Running migrations    |"
+# echo "+--------------------------+"
+# python server/manage.py migrate
 
 # echo "+--------------------------+"
 # echo "|       Loading data       |"
