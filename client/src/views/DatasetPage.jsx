@@ -93,13 +93,16 @@ const Analyses = ({ username, slug }) => (
         if (loading) return "loading"
         if (error) return "error"
 
+        console.log(data)
         const { analyses } = data.dataset
         console.log(analyses)
         return (
           <React.Fragment>
             <div className="columns is-multiline is-mobile">
               {analyses.map((analysis, idx) => (
-                <AnalysisCard key={idx} {...analysis} />
+                <div className="column is-4-desktop">
+                  <AnalysisCard key={idx} {...analysis} />
+                </div>
               ))}
             </div>
           </React.Fragment>
