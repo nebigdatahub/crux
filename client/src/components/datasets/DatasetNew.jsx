@@ -1,10 +1,6 @@
 import React, { Component } from "react"
-import { Link } from "react-router-dom"
-
-import { compose, graphql, Mutation } from "react-apollo"
-import gql from "graphql-tag"
-
-import { userDatasets, createDataset } from "../../queries/datasets.gql"
+import { Mutation } from "react-apollo"
+import { createDataset } from "../../queries/datasets.gql"
 
 class DatasetNew extends Component {
   state = {
@@ -70,7 +66,6 @@ class DatasetNew extends Component {
 
   _handleFileChange = (file, key) => {
     let { files } = this.state
-    console.log(files)
     files[key] = file
     this.setState({
       files: files,

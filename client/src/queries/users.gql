@@ -1,4 +1,22 @@
-mutation createUserMutation($email: String!, $password: String!) {
+query userProfile($username: String!) {
+  userProfile(username: $username) {
+    firstName
+    lastName
+    username
+    email
+  }
+}
+
+query currentUser {
+  currentUser {
+    firstName
+    lastName
+    username
+    email
+  }
+}
+
+mutation createUser($email: String!, $password: String) {
   createUser(email: $email, password: $password) {
     user {
       id
@@ -6,20 +24,17 @@ mutation createUserMutation($email: String!, $password: String!) {
   }
 }
 
-mutation verifyTokenMutation($token: String!) {
-  verifyToken(token: $token) {
-    payload
-  }
-}
-
-mutation refreshTokenMutation($token: String!) {
-  refreshToken(token: $token) {
-    payload
-  }
-}
-
-mutation loginUserMutation($email: String!, $password: String!) {
+mutation loginUser($email: String!, $password: String!) {
   loginUser(email: $email, password: $password) {
+    token
+  }
+}
+
+mutation socialAuth($provider: String!, $accessToken: String!) {
+  socialAuth(provider: $provider, accessToken: $accessToken) {
+    social {
+      uid
+    }
     token
   }
 }

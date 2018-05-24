@@ -14,13 +14,16 @@ whitenoise = "*"
 graphene = "*"
 graphene-django = "*"
 django-graphql-jwt = "*"
-django-graphql-social-auth = "*"
 django-graphql-extensions = "*"
 django-cors-headers = "*"
 nbconvert = "*"
 dj-database-url = "*"
-"psycopg2" = "*"
 django-guardian = "*"
+django-graphql-social-auth = {extras = ["jwt"]}
+social-auth-app-django = "*"
+pyyaml = "*"
+"psycopg2-binary" = "*"
+graphene-django-extras = "*"
 
 
 [dev-packages]

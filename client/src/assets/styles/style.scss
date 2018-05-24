@@ -14,9 +14,8 @@ $fa-font-path: "~@fortawesome/fontawesome-free-webfonts/webfonts";
   background-color: #12121212;
 }
 
-.card,
-.card-content {
-  height: 15em;
+.card {
+  height: 100%;
 }
 
 #signup-form {
@@ -58,4 +57,24 @@ $fa-font-path: "~@fortawesome/fontawesome-free-webfonts/webfonts";
 section.column {
   margin-left: 0.75rem;
   margin-right: 0.75rem;
+}
+
+.modal-card-body > .select select {
+  height: unset;
+}
+
+.notebook {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 35px;
+  height: 0;
+  overflow: hidden;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }

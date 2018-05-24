@@ -1,77 +1,45 @@
-query userDatasets {
-  userDatasets {
+query usersDatasets {
+  usersDatasets {
+    id
     name
-    description
-    uuid
+    readme
+    slug
+    createdBy {
+      username
+    }
   }
 }
 
-query datasetByUuid($uuid: String!) {
-  datasetByUuid(uuid: $uuid) {
-    uuid
+query dataset($username: String!, $slug: String!) {
+  dataset(username: $username, slug: $slug) {
+    slug
     name
-    description
-    analysisList {
+    readme
+    analyses {
       name
-      description
-      uuid
+      readme
+      slug
     }
   }
 }
 
 query allDatasets {
   allDatasets {
-    uuid
+    slug
     name
-    description
+    readme
+    createdBy {
+      username
+    }
   }
 }
 
-query allAnalyses {
-  allAnalyses {
-    name
-    uuid
+mutation createDataset($name: String!, $readme: String) {
+  createDataset(name: $name, readme: $readme) {
     dataset {
-      uuid
+      id
       name
-      description
+      slug
     }
-  }
-}
-
-query userAnalyses {
-  userAnalyses {
-    name
-    uuid
-    dataset {
-      uuid
-      name
-      description
-    }
-  }
-}
-
-query analysisByUuid($uuid: String!) {
-  analysisByUuid(uuid: $uuid) {
-    name
-    description
-    uuid
-    files {
-      uuid
-    }
-  }
-}
-
-query fileByUuid($uuid: String!) {
-  file(uuid: $uuid) {
-    name
-    file
-    content
-  }
-}
-
-mutation createDataset($name: String!, $description: String) {
-  createDataset(name: $name, description: $description) {
-    success
   }
 }

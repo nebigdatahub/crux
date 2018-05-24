@@ -1,10 +1,9 @@
 import React, { Component } from "react"
+import { Query } from "react-apollo"
 import { Link } from "react-router-dom"
-import { graphql, compose, Query } from "react-apollo"
-import { config } from "../config"
-import gql from "graphql-tag"
-
 import logo from "../assets/files/logo.png"
+import { TOKEN_NAME } from "../config"
+import { currentUser } from "../queries/users.gql"
 
 class Navbar extends Component {
   render() {
@@ -41,23 +40,21 @@ class Navbar extends Component {
 }
 
 const CurrentUser = () => {
+  const token = localStorage.getItem(TOKEN_NAME)
+  if (token === null)
+    return (
+      <Link to="/login" className="is-primary">
+        Log In
+      </Link>
+    )
   return (
-    <Query query={CURRENT_USER}>
+    <Query query={currentUser}>
       {({ loading, error, data }) => {
-        if (loading) return "loading"
-        if (error)
-          return (
-            <Link to="/login" className="is-primary">
-              Log In
-            </Link>
-          )
+        if (loading) return ""
+
         const { firstName, lastName, username, email } = data.currentUser
-        const displayName =
-          "" + firstName
-            ? firstName + " " + lastName
-            : username
-              ? username
-              : email
+        localStorage.setItem("username", username)
+        const displayName = `${firstName} ${lastName}` || `${username}`
         return (
           <div className="navbar-item has-dropdown is-hoverable">
             <a className="navbar-link">
@@ -67,7 +64,7 @@ const CurrentUser = () => {
             </a>
             <div className="navbar-dropdown is-right">
               <div className="navbar-item">
-                <Link to={"/" + username}>{displayName}</Link>
+                <Link to={`/${username}/profile`}>{displayName}</Link>
               </div>
               <hr className="navbar-divider" />
               <div className="navbar-item">
@@ -80,16 +77,5 @@ const CurrentUser = () => {
     </Query>
   )
 }
-
-const CURRENT_USER = gql`
-  query currentUserQuery {
-    currentUser {
-      email
-      firstName
-      lastName
-      username
-    }
-  }
-`
 
 export default Navbar

@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import { Query, Mutation } from "react-apollo"
 import gql from "graphql-tag"
+import React, { Component } from "react"
+import { Mutation, Query } from "react-apollo"
 
 class TaskNew extends Component {
   state = {
@@ -35,7 +35,7 @@ class TaskNew extends Component {
   }
 
   render() {
-    const { nameField } = this.state
+    const { nameField, name, description, datasetId } = this.state
     return (
       <Mutation mutation={CREATE_TASK}>
         {(createTask, { data }) => (
@@ -47,9 +47,9 @@ class TaskNew extends Component {
                   if (!this._validateForm()) return
                   createTask({
                     variables: {
-                      name: this.state.name,
-                      description: this.state.description,
-                      datasetId: this.state.datasetId,
+                      name: name,
+                      description: description,
+                      datasetId: datasetId,
                     },
                   })
                     .then(({ data }) => {

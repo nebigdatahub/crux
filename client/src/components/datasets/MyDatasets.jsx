@@ -1,40 +1,19 @@
 import React, { Component } from "react"
-import { Route, Link, withRouter } from "react-router-dom"
-import DatasetCard from "./DatasetCard"
-import gql from "graphql-tag"
-import { graphql, Query, compose } from "react-apollo"
-
-import { userDatasets } from "../../queries/datasets.gql"
+import { compose } from "react-apollo"
+import { withRouter } from "react-router-dom"
+import Datasets from "./Datasets"
+import DatasetsProvider from "./DatasetsProvider"
 
 class MyDatasets extends Component {
   render() {
     return (
       <React.Fragment>
-        <section className="columns is-multiline is-mobile">
+        <DatasetsProvider username={this.props.match.params.username}>
           <Datasets />
-        </section>
+        </DatasetsProvider>
       </React.Fragment>
     )
   }
 }
-
-const Datasets = () => (
-  <Query query={userDatasets}>
-    {({ error, loading, data }) => {
-      if (error) return "error"
-      if (loading) return "loading"
-
-      const { userDatasets } = data
-      return (
-        userDatasets &&
-        userDatasets.map((dataset, idx) => (
-          <div key={idx} className="column is-4-desktop">
-            <DatasetCard {...dataset} />
-          </div>
-        ))
-      )
-    }}
-  </Query>
-)
 
 export default compose(withRouter)(MyDatasets)

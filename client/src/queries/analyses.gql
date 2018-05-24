@@ -1,0 +1,65 @@
+query allAnalyses {
+  allAnalyses {
+    name
+    slug
+    readme
+    createdBy {
+      username
+    }
+    dataset {
+      name
+      slug
+      readme
+      files {
+        name
+        file
+      }
+    }
+  }
+}
+
+query usersAnalyses {
+  usersAnalyses {
+    name
+    slug
+    readme
+    createdBy {
+      username
+    }
+    dataset {
+      name
+      slug
+      readme
+      files {
+        name
+        file
+      }
+    }
+  }
+}
+
+query analysis($username: String!, $slug: String!) {
+  analysis(username: $username, slug: $slug) {
+    name
+    readme
+    slug
+    files {
+      name
+      slug
+      content
+    }
+    createdBy {
+      username
+    }
+  }
+}
+
+mutation createAnalysis($name: String!, $readme: String, $datasetId: Int!) {
+  createAnalysis(name: $name, readme: $readme, datasetId: $datasetId) {
+    analysis {
+      id
+      name
+      slug
+    }
+  }
+}

@@ -1,0 +1,32 @@
+- model: app.file
+  pk: 1
+  fields:
+    created_by: 1
+    file: titanic1.ipynb
+    content_type: 15
+    object_id: 1
+
+- model: app.file
+  pk: 2
+  fields:
+    created_by: 1
+    file: titanic2.ipynb
+    content_type: 15
+    object_id: 2
+
+- model: app.file
+  pk: 3
+  fields:
+    created_by: 2
+    file: youtube1.ipynb
+    content_type: 15
+    object_id: 3
+
+- model: app.file
+  pk: 4
+  fields:
+    created_by: 2
+    file: youtube2.ipynb
+    content_type: 15
+    object_id: 4
+

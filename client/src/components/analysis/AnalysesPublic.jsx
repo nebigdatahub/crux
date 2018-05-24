@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import { Query } from "react-apollo"
-
-import { allAnalyses } from "../../queries/datasets.gql"
+import { allAnalyses } from "../../queries/analyses.gql"
 import AnalysisCard from "./AnalysisCard"
 
 class AnalysesPublic extends Component {
@@ -25,9 +24,9 @@ const Analyses = () => (
       const { allAnalyses } = data
       return (
         allAnalyses &&
-        allAnalyses.map((dataset, idx) => (
+        allAnalyses.map((analysis, idx) => (
           <div key={idx} className="column is-4-desktop">
-            <AnalysisCard {...dataset} />
+            <AnalysisCard {...analysis} />
           </div>
         ))
       )
