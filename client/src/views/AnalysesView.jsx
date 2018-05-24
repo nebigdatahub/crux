@@ -9,11 +9,6 @@ import MyAnalyses from "../components/analysis/MyAnalyses"
 class AnalysesView extends Component {
   state = {
     activeTab: 0,
-    tabs: [
-      { text: "All", url: "/all" },
-      { text: "My analyses", url: "/" },
-      { text: "New Analysis", url: "/create" },
-    ],
   }
 
   _setActiveTab = idx => {
@@ -22,56 +17,60 @@ class AnalysesView extends Component {
     })
   }
   render() {
-    const { tabs, activeTab } = this.state
+    const username = "sabnatarajan"
+    const { activeTab } = this.state
     return (
       <React.Fragment>
         <Navbar />
-        <section className="hero is-dark">
-          <div className="container hero-body">
-            <h1 className="title">Analysis</h1>
-          </div>
+        <AnalysesHeader />
+        <section className="container section">
+          <Tabs
+            activeTab={activeTab}
+            setActiveTab={this._setActiveTab}
+            username={username}
+          />
+          <Route exact path="/analyses" render={() => <AnalysesPublic />} />
+          <Route
+            exact
+            path={`/${username}/analyses`}
+            render={() => <MyAnalyses />}
+          />
+          <Route path="/analyses/create" render={() => <AnalysisNew />} />
         </section>
-        <main className="container">
-          <section className="section">
-            <Tabs
-              tabs={tabs}
-              activeTab={activeTab}
-              setActiveTab={this._setActiveTab}
-            />
-            <Routes />
-          </section>
-        </main>
       </React.Fragment>
     )
   }
 }
 
-const Tabs = ({ tabs, activeTab, setActiveTab }) => (
-  <div className="tabs is-toggle is-fullwidth">
-    <ul>
-      {tabs.map(({ url, text }, idx) => (
-        <li
-          key={idx}
-          className={idx == activeTab ? "is-active" : ""}
-          onClick={() => setActiveTab(idx)}
-        >
-          <Link to={"/analyses" + url}>{text}</Link>
-        </li>
-      ))}
-    </ul>
-  </div>
+const AnalysesHeader = () => (
+  <section className="hero is-dark">
+    <div className="container hero-body">
+      <h1 className="title">Analyses</h1>
+    </div>
+  </section>
 )
 
-const Routes = () => (
-  <React.Fragment>
-    <Route
-      path="/analyses/all"
-      exact={true}
-      render={() => <AnalysesPublic />}
-    />
-    <Route exact path="/analyses" render={() => <MyAnalyses />} />
-    <Route path="/analyses/create" render={() => <AnalysisNew />} />
-  </React.Fragment>
-)
+const Tabs = ({ username, activeTab, setActiveTab }) => {
+  const tabs = [
+    { text: "All", url: "/analyses" },
+    { text: "My analyses", url: `/${username}/analyses` },
+    { text: "New Analysis", url: "/analyses/create" },
+  ]
+  return (
+    <div className="tabs is-toggle is-fullwidth">
+      <ul>
+        {tabs.map(({ url, text }, idx) => (
+          <li
+            key={idx}
+            className={idx == activeTab ? "is-active" : ""}
+            onClick={() => setActiveTab(idx)}
+          >
+            <Link to={url}>{text}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
 
 export default compose(withRouter)(AnalysesView)

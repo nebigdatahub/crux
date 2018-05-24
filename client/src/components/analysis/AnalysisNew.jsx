@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 import { Mutation, Query } from "react-apollo"
 import { createAnalysis } from "../../queries/analyses.gql"
-import { userDatasets } from "../../queries/datasets.gql"
+import { usersDatasets } from "../../queries/datasets.gql"
 
-class DatasetNew extends Component {
+class AnalysisNew extends Component {
   state = {
     name: "",
     nameField: {
@@ -11,7 +11,7 @@ class DatasetNew extends Component {
       inputClasses: ["input"],
       helpClasses: [],
     },
-    files: [""],
+    file: "",
     description: "",
     success: false,
     datasetId: null,
@@ -42,11 +42,11 @@ class DatasetNew extends Component {
   _handleFormSubmit = async (createAnalysis, e) => {
     e.preventDefault()
     if (!this._validateForm()) return
-    const { name, files, description, datasetId } = this.state
+    const { name, file, description, datasetId } = this.state
     await createAnalysis({
       variables: {
         name: name,
-        files: files,
+        files: file,
         description: description,
         datasetId: datasetId,
       },
@@ -56,7 +56,7 @@ class DatasetNew extends Component {
           success: true,
           name: "",
           description: "",
-          files: [""],
+          file: "",
           datasetId: null,
         })
         setTimeout(() => {
@@ -82,81 +82,14 @@ class DatasetNew extends Component {
     })
   }
 
-  _handleFileChange = (file, key) => {
-    let { files } = this.state
-    files[key] = file
+  _handleFileChange = file => {
     this.setState({
-      files: files,
+      file: file,
     })
-  }
-
-  _removeFile = key => {
-    let { files } = this.state
-    files.splice(key, 1)
-    if (!files) files = [""]
-    this.setState({
-      files: files,
-    })
-  }
-
-  _renderFiles = () => {
-    return (
-      <React.Fragment>
-        <div className="field">
-          <div className="control">
-            <input
-              required
-              type="button"
-              className="button"
-              onClick={() => {
-                this.setState({
-                  files: [...this.state.files, ""],
-                })
-              }}
-              value="Add another file"
-            />
-          </div>
-        </div>
-        {this.state.files.map((file, key) => (
-          <div className="file has-name" key={key || 0}>
-            <label className="file-label">
-              <input
-                className="file-input"
-                type="file"
-                name="fileName"
-                onChange={({
-                  target: {
-                    validity,
-                    files: [file],
-                  },
-                }) => {
-                  validity.valid && this._handleFileChange(file, key)
-                }}
-              />
-              <span className="file-cta">
-                <span className="file-icon">
-                  <i className="fas fa-upload" />
-                </span>
-                <span className="file-label" />
-              </span>
-              <span className="file-name">
-                {(file && file.name) || "No file chosen"}
-              </span>
-            </label>
-            <span
-              className="file-delete"
-              onClick={this._removeFile.bind(this, key)}
-            >
-              <i className="far fa-trash-alt" />
-            </span>
-          </div>
-        ))}
-      </React.Fragment>
-    )
   }
 
   render() {
-    const { nameField } = this.state
+    const { nameField, file } = this.state
 
     return (
       <Mutation mutation={createAnalysis}>
@@ -219,9 +152,36 @@ class DatasetNew extends Component {
                     active={this.state.modalActive}
                     togglePicker={this._toggleModal}
                     setDataset={this._selectDataset}
+                    selected={this.state.datasetId}
                   />
 
-                  {this._renderFiles()}
+                  <div className="file has-name">
+                    <label className="file-label">
+                      <input
+                        className="file-input"
+                        type="file"
+                        name="fileName"
+                        required
+                        onChange={({
+                          target: {
+                            validity,
+                            files: [file],
+                          },
+                        }) => {
+                          validity.valid && this._handleFileChange(file)
+                        }}
+                      />
+                      <span className="file-cta">
+                        <span className="file-icon">
+                          <i className="fas fa-upload" />
+                        </span>
+                        <span className="file-label" />
+                      </span>
+                      <span className="file-name">
+                        {(file && file.name) || "No file chosen"}
+                      </span>
+                    </label>
+                  </div>
 
                   <div className="field">
                     <div className="control">
@@ -243,13 +203,13 @@ class DatasetNew extends Component {
   }
 }
 
-const DatasetPicker = ({ active, togglePicker, setDataset }) => (
-  <Query query={userDatasets}>
+const DatasetPicker = ({ active, togglePicker, setDataset, selected }) => (
+  <Query query={usersDatasets}>
     {({ loading, error, data }) => {
       if (error) return "error"
       if (loading) return "loading"
 
-      const { userDatasets } = data
+      const { usersDatasets } = data
       return (
         <div className={`modal ${active ? "is-active" : ""}`}>
           <div className="modal-background" />
@@ -263,7 +223,11 @@ const DatasetPicker = ({ active, togglePicker, setDataset }) => (
               />
             </header>
             <section className="modal-card-body">
-              <Datasets datasets={userDatasets} setDataset={setDataset} />
+              <Datasets
+                datasets={usersDatasets}
+                setDataset={setDataset}
+                selected={selected}
+              />
             </section>
             <footer className="modal-card-foot">
               <button className="button is-info" onClick={togglePicker}>
@@ -280,9 +244,16 @@ const DatasetPicker = ({ active, togglePicker, setDataset }) => (
   </Query>
 )
 
-const Datasets = ({ datasets, setDataset }) => (
+const Datasets = ({ selected, datasets, setDataset }) => (
   <div className="select is-multiple">
-    <select size="3" onChange={({ target: { value } }) => setDataset(value)}>
+    <select
+      size="5"
+      onChange={({ target: { value } }) => {
+        setDataset(value)
+      }}
+      value={selected}
+    >
+      <option value="-1">Select a dataset</option>
       {datasets.map((dataset, idx) => (
         <option key={idx} value={dataset.id}>
           {dataset.name}
@@ -297,9 +268,9 @@ const SuccessMessage = ({ display }) => {
   return (
     <div className="notification is-success">
       <button className="delete" />
-      Dataset created successfully!
+      Analysis created successfully!
     </div>
   )
 }
 
-export default DatasetNew
+export default AnalysisNew

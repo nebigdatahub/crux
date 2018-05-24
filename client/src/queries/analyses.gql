@@ -3,6 +3,9 @@ query allAnalyses {
     name
     slug
     readme
+    createdBy {
+      username
+    }
     dataset {
       name
       slug
@@ -15,11 +18,14 @@ query allAnalyses {
   }
 }
 
-query userAnalyses {
-  userAnalyses {
+query usersAnalyses {
+  usersAnalyses {
     name
     slug
     readme
+    createdBy {
+      username
+    }
     dataset {
       name
       slug
@@ -32,8 +38,8 @@ query userAnalyses {
   }
 }
 
-query analysisBySlug($slug: String!) {
-  analysisBySlug(slug: $slug) {
+query analysis($username: String!, $slug: String!) {
+  analysis(username: $username, slug: $slug) {
     name
     readme
     slug
@@ -41,6 +47,9 @@ query analysisBySlug($slug: String!) {
       name
       slug
       content
+    }
+    createdBy {
+      username
     }
   }
 }

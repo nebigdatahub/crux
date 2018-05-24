@@ -9,6 +9,7 @@ import DatasetPage from "./views/DatasetPage"
 import DatasetsView from "./views/DatasetsView"
 import HomeView from "./views/HomeView"
 import UserPage from "./views/UserPage"
+import UsersAnalyses from "./views/UsersAnalyses"
 import UsersDatasets from "./views/UsersDatasets"
 
 class App extends Component {
@@ -37,6 +38,10 @@ class App extends Component {
         <Route
           path="/:username([a-z0-9]+)/datasets"
           render={() => <UsersDatasets />}
+        />
+        <Route
+          path="/:username([a-z0-9]+)/analyses"
+          render={() => <UsersAnalyses />}
         />
         <Route
           path="/:username([a-z0-9]+)/profile"
