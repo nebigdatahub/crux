@@ -1,9 +1,8 @@
-from django.contrib import admin
-from guardian.admin import GuardedModelAdmin
+from django.contrib.admin import register, ModelAdmin
 
 from ..models import Task
 
 
-@admin.register(Task)
-class TaskAdmin(GuardedModelAdmin):
+@register(Task)
+class TaskAdmin(ModelAdmin):
     pass

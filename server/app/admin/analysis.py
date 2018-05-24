@@ -1,10 +1,9 @@
-from django.contrib import admin
-from guardian.admin import GuardedModelAdmin
+from django.contrib.admin import register, ModelAdmin
 
 from ..models import Analysis
 
 
-@admin.register(Analysis)
-class AnalysisAdmin(GuardedModelAdmin):
-    list_display_links = ('id', 'name')
-    list_display = ('id', 'name', 'created_by', 'readme')
+@register(Analysis)
+class AnalysisAdmin(ModelAdmin):
+    list_display_links = ('id', 'name', 'slug')
+    list_display = ('id', 'name', 'slug', 'created_by', 'readme')

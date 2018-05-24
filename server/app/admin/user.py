@@ -1,12 +1,11 @@
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from django.contrib.admin import register, ModelAdmin
 from django.utils.translation import gettext_lazy as _
 
 from ..models import User
-from ..models import Dataset
 
 
-class UserAdmin(admin.ModelAdmin):
+@register(User)
+class UserAdmin(ModelAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {
@@ -26,6 +25,3 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
     filter_horizontal = ('groups', 'user_permissions')
-
-
-admin.site.register(User, UserAdmin)

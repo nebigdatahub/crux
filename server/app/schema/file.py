@@ -25,9 +25,8 @@ class NotebookType(DjangoObjectType):
 
     def resolve_content(self, info, **kwargs):
         with self.file.open() as f:
-            notebook = nbformat.reads(f.read(), as_version=4)
             html_exporter = HTMLExporter()
-            body, resources = html_exporter.from_notebook_node(notebook)
+            body, resources = html_exporter.from_file(f)
         return body
 
 

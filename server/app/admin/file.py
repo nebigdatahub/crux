@@ -1,9 +1,9 @@
-from django.contrib import admin
-from guardian.admin import GuardedModelAdmin
+from django.contrib.admin import register, ModelAdmin
 
 from ..models import File
 
 
-@admin.register(File)
-class FileAdmin(GuardedModelAdmin):
-    list_display = ('id', 'name', 'file', 'created_by', 'slug')
+@register(File)
+class FileAdmin(ModelAdmin):
+    list_display_links = ('id', 'name', 'slug')
+    list_display = ('id', 'name', 'slug', 'content_type', 'file', 'created_by')

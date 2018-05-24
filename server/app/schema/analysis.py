@@ -1,12 +1,14 @@
-from django.contrib.auth import get_user_model
+import os
+
 import graphene
+from django.contrib.auth import get_user_model
 from graphene_django import DjangoObjectType
 from graphql_extensions.auth.decorators import (login_required,
                                                 staff_member_required)
 
-from .file import FileType, FileUploadType, NotebookType
-from ..models import Dataset, File, Analysis
+from ..models import Analysis, Dataset, File, User
 from .dataset import DatasetType
+from .file import FileType, FileUploadType, NotebookType
 
 
 class AnalysisType(DjangoObjectType):
@@ -21,18 +23,23 @@ class AnalysisType(DjangoObjectType):
 
 class AnalysisQuery(graphene.ObjectType):
     all_analyses = graphene.List(AnalysisType)
-    user_analyses = graphene.List(AnalysisType)
-    analysis_by_slug = graphene.Field(AnalysisType, slug=graphene.String())
+    users_analyses = graphene.List(AnalysisType, username=graphene.String())
+    analysis = graphene.Field(
+        AnalysisType, username=graphene.String(), slug=graphene.String())
 
     def resolve_all_analyses(self, info, **kwargs):
         return Analysis.objects.all()
 
     @login_required
-    def resolve_user_analyses(self, info, **kwargs):
-        return info.context.user.analyses.all()
+    def resolve_users_analyses(self, info, username=None, **kwargs):
+        if not username:
+            return info.context.user.analyses.all()
+        user = User.objects.get(username=username)
+        return user.analyses.all()
 
-    def resolve_analysis_by_slug(self, info, slug, **kwargs):
-        return Analysis.objects.get(slug=slug)
+    def resolve_analysis(self, info, username, slug, **kwargs):
+        user = User.objects.get(username=username)
+        return Analysis.objects.get(created_by=user, slug=slug)
 
 
 class CreateAnalysis(graphene.Mutation):
@@ -53,11 +60,10 @@ class CreateAnalysis(graphene.Mutation):
                             **kwargs)
         analysis.save()
         for f in info.context.FILES.getlist('files'):
-            analysis.files.create(
-                name=f'{name}-file',
-                file=f,
-                uploaded_by=info.context.user
-            )
+            name, ext = os.path.splitext(f'{f.name}')
+            analysis.files.create(name=f'{name}-file',
+                                  file=f,
+                                  created_by=info.context.user)
 
         return CreateAnalysis(analysis=analysis)
 

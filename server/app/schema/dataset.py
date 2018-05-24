@@ -1,11 +1,13 @@
-from django.contrib.auth import get_user_model
+import os
+
 import graphene
+from django.contrib.auth import get_user_model
 from graphene_django import DjangoObjectType
 from graphql_extensions.auth.decorators import (login_required,
                                                 staff_member_required)
 
-from .file import FileType, FileUploadType
 from ..models import Dataset, File, User
+from .file import FileType, FileUploadType
 
 
 class DatasetType(DjangoObjectType):
@@ -49,20 +51,16 @@ class CreateDataset(graphene.Mutation):
 
     @login_required
     def mutate(self, info, name, readme=None, **kwargs):
-        dataset = Dataset(
-            name=name,
-            created_by=info.context.user,
-            **kwargs
-        )
+        dataset = Dataset(name=name,
+                          created_by=info.context.user,
+                          readme=readme,
+                          **kwargs)
         dataset.save()
         for f in info.context.FILES.getlist('files'):
-            file = File(
-                file=f,
-                file_type='DS',
-                **kwargs
-            )
-            file.save()
-            dataset.files.add(file)
+            name, ext = os.path.splitext(f'{f.name}')
+            dataset.files.create(name=name,
+                                 file=f,
+                                 created_by=info.context.user)
 
         return CreateDataset(dataset=dataset)
 
