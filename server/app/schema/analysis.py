@@ -1,5 +1,3 @@
-import os
-
 import graphene
 from django.contrib.auth import get_user_model
 from graphene_django import DjangoObjectType
@@ -60,9 +58,7 @@ class CreateAnalysis(graphene.Mutation):
                             **kwargs)
         analysis.save()
         for f in info.context.FILES.getlist('files'):
-            name, ext = os.path.splitext(f'{f.name}')
-            analysis.files.create(name=f'{name}-file',
-                                  file=f,
+            analysis.files.create(file=f,
                                   created_by=info.context.user)
 
         return CreateAnalysis(analysis=analysis)

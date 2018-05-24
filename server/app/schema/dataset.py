@@ -1,5 +1,3 @@
-import os
-
 import graphene
 from django.contrib.auth import get_user_model
 from graphene_django import DjangoObjectType
@@ -57,9 +55,7 @@ class CreateDataset(graphene.Mutation):
                           **kwargs)
         dataset.save()
         for f in info.context.FILES.getlist('files'):
-            name, ext = os.path.splitext(f'{f.name}')
-            dataset.files.create(name=name,
-                                 file=f,
+            dataset.files.create(file=f,
                                  created_by=info.context.user)
 
         return CreateDataset(dataset=dataset)

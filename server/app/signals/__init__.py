@@ -1,12 +1,11 @@
-from django.dispatch import receiver
-from django.db.models.signals import post_save
-from django.utils.text import slugify
 import itertools
-from ..models import (Activity,
-                      Analysis,
-                      Dataset,
-                      File,
-                      Task)
+import os
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils.text import slugify
+
+from ..models import Activity, Analysis, Dataset, File, Task
 
 
 @receiver(post_save)
@@ -16,6 +15,8 @@ def on_create(sender, instance, created, *args, **kwargs):
     if created:
         _log_activity(sender, instance)
         _generate_slug(sender, instance)
+        if sender == File:
+            _generate_filename(sender, instance)
 
 
 def _log_activity(sender, instance):
@@ -36,4 +37,12 @@ def _generate_slug(sender, instance):
     while(sender.objects.filter(created_by=user, slug=final_slug).exists()):
         final_slug = f'{slug}{next(i)}'
     instance.slug = final_slug
+    instance.save()
+
+
+def _generate_filename(sender, instance):
+    if instance.name:
+        return
+    filename, ext = os.path.splitext(instance.file.name)
+    instance.name = filename
     instance.save()
