@@ -1,7 +1,6 @@
 - model: app.file
   pk: 1
   fields:
-    name: Titanic Analysis
     created_by: 1
     file: titanic1.ipynb
     content_type: 15
@@ -10,7 +9,6 @@
 - model: app.file
   pk: 2
   fields:
-    name: Youtube analysis
     created_by: 1
     file: titanic2.ipynb
     content_type: 15
@@ -19,7 +17,6 @@
 - model: app.file
   pk: 3
   fields:
-    name: titanic analysis
     created_by: 2
     file: youtube1.ipynb
     content_type: 15
@@ -28,7 +25,6 @@
 - model: app.file
   pk: 4
   fields:
-    name: Youtube dataset notebook
     created_by: 2
     file: youtube2.ipynb
     content_type: 15

@@ -3,10 +3,12 @@
 echo "+--------------------------+"
 echo "|    Running migrations    |"
 echo "+--------------------------+"
-python server/manage.py migrate
+python manage.py migrate
 
 echo "+--------------------------+"
 echo "|       Loading data       |"
 echo "+--------------------------+"
-python server/manage.py loaddata users
-python server/manage.py loaddata datasets
+python ../manage.py loaddata users
+python ../manage.py loaddata datasets
+python ../manage.py loaddata analyses
+python ../manage.py loaddata files
