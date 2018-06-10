@@ -1,15 +1,9 @@
-import itertools
-
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.utils import timezone
-from django.utils.text import slugify
-from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.fields import GenericRelation
 
 from .activity import Activity
 from .file import File
+from .tag import Tag
 
 
 class Dataset(models.Model):
@@ -33,6 +27,7 @@ class Dataset(models.Model):
 
     files = GenericRelation(File)
     activity = GenericRelation(Activity)
+    tags = GenericRelation(Tag)
 
     REQUIRED_FIELDS = [name, created_by]
 
