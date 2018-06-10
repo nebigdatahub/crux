@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "install": "npm --prefix client install",
-    "start": "npm run django:dev & npm --prefix client run start",
+    "start": "npm --prefix client run start",
     "postinstall": "npm run build",
     "build": "npm --prefix client run build",
     "django:dev": "$(pipenv --venv)/bin/python server/manage.py runserver"
@@ -20,7 +20,5 @@
   },
   "homepage": "https://github.com/nebigdatahub/crux#readme",
   "dependencies": {},
-  "cacheDirectories": [
-    "client/node_modules"
-  ]
+  "cacheDirectories": ["client/node_modules"]
 }

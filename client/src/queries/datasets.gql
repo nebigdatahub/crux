@@ -19,6 +19,9 @@ query dataset($username: String!, $slug: String!) {
       name
       readme
       slug
+      createdBy {
+        username
+      }
     }
   }
 }

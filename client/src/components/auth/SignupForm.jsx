@@ -20,6 +20,7 @@ class SignupForm extends Component {
 
   _handleFormSubmit = async e => {
     e.preventDefault()
+    const { email, password } = this.state
     const result = await this.props
       .createUser({
         variables: {
@@ -28,7 +29,6 @@ class SignupForm extends Component {
         },
       })
       .then(({ data }) => {
-        _completeSignup(data)
         this.props.history.push("/login")
       })
       .catch(error => {
@@ -37,8 +37,6 @@ class SignupForm extends Component {
           errorMessage: "That account already exists",
         })
       })
-
-    _completeSignup = data => {}
   }
 
   render() {
