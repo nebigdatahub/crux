@@ -65,13 +65,14 @@ const AnalysisProvider = ({ username, slug, children }) => (
   </Query>
 )
 
-const AnalysisHeader = ({ analysis: { name, description } }) => (
+const AnalysisHeader = ({ analysis: { name, readme } }) => (
   <React.Fragment>
     <section className="hero is-dark is-small">
       <div className="hero-body">
         <div className="container">
           <Title text={name} />
-          <Subtitle text={description} />
+          <Subtitle text={readme} />
+          <span className="tag">Analysis</span>
         </div>
       </div>
     </section>

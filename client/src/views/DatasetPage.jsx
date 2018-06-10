@@ -72,11 +72,12 @@ const DatasetHeader = ({ username, slug }) => (
             if (loading) return "loading"
             if (error) return "error"
 
-            const { name, description } = data.dataset
+            const { name, readme } = data.dataset
             return (
               <React.Fragment>
                 <Title text={name} />
-                <Subtitle text={description} />
+                <Subtitle text={readme} />
+                <span className="tag">Dataset</span>
               </React.Fragment>
             )
           }}
