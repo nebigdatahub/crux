@@ -29,10 +29,10 @@ install:
   - rm server/db.sqlite3 && touch server/db.sqlite3
   - pipenv shell
   - server/manage.py migrate
-  -server/manage.py loaddata users datasets analyses files
+  - server/manage.py loaddata users datasets analyses files
 
-before_script:
-  -
+after_success:
+  - coveralls
 
 script:
   - pylint server/
