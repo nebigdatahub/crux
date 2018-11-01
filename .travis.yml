@@ -24,8 +24,7 @@ before_install:
 
 install:
   - pip install pipenv
-  - pipenv install
-  - pipenv shell
+  - pip install -r requirements.txt
   - server/manage.py migrate
   - server/manage.py loaddata users datasets analyses files
 
