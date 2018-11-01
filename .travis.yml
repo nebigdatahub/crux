@@ -41,6 +41,7 @@ script:
 deploy:
   provider: heroku
   api_key: app:36d0606c-a518-47e5-b60c-2eff8e678f40
+  app:
     master: crux-staging-nebigdatahub
     production: crux-staging-nebigdatahub
 
