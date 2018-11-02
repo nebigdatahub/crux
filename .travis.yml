@@ -18,7 +18,7 @@ env:
   - DJANGO=1.4.1
 
 before_install:
-  - export DJANGO_SETTINGS_MODULE=crux.settings
+  - export DJANGO_SETTINGS_MODULE=server.settings
   - export PYTHONPATH=$HOME/nebigdatahub/crux
   - export PIP_USE_MIRRORS=true
   - pip install -U pip
