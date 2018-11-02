@@ -22,6 +22,7 @@ before_install:
   - export DJANGO_SECRET_KEY="secretkeyfortravis"
   - export PYTHONPATH=$HOME/nebigdatahub/crux
   - export PIP_USE_MIRRORS=true
+  - export PYTHONPATH=$PYTHONPATH:$(pwd)
 
 install:
   - pip install pipenv
