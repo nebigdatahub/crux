@@ -23,6 +23,7 @@ before_install:
   - export PIP_USE_MIRRORS=true
   - pip install -U pip
   - export PYTHONPATH=$PYTHONPATH:$(pwd)
+  - python3 setup.py install
 
 install:
   - pip install pipenv
