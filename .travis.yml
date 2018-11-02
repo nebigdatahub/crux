@@ -19,11 +19,10 @@ env:
 
 before_install:
   - export DJANGO_SETTINGS_MODULE=crux.settings
-  - export PYTHONPATH=$HOME/nebigdatahub/crux/
+  - export PYTHONPATH=$HOME/nebigdatahub/crux
   - export PIP_USE_MIRRORS=true
   - pip install -U pip
   - export PYTHONPATH=$PYTHONPATH:$(pwd)
-  - python3 setup.py install
 
 install:
   - pip install pipenv
