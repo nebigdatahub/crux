@@ -27,8 +27,6 @@ install:
   - echo $DJANGO_SECRET_KEY
   - pip install pipenv
   - pip install -r requirements.txt
-  - server/manage.py migrate
-  - server/manage.py loaddata users datasets analyses files
 
 after_success:
   - coveralls
