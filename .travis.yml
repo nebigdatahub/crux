@@ -19,9 +19,9 @@ env:
 
 before_install:
   - export DJANGO_SETTINGS_MODULE=server.settings
+  - export DJANGO_SECRET_KEY="secretkeyfortravis"
   - export PYTHONPATH=$PYTHONPATH:$(pwd)
   - export PIP_USE_MIRRORS=true
-  - export DJANGO_SECRET_KEY="secretkeyfortravis"
 
 install:
   - pip install pipenv
