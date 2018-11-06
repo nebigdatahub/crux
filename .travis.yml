@@ -24,6 +24,7 @@ before_install:
   - export PIP_USE_MIRRORS=true
 
 install:
+  - echo $DJANGO_SECRET_KEY
   - pip install pipenv
   - pip install -r requirements.txt
   - server/manage.py migrate
