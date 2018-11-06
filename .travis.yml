@@ -18,10 +18,10 @@ env:
   - DJANGO=1.4.1
 
 before_install:
+  - export DJANGO_SETTINGS_MODULE=server.settings
   - export PYTHONPATH=$PYTHONPATH:$(pwd)
   - export PIP_USE_MIRRORS=true
   - export PYTHONPATH=$HOME/nebigdatahub/crux
-  - export DJANGO_SETTINGS_MODULE=server.settings
   - export DJANGO_SECRET_KEY="secretkeyfortravis"
 
 install:
