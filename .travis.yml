@@ -18,7 +18,7 @@ env:
   - DJANGO=1.4.1
 
 before_install:
-  - export DJANGO_SETTINGS_MODULE=server.settings
+  - export DJANGO_SETTINGS_MODULE=server.settings.development
   - export DJANGO_SECRET_KEY="secretkeyfortravis"
   - export PYTHONPATH=$PYTHONPATH:$(pwd)
   - export PIP_USE_MIRRORS=true
@@ -27,6 +27,8 @@ install:
   - echo $DJANGO_SECRET_KEY
   - pip install pipenv
   - pip install -r requirements.txt
+  - server/manage.py migrate
+  - server/manage.py loaddata users datasets analyses files
 
 after_success:
   - coveralls
