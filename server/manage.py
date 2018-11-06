@@ -2,6 +2,10 @@
 import os
 import sys
 
+"""
+Manage.py file to set up django execution on CLI
+"""
+
 if __name__ == "__main__":
     DJANGO_SETTINGS_MODULE = os.environ.get(
         'DJANGO_SETTINGS_MODULE') or 'settings.development'

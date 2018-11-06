@@ -26,6 +26,7 @@ before_install:
 install:
   - echo $DJANGO_SECRET_KEY
   - pip install pipenv
+  - pip install pycodestyle
   - pip install -r requirements.txt
   - server/manage.py migrate
   - server/manage.py loaddata users datasets analyses files
@@ -34,7 +35,7 @@ after_success:
   - coveralls
 
 script:
-  - pylint server/
+  - pycodestyle server/ --ignore=E501
   - nosetests
 
 
