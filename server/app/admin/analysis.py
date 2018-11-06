@@ -5,5 +5,5 @@ from ..models import Analysis
 
 @register(Analysis)
 class AnalysisAdmin(ModelAdmin):
-    list_display_links = ('id', 'name', 'slug')
-    list_display = ('id', 'name', 'slug', 'created_by', 'readme')
+    ModelAdmin.list_display_links = ('id', 'name', 'slug')
+    ModelAdmin.list_display = ('id', 'name', 'slug', 'created_by', 'readme')
