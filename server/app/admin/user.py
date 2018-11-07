@@ -1,5 +1,4 @@
 from django.contrib.admin import register, ModelAdmin
-from django.utils.translation import gettext_lazy as _
 
 from ..models import User
 
@@ -10,9 +9,9 @@ class UserAdmin(ModelAdmin):
         (None, {'fields': ('email', 'password',)}),
         ('Personal info', {
             'fields': ('first_name', 'last_name', 'email',)}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser',
+        ('Permissions', {'fields_': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions',)}),
-        ('Important dates', {'fields': ('last_login', 'date_joined',)})
+        ('Important dates', {'fields__': ('last_login', 'date_joined',)})
     )
     add_fieldsets = (
         (None, {
