@@ -6,12 +6,12 @@ from ..models import User
 @register(User)
 class UserAdmin(ModelAdmin):
     fieldsets = (
-        (None, {'fields': ('email', 'password',)}),
+        (None, {'fields': ('password',)}),
         ('Personal info', {
-            'fields': ('first_name', 'last_name', 'email',)}),
-        ('Permissions', {'fields_': ('is_active', 'is_staff', 'is_superuser',
+            'fields': ('last_name', 'email',)}),
+        ('Permissions', {'fields': ( 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions',)}),
-        ('Important dates', {'fields__': ('last_login', 'date_joined',)})
+        ('Important dates', {'fields': ('last_login', 'date_joined',)})
     )
     add_fieldsets = (
         (None, {
