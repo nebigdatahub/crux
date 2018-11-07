@@ -6,4 +6,4 @@ from ..models import User
 
 @register(User)
 class UserAdmin(ModelAdmin):
-   pass
+    pass
