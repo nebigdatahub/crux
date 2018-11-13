@@ -1,0 +1,45 @@
+#   A basic travis.yml boilerplate for Django projects
+#
+#   The set-up assumes a postgreSQL database.
+#
+#   Replace the following variables in the code:
+# * your_project_settings
+# * your_github_username
+# * your_repo
+
+language: python
+
+python:
+  - 3.6
+
+services: postgresql
+
+env:
+  - DJANGO=1.4.1
+
+before_install:
+  - export DJANGO_SETTINGS_MODULE=server.settings.staging
+  - export DJANGO_SECRET_KEY="secretkeyfortravis"
+  - export PYTHONPATH=$PYTHONPATH:$(pwd)
+  - export PIP_USE_MIRRORS=true
+
+install:
+  - echo $DJANGO_SECRET_KEY
+  - pip install pipenv
+  - pip install pycodestyle
+  - pip install -r requirements.txt
+  - server/manage.py migrate
+  - server/manage.py loaddata users datasets analyses files
+
+after_success:
+  - coveralls
+
+script:
+  - pycodestyle server/ --ignore=E501
+  - nosetests
+
+
+notifications:
+  email:
+    - raphnano@gmail.com
+    - acm2248@columbia.edu

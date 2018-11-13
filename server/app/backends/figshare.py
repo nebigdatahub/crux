@@ -1,7 +1,4 @@
 from social_core.backends.oauth import BaseOAuth2
-import social_core.pipeline.social_auth
-import social_core.pipeline.user
-import social_django.models
 import requests
 import json
 

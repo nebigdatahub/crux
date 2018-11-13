@@ -1,12 +1,9 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [packages]
-
 django = "*"
 djangorestframework = "*"
 gunicorn = "*"
@@ -24,7 +21,25 @@ social-auth-app-django = "*"
 pyyaml = "*"
 "psycopg2-binary" = "*"
 graphene-django-extras = "*"
-
+django-webtest = "*"
+coverage = "*"
+django-coverage = "*"
+django-crawler = "*"
+django-discover-runner = "*"
+django-discoverage = "*"
+django-environ = "*"
+django-factory-boy = "*"
+django-nose = "*"
+django-test = "*"
+django-test-generator = "*"
+django-test-utilities = "*"
+entrypoints = "*"
+factory-boy = "*"
+mock = "*"
+model-mommy = "*"
+nose = "*"
+requests = "*"
+selenium = "*"
 
 [dev-packages]
-
+pylint = "*"

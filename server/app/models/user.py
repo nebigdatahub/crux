@@ -70,6 +70,6 @@ class User(AbstractUser):
     def _get_username(self, email):
         username = uname = re.sub('[^a-zA-Z0-9-_ \n]', '', email.split('@')[0])
         i = itertools.count(1)
-        while(User.objects.filter(username=username).exists()):
+        while User.objects.filter(username=username).exists():
             username = f'{uname}{next(i)}'
         return username
