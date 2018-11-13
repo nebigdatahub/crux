@@ -1,0 +1,17 @@
+<style>
+  .signed-in-area {
+    margin-top: 30px;
+  }
+</style>
+<h1>google sign-in</h1>
+<google-signin clientId="484793393317-n9pfr2ffuni9vgldk7bt086pecsq003q.apps.googleusercontent.com" width="240"
+               theme="dark" longTitle="true" fetchBasicProfile="true"
+               (googleSigninSuccess)="onGoogleSigninSuccess($event)"></google-signin>
+
+<div class="signed-in-area" *ngIf="isSignedIn">
+  <div>id : {{id}}</div>
+  <div>name : {{name}}</div>
+  <div>email : {{email}}</div>
+  <img [src]="imageUrl" alt="profile image"><br>
+  <button (click)="signOut()">Sign Out</button>
+</div>
